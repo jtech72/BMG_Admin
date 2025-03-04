@@ -47,6 +47,9 @@ const Categories = () => {
             hour12: true,       // "AM/PM"
         });
     };
+    useEffect(() => {
+        setPageIndex(1)
+    }, [activeTab]);
     return (
         <>
             <PageTitle

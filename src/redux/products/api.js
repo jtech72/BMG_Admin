@@ -7,7 +7,7 @@ const api = new APICore();
 //products
 function productData(params: any): any {
     const { search,limit,page } = params?.data
-    return api.get(`${URL.GET_PRODUCT}?&search=${search}&limit=${limit}&page=${page}`);
+    return api.get(`${URL.GET_PRODUCT}?search=${search}&limit=${limit}&page=${page}`);
 }
 
 function createProductData(params: any): any {

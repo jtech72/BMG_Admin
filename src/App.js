@@ -14,7 +14,7 @@ import './assets/scss/Saas.scss';
 // import './assets/scss/Modern.scss';
 
 // For Creative demo import Creative.scss
-// import './assets/scss/Creative.scss';
+import './assets/scss/Creative.scss';
 
 // configure fake backend
 configureFakeBackend();
