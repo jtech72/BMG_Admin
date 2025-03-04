@@ -33,14 +33,14 @@ const Buyer_Seller = () => {
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: 'Buyers/Sellers', path: '/bmg/buyer-seller' },
+                    { label: `Buyer's & Seller's`, path: '/bmg/buyer-seller' },
                     {
                         label: 'Users',
                         path: '/bmg/buyer-seller',
                         active: true,
                     },
                 ]}
-                title={'Buyers/Sellers'}
+                title={`Buyer's & Seller's`}
             />
             <Row>
                 <Col lg={6} className="d-flex justify-content-start ">
@@ -55,7 +55,7 @@ const Buyer_Seller = () => {
                                 <Card.Body className="text-center">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <span className="px-3 py-1 bg-dark text-light rounded">
-                                            Total Buyer's: {UserData?.length}
+                                            Total Buyer's: {UserData?.length || 0}
                                         </span>
                                         <div className="d-flex">
                                             <input
@@ -91,6 +91,7 @@ const Buyer_Seller = () => {
                                                                     <th scope="col"><i className="mdi mdi-merge"></i></th>
                                                                     <th scope="col">Name</th>
                                                                     <th scope="col">Email</th>
+                                                                    <th scope="col">Contact No</th>
                                                                     <th scope="col">Verified</th>
                                                                 </tr>
                                                             </thead>
@@ -100,15 +101,29 @@ const Buyer_Seller = () => {
                                                                         key={index}
                                                                         className="text-dark fw-bold text-nowrap">
                                                                         <th scope="row">{index + 1}</th>
-                                                                        <td className='text-uppercase fw-bold text-info'>
-                                                                            <span>{`${data?.name || ""} ${data?.lastName || ""}`.trim() || <span className="d-flex text-danger justify-content-center">
-                                                                                N/A
-                                                                            </span>}</span>
-
+                                                                        <td className="fw-bold text-info">
+                                                                            {data?.name || data?.lastName ? (
+                                                                                <span>
+                                                                                    {`${data?.name?.charAt(0).toUpperCase()}${data?.name?.slice(1) || ""} 
+        ${data?.lastName?.charAt(0).toUpperCase()}${data?.lastName?.slice(1) || ""}`.trim()}
+                                                                                </span>
+                                                                            ) : (
+                                                                                <span className="d-flex text-danger justify-content-center">N/A</span>
+                                                                            )}
                                                                         </td>
-                                                                        <td className='text-uppercase fw-bold text-success'>
+
+                                                                        <td className='fw-bold text-success'>
                                                                             {data?.email ? (
                                                                                 <span>{data?.email}  </span>
+                                                                            ) : (
+                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                    N/A
+                                                                                </span>
+                                                                            )}
+                                                                        </td>
+                                                                        <td className='fw-bold'>
+                                                                            {data?.phoneNumber ? (
+                                                                                <span>{data?.phoneNumber}  </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -159,7 +174,7 @@ const Buyer_Seller = () => {
                                     <Card.Body className="text-center">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                             <span className="px-3 py-1 bg-dark text-light rounded">
-                                                Total Seller's: {UserData?.length}
+                                                Total Seller's: {UserData?.length || 0}
                                             </span>
                                             <div className="d-flex">
                                                 <input
@@ -195,6 +210,7 @@ const Buyer_Seller = () => {
                                                                         <th scope="col"><i className="mdi mdi-merge"></i></th>
                                                                         <th scope="col">Name</th>
                                                                         <th scope="col">Email</th>
+                                                                        <th scope="col">Contact No</th>
                                                                         <th scope="col">Verified</th>
                                                                     </tr>
                                                                 </thead>
@@ -204,14 +220,29 @@ const Buyer_Seller = () => {
                                                                             key={index}
                                                                             className="text-dark fw-bold text-nowrap">
                                                                             <th scope="row">{index + 1}</th>
-                                                                            <td className='text-uppercase fw-bold text-info'>
-                                                                                <span>{`${data?.name || ""} ${data?.lastName || ""}`.trim() || <span className="d-flex text-danger justify-content-center">
-                                                                                    N/A
-                                                                                </span>}</span>
+                                                                            <td className="fw-bold text-info">
+                                                                                {data?.name || data?.lastName ? (
+                                                                                    <span>
+                                                                                        {`${data?.name?.charAt(0).toUpperCase()}${data?.name?.slice(1) || ""} 
+        ${data?.lastName?.charAt(0).toUpperCase()}${data?.lastName?.slice(1) || ""}`.trim()}
+                                                                                    </span>
+                                                                                ) : (
+                                                                                    <span className="d-flex text-danger justify-content-center">N/A</span>
+                                                                                )}
                                                                             </td>
-                                                                            <td className='text-uppercase fw-bold text-success'>
+
+                                                                            <td className='fw-bold text-success'>
                                                                                 {data?.email ? (
                                                                                     <span>{data?.email}  </span>
+                                                                                ) : (
+                                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                                        N/A
+                                                                                    </span>
+                                                                                )}
+                                                                            </td>
+                                                                            <td className='fw-bold'>
+                                                                                {data?.phoneNumber ? (
+                                                                                    <span>{data?.phoneNumber}  </span>
                                                                                 ) : (
                                                                                     <span className="d-flex text-danger justify-content-center">
                                                                                         N/A

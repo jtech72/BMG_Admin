@@ -49,7 +49,7 @@ const Orders = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Order's: {OrdersData?.length}
+                                    Total Order's: {OrdersData?.length || 0}
                                 </span>
                                 <div className="d-flex">
                                     <input
@@ -153,7 +153,7 @@ const Orders = () => {
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
                                             <code className="fs-4">
-                                                No Product's found. Please create or add Product to view.{' '}
+                                                No Order's found.{' '}
                                             </code>
                                         </div>
                                     )}
