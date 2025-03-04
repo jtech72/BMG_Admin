@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom'; // Assuming you are using React Router
 
 const Pagination = ({ pageIndex, pageSize, totalPages, setPageIndex, onChangePageSize }) => {
     useEffect(() => {
-        // Ensure pageIndex is within bounds when totalPages changes
-        if (pageIndex >= totalPages) {
-            setPageIndex(Math.max(0, totalPages - 1));
+        // Ensure pageIndex stays within bounds when totalPages changes
+        if (pageIndex > totalPages) {
+            setPageIndex(Math.max(1, totalPages)); // Keep in valid range
         }
     }, [pageIndex, totalPages, setPageIndex]);
 
     return (
         <div className="d-lg-flex align-items-center text-center pb-1 pt-2">
+            {/* Page Size Selection */}
             <div className="d-inline-block me-3">
                 <label className="me-1">Display :</label>
                 <select
@@ -18,108 +19,71 @@ const Pagination = ({ pageIndex, pageSize, totalPages, setPageIndex, onChangePag
                     onChange={(e) => {
                         const newSize = Number(e.target.value);
                         onChangePageSize(newSize);
-                        setPageIndex(0);
+                        setPageIndex(1); // Reset to first page
                     }}
                     className="form-select d-inline-block w-auto">
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
+                    {[10, 20, 50, 100].map((size) => (
+                        <option key={size} value={size}>{size}</option>
+                    ))}
                 </select>
             </div>
 
+            {/* Page Info */}
             <span className="me-3">
-                Page{' '}
-                <strong>
-                    {pageIndex + 1} of {totalPages}
-                </strong>
+                Page <strong>{pageIndex} of {totalPages}</strong>
             </span>
 
-            <label>Go to page : </label>
-            {/* <input
+            {/* Go to Page Input */}
+            <label>Go to page: </label>
+            <input
                 type="number"
-                placeholder={`${pageIndex + 1}`}
+                placeholder={`${pageIndex}`}
                 min="1"
                 max={totalPages}
                 onChange={(e) => {
-                    const enteredPage = e.target.value;
-                    setPageIndex((prev) => {
-                        const newPage = enteredPage ? Math.max(1, Math.min(enteredPage, totalPages)) - 1 : 0;
-                        return newPage;
-                    });
+                    const enteredPage = Number(e.target.value);
+                    if (enteredPage >= 1 && enteredPage <= totalPages) {
+                        setPageIndex(enteredPage);
+                    }
                 }}
-                className="form-control  ms-1 d-inline-block"
-                style={{
-                    width: '80px',
-                }}
-            /> */}
-            <input
-                type="number"
-                placeholder={`${pageIndex + 1}`}
-                min="1"
-                max={Number(totalPages)} // Convert totalPages to a number
-                onChange={(e) => {
-                    const enteredPage = e.target.value;
-                    setPageIndex((prev) => {
-                        const newPage = enteredPage ? Math.max(1, Math.min(enteredPage, totalPages)) - 1 : 0;
-                        return newPage;
-                    });
-                }}
-                className="form-control  ms-1 d-inline-block"
-                style={{
-                    width: '80px',
-                }}
+                className="form-control ms-1 d-inline-block"
+                style={{ width: '80px' }}
             />
 
-
+            {/* Pagination Controls */}
             <ul className="pagination pagination-rounded d-inline-flex ms-auto align-item-center mb-0 pe-4">
-                {pageIndex > 0 && (
+                {/* Previous Button */}
+                {pageIndex > 1 && (
                     <li className="page-item" onClick={() => setPageIndex(pageIndex - 1)}>
-                        <Link to="#" className="page-link">
-                            Previous
-                        </Link>
+                        <Link to="#" className="page-link">Previous</Link>
                     </li>
                 )}
 
-                {Array.from({ length: totalPages }).map((_, page) => {
-                    const isFirstPage = page === 0;
-                    const isLastPage = page === totalPages - 1;
+                {/* Page Number Buttons */}
+                {Array.from({ length: totalPages }).map((_, i) => {
+                    const page = i + 1; // Adjust index to start from 1
                     const isCurrentPage = page === pageIndex;
+                    const isNearCurrent = page >= pageIndex - 1 && page <= pageIndex + 1;
+                    const isEdgePage = page === 1 || page === totalPages;
 
-                    if (
-                        totalPages <= 5 ||
-                        isFirstPage ||
-                        isLastPage ||
-                        (page >= pageIndex - 1 && page <= pageIndex + 1)
-                    ) {
+                    if (totalPages <= 5 || isNearCurrent || isEdgePage) {
                         return (
-                            <li
-                                key={`page-${page + 1}`}
-                                className={`page-item ${isCurrentPage ? 'active' : ''}`}
+                            <li key={page} className={`page-item ${isCurrentPage ? 'active' : ''}`}
                                 onClick={() => setPageIndex(page)}>
-                                <Link to="#" className="page-link">
-                                    {page + 1}
-                                </Link>
+                                <Link to="#" className="page-link">{page}</Link>
                             </li>
                         );
-                    } else if ((isFirstPage && pageIndex >= 4) || (isLastPage && pageIndex <= totalPages - 3)) {
-                        return (
-                            <li key={`page-${page + 1}`} className="page-item disabled">
-                                <Link to="#" className="page-link">
-                                    ...
-                                </Link>
-                            </li>
-                        );
+                    } else if ((page === 2 && pageIndex >= 5) || (page === totalPages - 1 && pageIndex <= totalPages - 4)) {
+                        return <li key={page} className="page-item disabled"><Link to="#" className="page-link px-0">...</Link></li>;
                     }
 
                     return null;
                 })}
 
-                {pageIndex < totalPages - 1 && (
+                {/* Next Button */}
+                {pageIndex < totalPages && (
                     <li className="page-item" onClick={() => setPageIndex(pageIndex + 1)}>
-                        <Link to="#" className="page-link">
-                            Next
-                        </Link>
+                        <Link to="#" className="page-link">Next</Link>
                     </li>
                 )}
             </ul>

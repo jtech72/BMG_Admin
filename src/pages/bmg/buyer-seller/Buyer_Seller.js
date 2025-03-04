@@ -19,7 +19,7 @@ const Buyer_Seller = () => {
         setActiveTab(tabIndex);
     };
     const TotalRecords = store?.userDataReducer?.userData?.totalRecords;
-    const [pageIndex, setPageIndex] = useState(0);
+    const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
@@ -92,6 +92,7 @@ const Buyer_Seller = () => {
                                                                     <th scope="col">Name</th>
                                                                     <th scope="col">Email</th>
                                                                     <th scope="col">Contact No</th>
+                                                                    <th scope="col">Location</th>
                                                                     <th scope="col">Verified</th>
                                                                 </tr>
                                                             </thead>
@@ -130,6 +131,22 @@ const Buyer_Seller = () => {
                                                                                 </span>
                                                                             )}
                                                                         </td>
+                                                                        <td className="fw-bold text-primary">
+                                                                            {data?.primaryAddress ? (
+                                                                                <span>
+                                                                                    {`${data?.primaryAddress?.address || ""}, 
+        ${data?.primaryAddress?.street || ""}, 
+        ${data?.primaryAddress?.city?.name || ""}, 
+        ${data?.primaryAddress?.state?.name || ""}, 
+        ${data?.primaryAddress?.country?.name || ""}`
+                                                                                        .replace(/,\s*,/g, ",") // Remove empty commas
+                                                                                        .trim()}
+                                                                                </span>
+                                                                            ) : (
+                                                                                <span className="d-flex text-danger justify-content-center">N/A</span>
+                                                                            )}
+                                                                        </td>
+
                                                                         <td className='fw-bold'>
                                                                             {data ? (
                                                                                 <span className={`badge ${data?.isVerified ? "bg-success" : "bg-danger"} px-2 py-1`}>
@@ -211,6 +228,7 @@ const Buyer_Seller = () => {
                                                                         <th scope="col">Name</th>
                                                                         <th scope="col">Email</th>
                                                                         <th scope="col">Contact No</th>
+                                                                        <th scope="col">Location</th>
                                                                         <th scope="col">Verified</th>
                                                                     </tr>
                                                                 </thead>
@@ -249,6 +267,22 @@ const Buyer_Seller = () => {
                                                                                     </span>
                                                                                 )}
                                                                             </td>
+                                                                            <td className="fw-bold text-primary">
+                                                                                {data?.primaryAddress ? (
+                                                                                    <span>
+                                                                                        {`${data?.primaryAddress?.address || ""}, 
+        ${data?.primaryAddress?.street || ""}, 
+        ${data?.primaryAddress?.city?.name || ""}, 
+        ${data?.primaryAddress?.state?.name || ""}, 
+        ${data?.primaryAddress?.country?.name || ""}`
+                                                                                            .replace(/,\s*,/g, ",") // Remove empty commas
+                                                                                            .trim()}
+                                                                                    </span>
+                                                                                ) : (
+                                                                                    <span className="d-flex text-danger justify-content-center">N/A</span>
+                                                                                )}
+                                                                            </td>
+
                                                                             <td className='text-uppercase fw-bold'>
                                                                                 {data ? (
                                                                                     <span className={`badge ${data?.isVerified ? "bg-success" : "bg-danger"} px-2 py-1`}>
