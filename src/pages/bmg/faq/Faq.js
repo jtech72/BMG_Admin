@@ -54,7 +54,7 @@ const Faq = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <span className="px-3 py-1 bg-dark text-light rounded">
-                  Total FAQs: {FaqData?.length}
+                  Total FAQs: {FaqData?.length || 0}
                 </span>
                 <div className="d-flex">
                   <input
@@ -84,8 +84,8 @@ const Faq = () => {
                   <Table bordered hover className="bg-white text-center">
                     <thead>
                       <tr className="text-nowrap text-secondary">
-                      <th><i className="mdi mdi-merge"></i></th>
-                      <th>Question</th>
+                        <th><i className="mdi mdi-merge"></i></th>
+                        <th>Question</th>
                         <th>Answer</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -116,9 +116,8 @@ const Faq = () => {
 
                           <td>
                             <span
-                              className={`badge ${
-                                data?.status ? "bg-success" : "bg-danger"
-                              } px-2 py-1`}
+                              className={`badge ${data?.status ? "bg-success" : "bg-danger"
+                                } px-2 py-1`}
                             >
                               {data?.status ? "✅ Active" : "❌ Inactive"}
                             </span>

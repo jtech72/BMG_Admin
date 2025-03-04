@@ -68,7 +68,7 @@ const AuctionLead = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Lead's: {LeadsData?.length}
+                                    Total Lead's: {LeadsData?.length || 0}
                                 </span>
                                 <div className="d-flex">
                                     <input
@@ -242,7 +242,7 @@ const AuctionLead = () => {
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
                                             <code className="fs-4">
-                                                No Lead's found. Please create or add Lead to view.{' '}
+                                                No Lead's found.
                                             </code>
                                         </div>
                                     )}

@@ -12,6 +12,7 @@ import ProfileDropdown from '../components/ProfileDropdown';
 
 //constants
 import * as layoutConstants from '../constants/layout';
+import ThemeToggle from '../helpers/ThemeToggle';
 
 // get the profilemenu
 const ProfileMenus = [
@@ -128,6 +129,9 @@ const Topbar = ({ hideLogo, navCssClasses, openLeftMenuCallBack, topbarDark }: T
                                 onClick={handleRightSideBar}>
                                 <i className="dripicons-gear noti-icon"></i>
                             </button>
+                        </li> */}
+                        {/* <li className="dropdown notification-list mt-3 me-3">
+                            <ThemeToggle/>
                         </li> */}
                         <li className="dropdown notification-list">
                             <ProfileDropdown

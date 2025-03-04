@@ -73,7 +73,7 @@ const Categories = () => {
                                 <Card.Body className="text-center">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <span className="px-3 py-1 bg-dark text-light rounded">
-                                            Total Categories: {CategoryData?.length}
+                                            Total Categories: {CategoryData?.length || 0}
                                         </span>
                                         <div className="d-flex">
                                             <input
@@ -147,7 +147,7 @@ const Categories = () => {
                                                     className="text-center d-flex align-items-center justify-content-center"
                                                     style={{ height: '30vh' }}>
                                                     <code className="fs-4">
-                                                        No Category found. Please create or add Category to view.{' '}
+                                                        No Categories found.
                                                     </code>
                                                 </div>
                                             )}
@@ -170,7 +170,7 @@ const Categories = () => {
                                     <Card.Body className="text-center">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                             <span className="px-3 py-1 bg-dark text-light rounded">
-                                                Total Sub Categories: {SubCategoryData?.length}
+                                                Total Sub Categories: {SubCategoryData?.length || 0}
                                             </span>
                                             <div className="d-flex">
                                                 <input
@@ -253,7 +253,7 @@ const Categories = () => {
                                                         className="text-center d-flex align-items-center justify-content-center"
                                                         style={{ height: '30vh' }}>
                                                         <code className="fs-4">
-                                                            No Sub Category found. Please create or add Sub Category to view.{' '}
+                                                            No Sub Category found.
                                                         </code>
                                                     </div>
                                                 )}

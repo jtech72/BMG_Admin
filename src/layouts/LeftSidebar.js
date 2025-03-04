@@ -71,10 +71,10 @@ const LeftSidebar = ({ isCondensed, isLight, hideLogo, hideUserProfile }: LeftSi
                     <>
                         <Link to="/" className="logo text-center logo-light">
                             <span className="logo-lg">
-                                <img src={isLight ? Logo : Logo} alt="logo" height="16" />
+                                <img src={isLight ? Logo : Logo} alt="logo" height="60" />
                             </span>
                             <span className="logo-sm">
-                                <img src={isLight ? BmgLogo : BmgLogo} alt="logo" height="16" />
+                                <img src={isLight ? BmgLogo : BmgLogo} alt="logo" height="50" />
                             </span>
                         </Link>
 

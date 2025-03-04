@@ -67,7 +67,7 @@ const Products = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Product's: {ProductsData?.length}
+                                    Total Product's: {ProductsData?.length || 0}
                                 </span>
                                 <div className="d-flex">
                                     <input
@@ -146,16 +146,16 @@ const Products = () => {
                                                                             <Tooltip id="overlay-example">
                                                                                 View Detail's
                                                                             </Tooltip>
-                                                                        }>                                                                 
+                                                                        }>
                                                                         <b>
-                                                                        {data?.Product_Name ? (
-                                                                            <span onClick={() => handleProductClick(data)}
-                                                                            >{data?.Product_Name} </span>
-                                                                        ) : (
-                                                                            <span className="d-flex text-danger justify-content-center">
-                                                                                N/A
-                                                                            </span>
-                                                                        )}
+                                                                            {data?.Product_Name ? (
+                                                                                <span onClick={() => handleProductClick(data)}
+                                                                                >{data?.Product_Name} </span>
+                                                                            ) : (
+                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                    N/A
+                                                                                </span>
+                                                                            )}
                                                                         </b>
                                                                     </OverlayTrigger>
                                                                 </td>
@@ -199,7 +199,7 @@ const Products = () => {
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
                                             <code className="fs-4">
-                                                No Product's found. Please create or add Product to view.{' '}
+                                                No Product's found.
                                             </code>
                                         </div>
                                     )}
@@ -218,7 +218,7 @@ const Products = () => {
             </Row >
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
-                <Modal.Header className='px-2 py-1 text-light'style={{backgroundColor:'#008003'}}>
+                <Modal.Header className='px-2 py-1 text-light' style={{ backgroundColor: '#008003' }}>
                     <Modal.Title className="fw-semibold">Product Details</Modal.Title>
                     <i className="mdi mdi-close fs-3" onClick={() => setShowModal(false)} style={{ cursor: 'pointer' }}></i>
                 </Modal.Header>

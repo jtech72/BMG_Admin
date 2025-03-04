@@ -5,8 +5,8 @@ import config from '../../config';
 
 // content type
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.baseURL = 'http://192.168.0.106:5004/'
-// config.API_URL;
+axios.defaults.baseURL =config.API_URL;
+//  'http://192.168.0.106:5004/'
 // intercepting to capture errors
 axios.interceptors.response.use(
     (response) => {
