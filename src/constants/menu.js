@@ -4,8 +4,7 @@ const MENU_ITEMS = [
         key: 'dashboard',
         label: 'Dashboard',
         isTitle: false,
-        icon: 'uil-servers',
-        // badge: { variant: 'success', text: '4' },
+        icon: 'uil-dashboard',
         url: '/bmg/dashboard',
     },
     {
@@ -13,7 +12,6 @@ const MENU_ITEMS = [
         label: 'Auction Leads',
         isTitle: false,
         icon: 'uil-chart',
-        // badge: { variant: 'success', text: '4' },
         url: '/bmg/leads',
     },
     {
@@ -21,7 +19,6 @@ const MENU_ITEMS = [
         label: 'Categories',
         isTitle: false,
         icon: 'uil-cell',
-        // badge: { variant: 'success', text: '4' },
         url: '/bmg/categories',
     },
     {
@@ -29,7 +26,6 @@ const MENU_ITEMS = [
         label: 'Products',
         isTitle: false,
         icon: 'uil-box',
-        // badge: { variant: 'success', text: '4' },
         url: '/bmg/products',
     },
     {
@@ -37,24 +33,28 @@ const MENU_ITEMS = [
         label: 'Buyers/Sellers',
         isTitle: false,
         icon: ' uil-users-alt',
-        // badge: { variant: 'success', text: '4' },
         url: '/bmg/buyer&seller',
     },
     {
         key: 'orders',
         label: 'Orders',
         isTitle: false,
-        icon: 'uil-border-clear',
-        // badge: { variant: 'success', text: '4' },
+        icon: 'uil-bill',
         url: '/bmg/orders',
     },
     {
         key: 'faq',
         label: 'Faq',
         isTitle: false,
-        icon: ' uil-chat-info',
-        // badge: { variant: 'success', text: '4' },
+        icon: ' uil-comment-exclamation',
         url: '/bmg/faq',
+    },
+    {
+        key: 'enquiry',
+        label: 'Enquiry',
+        isTitle: false,
+        icon: 'uil-comments-alt',
+        url: '/bmg/enquiry',
     },
    
 ];

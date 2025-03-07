@@ -182,7 +182,7 @@ const AuctionLead = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold'>
+                                                                <td className='fw-bold'>
                                                                     {data?.userId ? (
                                                                         <span className="fw-semibold">
                                                                             {`${data?.userId?.name || ""} ${data?.userId?.lastName || ""}`.trim() || "N/A"}
@@ -192,7 +192,7 @@ const AuctionLead = () => {
                                                                     )}
 
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-info'>
+                                                                <td className='fw-bold text-info'>
                                                                     {data?.userId?.email ? (
                                                                         <span>{data?.userId?.email} </span>
                                                                     ) : (
@@ -201,7 +201,7 @@ const AuctionLead = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold'>
+                                                                <td className='fw-bold'>
                                                                     {data?.userId ? (
                                                                         <span className={`badge ${data?.userId?.isVerified ? "bg-success" : "bg-danger"} px-3 py-2`}>
                                                                             {data?.userId?.isVerified ? "✅ Verified" : "❌ Not Verified"}

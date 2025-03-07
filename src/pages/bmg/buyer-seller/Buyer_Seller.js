@@ -105,8 +105,8 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-info">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${data?.name?.charAt(0).toUpperCase()}${data?.name?.slice(1) || ""} 
-        ${data?.lastName?.charAt(0).toUpperCase()}${data?.lastName?.slice(1) || ""}`.trim()}
+                                                                                    {`${data?.name?.charAt(0).toUpperCase()|| ""}${data?.name?.slice(1) || ""} 
+                                                                                      ${data?.lastName?.charAt(0).toUpperCase()|| ""}${data?.lastName?.slice(1) || ""}`.trim()}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">N/A</span>
@@ -135,10 +135,10 @@ const Buyer_Seller = () => {
                                                                             {data?.primaryAddress ? (
                                                                                 <span>
                                                                                     {`${data?.primaryAddress?.address || ""}, 
-        ${data?.primaryAddress?.street || ""}, 
-        ${data?.primaryAddress?.city?.name || ""}, 
-        ${data?.primaryAddress?.state?.name || ""}, 
-        ${data?.primaryAddress?.country?.name || ""}`
+                                                                                      ${data?.primaryAddress?.street || ""}, 
+                                                                                      ${data?.primaryAddress?.city?.name || ""}, 
+                                                                                      ${data?.primaryAddress?.state?.name || ""}, 
+                                                                                      ${data?.primaryAddress?.country?.name || ""}`
                                                                                         .replace(/,\s*,/g, ",") // Remove empty commas
                                                                                         .trim()}
                                                                                 </span>
@@ -241,8 +241,8 @@ const Buyer_Seller = () => {
                                                                             <td className="fw-bold text-info">
                                                                                 {data?.name || data?.lastName ? (
                                                                                     <span>
-                                                                                        {`${data?.name?.charAt(0).toUpperCase()}${data?.name?.slice(1) || ""} 
-        ${data?.lastName?.charAt(0).toUpperCase()}${data?.lastName?.slice(1) || ""}`.trim()}
+                                                                                        {`${data?.name?.charAt(0).toUpperCase() || ""}${data?.name?.slice(1) || ""} 
+                                                                                          ${data?.lastName?.charAt(0).toUpperCase() || ""}${data?.lastName?.slice(1) || ""}`}
                                                                                     </span>
                                                                                 ) : (
                                                                                     <span className="d-flex text-danger justify-content-center">N/A</span>

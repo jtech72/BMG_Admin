@@ -95,8 +95,16 @@ const Faq = () => {
                       {FaqData.map((data, index) => (
                         <tr key={data._id || index}>
                           <td>{index + 1}</td>
-                          <td>{data?.question || "N/A"}</td>
-
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={
+                              <Tooltip id={`tooltip-${index}`}>
+                                {data?.question}
+                              </Tooltip>
+                            }
+                          >
+                            <td>{data?.question.slice(0,70)+'...' || "N/A"}</td>
+                          </OverlayTrigger>
                           <OverlayTrigger
                             placement="top"
                             overlay={
@@ -152,15 +160,11 @@ const Faq = () => {
           </Card>
         </Col>
       </Row>
-
-      {/* FAQ Modal */}
-      {faqModal.isVisible && (
-        <FaqModal
-          show={faqModal.isVisible}
-          hide={() => setFaqModal({ ...faqModal, isVisible: false })}
-          faqData={faqModal}
-        />
-      )}
+      <FaqModal
+        show={faqModal.isVisible}
+        hide={() => setFaqModal({ ...faqModal, isVisible: false })}
+        faqData={faqModal}
+      />
     </>
   );
 };
