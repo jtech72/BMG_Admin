@@ -120,7 +120,7 @@ const FaqModal = ({ show, hide, faqData }) => {
                     Cancel
                 </Button>
                 <Button style={{backgroundColor:'#008003'}} onClick={handleSubmit} disabled={loading}>
-                    {loading ? <ButtonLoading /> : <>{faqData?.type} FAQ</>}
+                    {loading ? <ButtonLoading /> : <>{faqData?.type ==='Edit'?'Update':"Add"} FAQ</>}
                 </Button>
             </Modal.Footer>
         </Modal>
