@@ -5,8 +5,8 @@ import config from '../../config';
 
 // content type
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.baseURL =config.API_URL;
-//  'http://192.168.0.106:5004/'
+axios.defaults.baseURL = config.API_URL;
+// 'http://192.168.0.106:5004/'
 // intercepting to capture errors
 axios.interceptors.response.use(
     (response) => {
@@ -16,13 +16,13 @@ axios.interceptors.response.use(
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         let message;
 
-        if (error && error.response && error.response.status === 400) {
+        if (error && error.response && error?.response?.status === 400) {
             // window.location.href = '/not-found';
             // alert('Sorry! the data you are looking for could not be found')
-        } else if (error && error.response && error.response.status === 403) {
+        } else if (error && error.response && error?.response?.status === 403) {
             window.location.href = '/access-denied';
         } else {
-            switch (error.response.status) {
+            switch (error?.response?.status) {
                 case 404:
                     message = error.response.data.message || 'Invalid credentials';
                     break;

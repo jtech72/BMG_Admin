@@ -74,12 +74,12 @@ const FaqModal = ({ show, hide, faqData }) => {
     
 
     return (
-        <Modal show={show} onHide={hide} centered size="md">
+        <Modal show={show} onHide={hide} centered size="lg" backdrop='static'>
             <Modal.Header className="px-2 py-1 text-light" style={{backgroundColor:'#008003'}}>
                 <Modal.Title>{faqData?.type} FAQ</Modal.Title>
                 <i className="mdi mdi-close fs-3" onClick={hide} style={{ cursor: 'pointer' }}></i>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body >
                 <Form>
                     {/* Question Input */}
                     <Form.Group className="mb-3">
@@ -115,8 +115,8 @@ const FaqModal = ({ show, hide, faqData }) => {
                     )}
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={hide}>
+            <Modal.Footer className="px-2 py-1">
+                <Button variant="danger" onClick={hide}>
                     Cancel
                 </Button>
                 <Button style={{backgroundColor:'#008003'}} onClick={handleSubmit} disabled={loading}>

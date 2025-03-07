@@ -20,6 +20,7 @@ const Products = () => {
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
+    console.log('making build console for checking')
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);

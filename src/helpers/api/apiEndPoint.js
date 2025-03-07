@@ -2,7 +2,8 @@
 export const GET_DASHBOARD_DATA='api/admin/dashboard/getAllDashBoardData'
 //category
 export const CREATE_CATEGORY = '';
-export const GET_CATEGORY = 'api/admin/category/getAllCategory';
+export const GET_CATEGORY = 'api/admin/subCategory/getAllSubCategories';
+// export const GET_CATEGORY = 'api/admin/category/getAllCategory';
 export const GET_SUB_CATEGORY = 'api/admin/subCategory/getAllSubCategory';
 export const UPDATE_CATEGORY = '';
 export const DELETE_CATEGORY = '';
@@ -28,4 +29,10 @@ export const CREATE_FAQ = 'api/admin/faq/create';
 export const GET_FAQ = 'api/admin/faq/get';
 export const UPDATE_FAQ = 'api/admin/faq/update';
 export const DELETE_FAQ = '/api/admin/faq/delete/';
+//enquiry
+export const GET_ENQUIRY='api/admin/contact/getAllContactByAdmin';
+
+// support
+export const GET_SUPPORT='';
+export const UPDATE_SUPPORT='';
 

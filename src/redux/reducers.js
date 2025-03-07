@@ -15,6 +15,8 @@ import {     faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteF
 import { userDataReducer } from './user/reducers';
 import { getOrderDataReducer } from './orders/reducers';
 import { leadDataReducer } from './auctionLead/reducers';
+import { enquiryDataReducer } from './enquiry/reducers';
+import { getSupportDataReducer, updateSupportDataReducer } from './help&support/reducers';
 export default (combineReducers({
   Auth,
   Layout,
@@ -24,5 +26,7 @@ export default (combineReducers({
   faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer,
   userDataReducer,
   leadDataReducer,
-  getOrderDataReducer
+  getOrderDataReducer,
+  enquiryDataReducer,
+  getSupportDataReducer,updateSupportDataReducer
 }): any);

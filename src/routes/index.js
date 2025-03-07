@@ -32,6 +32,7 @@ const Products=React.lazy(()=>import('../pages/bmg/products/Products'))
 const Buyer_Seller=React.lazy(()=>import('../pages/bmg/buyer-seller/Buyer_Seller'))
 const Faq=React.lazy(()=>import('../pages/bmg/faq/Faq'))
 const Orders=React.lazy(()=>import('../pages/bmg/orders/Orders'))
+const Enquiry=React.lazy(()=>import('../pages/bmg/enquiry/Enquiry'))
 // error handlers
 const ErrorPageNotFound = React.lazy(() => import('../pages/error/PageNotFound'));
 const ErrorPageNotFoundAlt = React.lazy(() => import('../pages/error/PageNotFoundAlt'));
@@ -143,6 +144,10 @@ const AllRoutes = () => {
                         {
                             path: 'orders',
                             element: <LoadComponent component={Orders} />,
+                        },
+                        {
+                            path: 'enquiry',
+                            element: <LoadComponent component={Enquiry} />,
                         },
                        
 

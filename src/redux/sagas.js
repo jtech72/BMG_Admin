@@ -10,9 +10,10 @@ import userSaga from './user/saga';
 import leadSaga from './auctionLead/saga';
 import faqSaga from './faq/saga';
 import orderSaga from './orders/saga';
+import enquirySaga from './enquiry/saga';
 
 export default function* rootSaga(): any {
     yield all([authSaga(), layoutSaga(), dashboardSaga(), categorySaga(), productSaga(),
-         userSaga(), leadSaga(),faqSaga(),orderSaga()]);
+         userSaga(), leadSaga(),faqSaga(),orderSaga(),enquirySaga()]);
 
 }
