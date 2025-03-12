@@ -40,10 +40,7 @@ const createFaqDataReducer = (state = FAQ_DATA_INITIAL_STATE, action) => {
             }
         case FaqActionTypes.CREATE_FAQ_ERROR:
             return {
-                faqData: {
-                    message: "product name already exists!",
-                    status: 400
-                },
+                faqData: action.payload,
                 loading: false
             }
         case FaqActionTypes.STATE_EMPTY_SUCCESS:

@@ -17,6 +17,7 @@ import { getOrderDataReducer } from './orders/reducers';
 import { leadDataReducer } from './auctionLead/reducers';
 import { enquiryDataReducer } from './enquiry/reducers';
 import { getSupportDataReducer, updateSupportDataReducer } from './help&support/reducers';
+import {getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer } from './notification/reducers';
 export default (combineReducers({
   Auth,
   Layout,
@@ -28,5 +29,6 @@ export default (combineReducers({
   leadDataReducer,
   getOrderDataReducer,
   enquiryDataReducer,
-  getSupportDataReducer,updateSupportDataReducer
+  getSupportDataReducer,updateSupportDataReducer,
+  getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer
 }): any);
