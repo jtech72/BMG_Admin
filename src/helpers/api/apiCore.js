@@ -8,39 +8,39 @@ import config from '../../config';
 axios.defaults.baseURL = config.API_URL;
 // 'http://192.168.0.106:5004/'
 // intercepting to capture errors
-axios.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        let message;
 
-        if (error && error.response && error?.response?.status === 400) {
-            // window.location.href = '/not-found';
-            // alert('Sorry! the data you are looking for could not be found')
-        } else if (error && error.response && error?.response?.status === 403) {
-            window.location.href = '/access-denied';
-        } else {
-            switch (error?.response?.status) {
-                case 404:
-                    message = error.response.data.message || 'Invalid credentials';
-                    break;
-                case 403:
-                    message = 'Access Forbidden';
-                    break;
-                case 404:
-                    message = 'Sorry! the data you are looking for could not be found';
-                    break;
-                default: {
-                    message =
-                        error.response && error.response.data ? error.response.data['message'] : error.message || error;
-                }
-            }
-            return Promise.reject(message);
+axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (!error.response) {
+            // Network errors or no response from server
+            return Promise.reject("Network error. Please check your internet connection.");
         }
+
+        const { status, data } = error.response;
+        let message = data?.message || "An unexpected error occurred.";
+
+        switch (status) {
+            case 400:
+                console.error("Bad Request:", data);
+                break;
+            case 403:
+                window.location.href = "/access-denied";
+                return;
+            case 404:
+                message = "Sorry! The data you are looking for could not be found.";
+                break;
+            case 500:
+                message = "Internal Server Error. Please try again later.";
+                break;
+            default:
+                console.error(`Error ${status}:`, data);
+        }
+
+        return Promise.reject(message);
     }
 );
+
 
 const AUTH_SESSION_KEY = 'bmg_user';
 

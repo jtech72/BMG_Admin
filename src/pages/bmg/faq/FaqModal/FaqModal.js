@@ -21,7 +21,12 @@ const FaqModal = ({ show, hide, faqData }) => {
         answer: "",
         status: false,
     });
-
+const closeModal=()=>{
+    setFaq({  question: "",
+        answer: "",
+        status: false,})
+        hide()
+}
     // Handle changes in form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -68,16 +73,16 @@ const FaqModal = ({ show, hide, faqData }) => {
     useEffect(() => {
         if (!loading && (createStatus === 200 || updateStatus === 200)) {
             dispatch(getFaqActions({ search: '', limit: '', page: '' }));
-            hide();
+            closeModal();
         }
     }, [createStatus, updateStatus, loading, dispatch]); 
     
 
     return (
-        <Modal show={show} onHide={hide} centered size="lg" backdrop='static'>
+        <Modal show={show} onHide={closeModal} centered size="lg" backdrop='static'>
             <Modal.Header className="px-2 py-1 text-light" style={{backgroundColor:'#008003'}}>
                 <Modal.Title>{faqData?.type} FAQ</Modal.Title>
-                <i className="mdi mdi-close fs-3" onClick={hide} style={{ cursor: 'pointer' }}></i>
+                <i className="mdi mdi-close fs-3" onClick={closeModal} style={{ cursor: 'pointer' }}></i>
             </Modal.Header>
             <Modal.Body >
                 <Form>
@@ -116,7 +121,7 @@ const FaqModal = ({ show, hide, faqData }) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer className="px-2 py-1">
-                <Button variant="danger" onClick={hide}>
+                <Button variant="danger" onClick={closeModal}>
                     Cancel
                 </Button>
                 <Button style={{backgroundColor:'#008003'}} onClick={handleSubmit} disabled={loading}>

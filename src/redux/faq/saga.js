@@ -4,6 +4,7 @@ import { FaqActionTypes } from './constants';
 
 import {
     faqData, createFaqData, updateFaqData, deleteFaqData} from './api';
+import ToastContainer from '../../helpers/toast/ToastContainer';
 /**
  * Login the user
  * @param {*} payload - username and password
@@ -49,6 +50,8 @@ function* createFaqFunction(data) {
                 type: FaqActionTypes.CREATE_FAQ_SUCCESS,
                 payload: { ...response.data },
             });
+            ToastContainer(response?.data?.data?.message,'success')
+
         } else {
             yield put({
                 type: FaqActionTypes.CREATE_FAQ_ERROR,
@@ -60,6 +63,8 @@ function* createFaqFunction(data) {
             type: FaqActionTypes.CREATE_FAQ_ERROR,
             payload: error,
         });
+        ToastContainer(error,'danger')
+
     }
 }
 
@@ -70,16 +75,12 @@ function* updateFaqFunction(payload) {
         });
 
         const response = yield call(updateFaqData, payload);
-
         if (response && response.data) {
             yield put({
                 type: FaqActionTypes.UPDATE_FAQ_DATA_SUCCESS,
                 payload: response.data,
             });
-
-            yield put({
-                type: FaqActionTypes.UPDATE_FAQ_DATA_RESET,
-            });
+            ToastContainer(response?.data?.message,'success')
         } else {
             yield put({
                 type: FaqActionTypes.UPDATE_FAQ_DATA_ERROR,
@@ -89,8 +90,10 @@ function* updateFaqFunction(payload) {
     } catch (error) {
         yield put({
             type: FaqActionTypes.UPDATE_FAQ_DATA_ERROR,
-            payload: { message: error.message },
+            payload: { message: error },
         });
+                ToastContainer(error,'danger')
+        
     }
 }
 
@@ -103,7 +106,7 @@ function* deleteFaqFunction(payload) {
         const response = yield call(deleteFaqData, payload);
 
 
-        if (response && response.data && response.data.status === 'success') {
+        if (response && response.data ) {
             yield put({
                 type: FaqActionTypes.DELETE_FAQ_DATA_SUCCESS,
                 payload: response.data,
@@ -121,8 +124,10 @@ function* deleteFaqFunction(payload) {
     } catch (error) {
         yield put({
             type: FaqActionTypes.DELETE_FAQ_DATA_ERROR,
-            payload: { message: error.message },
+            payload: { message: error },
         });
+        ToastContainer(error,'danger')
+
     }
 }
 

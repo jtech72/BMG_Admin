@@ -47,6 +47,28 @@ const Products = () => {
             .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter
     };
 
+
+    const formatDate = (dateString) => {
+        if (!dateString) return "";
+
+        const date = new Date(dateString);
+        return date.toLocaleString("en-US", {
+            weekday: "short",   // "Thu"
+            month: "short",     // "Feb"
+            day: "2-digit",     // "27"
+            year: "numeric",    // "2025"
+            hour: "2-digit",    // "12"
+            minute: "2-digit",  // "00"
+            hour12: true,       // "AM/PM"
+        });
+    };
+    const isValidISODate = (value) => {
+        if (typeof value !== "string") return false; // Ensure it's a string before calling includes()
+
+        const date = new Date(value);
+        return !isNaN(date.getTime()) && value.includes("T");
+    };
+
     return (
         <>
             <PageTitle
@@ -246,20 +268,60 @@ const Products = () => {
                                 </Carousel>
                             )}
 
-                            {/* Product Details */}
                             <Row className="border rounded p-3 bg-light">
                                 {Object.entries(selectedProduct)
                                     .filter(([key, value]) =>
-                                        !["_id", "createdAt", "updatedAt", "image"].includes(key) &&
-                                        !/^[0-9a-fA-F]{24}$/.test(value) && value // Remove ID fields & empty values
+                                        !["_id", "createdAt", "updatedAt", "image", "status"].includes(key) && // Remove unnecessary fields
+                                        !(typeof value === "string" && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
+                                        value // Ensure it's not empty
                                     )
-                                    .map(([key, value]) => (
-                                        <Col md={6} key={key} className="mb-3">
-                                            <strong className="text-muted">{formatKey(key)}</strong>
-                                            <div className="fw-bold">{typeof value === "object" ? JSON.stringify(value) : value}</div>
-                                        </Col>
-                                    ))}
+                                    .map(([key, value]) => {
+                                        let displayValue;
+
+                                        if (Array.isArray(value)) {
+                                            displayValue = (
+                                                <ul className="mb-0">
+                                                    {value
+                                                        .filter(item => !(typeof item === "string" && /^[0-9a-fA-F]{24}$/.test(item))) // Remove ID-like values inside arrays
+                                                        .map((item, index) => (
+                                                            <li key={index}>{typeof item === "object" ? JSON.stringify(item, null, 2) : item}</li>
+                                                        ))}
+                                                </ul>
+                                            );
+                                        }
+                                        else if (typeof value === "object" && value !== null) {
+                                            displayValue = (
+                                                <ul className="mb-0">
+                                                    {Object.entries(value)
+                                                        .filter(([subKey, subValue]) =>
+                                                            !["_id", "createdAt", "updatedAt", "status", "image"].includes(subKey) &&
+                                                            !(typeof subValue === "string" && /^[0-9a-fA-F]{24}$/.test(subValue))
+                                                        )
+                                                        .map(([subKey, subValue]) => (
+                                                            <li key={subKey}>
+                                                                <strong>{formatKey(subKey)}:</strong> {isValidISODate(subValue) ? formatDate(subValue) : subValue}
+                                                            </li>
+                                                        ))}
+                                                </ul>
+                                            );
+                                        }
+                                        else if (typeof value === "string" && isValidISODate(value)) {
+                                            displayValue = formatDate(value);
+                                        }
+                                        else {
+                                            displayValue = value;
+                                        }
+
+                                        return (
+                                            <Col md={6} key={key} className="mb-3">
+                                                <strong className="text-muted">{formatKey(key)}</strong>
+                                                <div className="fw-bold">{displayValue}</div>
+                                            </Col>
+                                        );
+                                    })}
                             </Row>
+
+
                         </Container>
                     )}
                 </Modal.Body>

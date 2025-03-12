@@ -50,6 +50,13 @@ const MENU_ITEMS = [
         url: '/bmg/faq',
     },
     {
+        key: 'notification',
+        label: 'Notification',
+        isTitle: false,
+        icon: 'uil-comment-alt-notes',
+        url: '/bmg/notification',
+    },
+    {
         key: 'enquiry',
         label: 'Enquiry',
         isTitle: false,
