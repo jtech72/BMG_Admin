@@ -54,7 +54,7 @@ const Faq = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <span className="px-3 py-1 bg-dark text-light rounded">
-                  Total FAQs: {FaqData?.length || 0}
+                  Total FAQs: {TotalRecords || 0}
                 </span>
                 <div className="d-flex">
                   <input

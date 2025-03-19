@@ -49,7 +49,7 @@ const Orders = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Order's: {OrdersData?.length || 0}
+                                    Total Order's: {TotalRecords || 0}
                                 </span>
                                 <div className="d-flex">
                                     <input

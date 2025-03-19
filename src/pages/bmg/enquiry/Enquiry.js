@@ -49,7 +49,7 @@ const Enquiry = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Enquiries: {EnquiryData?.length || 0}
+                                    Total Enquiries: {TotalRecords || 0}
                                 </span>
                                 <div className="d-flex">
                                     <input
@@ -123,14 +123,24 @@ const Enquiry = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='fw-bold text-primary'>
-                                                                    {data?.message ? (
-                                                                        <span>{data?.message} </span>
+                                                                <td className='fw-bold text-primary' style={{cursor:'pointer'}}>
+                                                                    <OverlayTrigger
+                                                                        placement="left"
+                                                                        overlay={
+                                                                            <Tooltip id="overlay-example">
+                                                                                {data?.message}
+                                                                            </Tooltip>
+                                                                        }>
+                                                                        <b>
+                                                                        {data?.message ? (
+                                                                        <span>{data?.message.slice(0,50)} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
+                                                                        </b>
+                                                                    </OverlayTrigger>
                                                                 </td>
                                                             </tr>
                                                         ))}
