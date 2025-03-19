@@ -55,7 +55,7 @@ const Buyer_Seller = () => {
                                 <Card.Body className="text-center">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <span className="px-3 py-1 bg-dark text-light rounded">
-                                            Total Buyer's: {UserData?.length || 0}
+                                            Total Buyer's: {TotalRecords || 0}
                                         </span>
                                         <div className="d-flex">
                                             <input
@@ -105,8 +105,8 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-info">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${data?.name?.charAt(0).toUpperCase()|| ""}${data?.name?.slice(1) || ""} 
-                                                                                      ${data?.lastName?.charAt(0).toUpperCase()|| ""}${data?.lastName?.slice(1) || ""}`.trim()}
+                                                                                    {`${data?.name?.charAt(0).toUpperCase() || ""}${data?.name?.slice(1) || ""} 
+                                                                                      ${data?.lastName?.charAt(0).toUpperCase() || ""}${data?.lastName?.slice(1) || ""}`.trim()}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">N/A</span>

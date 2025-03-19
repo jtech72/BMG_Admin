@@ -11,15 +11,17 @@ const Categories = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const CategoryData = store?.categoryDataReducer?.categoryData?.groupedCategories
+    console.log({ CategoryData })
     const SubCategoryData = store?.subCategoryDataReducer?.categoryData?.subCategories
     const CategoryLoading = store?.categoryDataReducer?.loading
     const SubCategoryLoading = store?.subCategoryDataReducer?.loading
     const [activeTab, setActiveTab] = useState(0);
-
+    const [totalRecords, setTotalRecords] = useState(0)
+    
     const connectTab = (tabIndex) => {
         setActiveTab(tabIndex);
     };
-    const TotalRecords = activeTab === 0 ? store?.categoryDataReducer?.categoryData?.totalRecords : store?.subCategoryDataReducer?.categoryData?.totalRecords;
+    const TotalRecords = totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -29,9 +31,20 @@ const Categories = () => {
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
+        if (activeTab === 0) {
+            setTotalRecords(store?.categoryDataReducer?.categoryData?.totalRecords)
+        } else if (activeTab === 1) {
+            setTotalRecords(store?.subCategoryDataReducer?.categoryData?.totalRecords)
+        }
+    }, [activeTab]);
+    console.log(store?.categoryDataReducer?.categoryData)
+    useEffect(() => {
+        if (activeTab === 0) {
         dispatch(getCategoryActions({ search: search, limit: pageSize, page: pageIndex }));
+        } else if (activeTab === 1) {
         dispatch(getSubCategoryActions({ search: search, limit: pageSize, page: pageIndex }));
-    }, [dispatch, pageIndex, pageSize, search]);
+        }
+    }, [dispatch,activeTab, pageIndex, pageSize, search]);
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -96,7 +109,7 @@ const Categories = () => {
                                 <Card.Body className="text-center">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <span className="px-3 py-1 bg-dark text-light rounded">
-                                            Total Categories: {CategoryData?.length || 0}
+                                            Total Categories: {TotalRecords || 0}
                                         </span>
                                         <div className="d-flex">
                                             <input
@@ -204,7 +217,7 @@ const Categories = () => {
                                     <Card.Body className="text-center">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                             <span className="px-3 py-1 bg-dark text-light rounded">
-                                                Total Sub Categories: {SubCategoryData?.length || 0}
+                                                Total Sub Categories: {TotalRecords || 0}
                                             </span>
                                             <div className="d-flex">
                                                 <input
@@ -248,7 +261,7 @@ const Categories = () => {
                                                                             key={index}
                                                                             className="text-dark fw-bold text-nowrap">
                                                                             <th scope="row">{index + 1}</th>
-                                                                                <td className='text-uppercase fw-bold text-success'>
+                                                                            <td className='text-uppercase fw-bold text-success'>
                                                                                 {data?.subCategoryName ? (
                                                                                     <span>{data?.subCategoryName}  </span>
                                                                                 ) : (

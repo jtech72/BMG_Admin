@@ -54,7 +54,7 @@ const Notification = () => {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <span className="px-3 py-1 bg-dark text-light rounded">
-                  Total Notification's: {NotificationData?.length || 0}
+                  Total Notification's: {TotalRecords || 0}
                 </span>
                 <div className="d-flex">
                   <input
