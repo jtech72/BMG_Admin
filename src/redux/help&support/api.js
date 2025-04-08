@@ -6,7 +6,7 @@ const api = new APICore();
 
 function getSupportApi(params: any): any {
     const {search,limit,page } = params?.data
-    return api.get(`${URL.GET_SUPPORT}?search=${search}&limit=${limit}&page=${page}`);
+    return api.get(`${URL.GET_SUPPORT}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
 function updateSupportApi(params){

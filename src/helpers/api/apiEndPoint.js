@@ -20,6 +20,8 @@ export const GET_BUYER_SELLER = '/api/admin/seller/getAllBuyerOrSeller';
 
 //leads
 export const GET_AUCTION_LEAD = '/api/lead/getLead';
+export const GET_AUCTION_SOLD_PRODUCT = '/api/admin/admin/getAuctionSoldProductDeatilsForAmdmin';
+export const GET_LIVE_BIDS = '/api/admin/admin/showLiveAuctionBidForAdmin';
 
 //orders
 export const GET_ORDERS='/api/admin/order/getAllOrderDetails';
@@ -35,8 +37,14 @@ export const GET_ENQUIRY='/api/admin/contact/getAllContactByAdmin';
 // support
 export const GET_SUPPORT='';
 export const UPDATE_SUPPORT='';
+
 //notifications
 export const GET_NOTIFICATION='/api/notification/getNotificationByType'
 export const CREATE_NOTIFICATION='/api/notification/createNotification'
 export const UPDATE_NOTIFICATION='/api/notification/updateNotification'
+
+//comission
+export const GET_COMISSION_ENDPOINT='/api/admin/commision/getAllCommisions'
+export const CREATE_COMISSION_ENDPOINT='/api/admin/commision/createCommision'
+export const UPDATE_COMISSION_ENDPOINT='/api/admin/commision/updateCommision'
 

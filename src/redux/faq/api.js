@@ -6,7 +6,7 @@ const api = new APICore();
 
 function faqData(params: any): any {
     const { search,limit,page } = params?.data
-    return api.get(`${URL.GET_FAQ}?search=${search}&limit=${limit}&page=${page}`);
+    return api.get(`${URL.GET_FAQ}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
 function createFaqData(params: any): any {

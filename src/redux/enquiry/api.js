@@ -6,7 +6,7 @@ const api = new APICore();
 
 function getEnquiryApi(params: any): any {
     const { search,limit,page } = params?.data
-    return api.get(`${URL.GET_ENQUIRY}?search=${search}&limit=${limit}&page=${page}`);
+    return api.get(`${URL.GET_ENQUIRY}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
 export {

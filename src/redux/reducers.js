@@ -14,10 +14,11 @@ import {
 import {     faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer} from './faq/reducers';
 import { userDataReducer } from './user/reducers';
 import { getOrderDataReducer } from './orders/reducers';
-import { leadDataReducer } from './auctionLead/reducers';
+import { leadDataReducer,soldProductDataReducer,getLiveBidDataReducer } from './auctionLead/reducers';
 import { enquiryDataReducer } from './enquiry/reducers';
 import { getSupportDataReducer, updateSupportDataReducer } from './help&support/reducers';
 import {getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer } from './notification/reducers';
+import { getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer } from './commision/reducers';
 export default (combineReducers({
   Auth,
   Layout,
@@ -26,9 +27,10 @@ export default (combineReducers({
   productDataReducer, createProductDataReducer, updateProductDataReducer, deleteProductDataReducer,
   faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer,
   userDataReducer,
-  leadDataReducer,
+  leadDataReducer,soldProductDataReducer,getLiveBidDataReducer,
   getOrderDataReducer,
   enquiryDataReducer,
   getSupportDataReducer,updateSupportDataReducer,
-  getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer
+  getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer,
+  getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer
 }): any);

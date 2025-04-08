@@ -7,13 +7,13 @@ const api = new APICore();
 function categoryData(params: any): any {
     const { search,limit,page } = params?.data
 
-    return api.get(`${URL.GET_CATEGORY}?search=${search}&limit=${limit}&page=${page}`);
+    return api.get(`${URL.GET_CATEGORY}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
 function subCategoryData(params: any): any {
     const { search,limit,page } = params?.data
 
-    return api.get(`${URL.GET_SUB_CATEGORY}?search=${search}&limit=${limit}&page=${page}`);
+    return api.get(`${URL.GET_SUB_CATEGORY}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
 

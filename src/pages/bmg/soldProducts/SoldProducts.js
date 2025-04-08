@@ -3,19 +3,18 @@ import { Row, Col, Card, OverlayTrigger, Tooltip, Modal, Container, Carousel } f
 import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
-import { getLeadActions } from '../../../redux/actions';
+import { getSoldProductDataActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination'
-const AuctionLead = () => {
+const SoldProducts = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const LeadsData = store?.leadDataReducer?.leadData?.data
+    const SoldAuctionData = store?.soldProductDataReducer?.leadData?.result
+    console.log({ SoldAuctionData })
+    const SoldAuctionLoading = store?.soldProductDataReducer?.loading
 
-    console.log(store?.leadDataReducer?.leadData)
-    const LeadsLoading = store?.leadDataReducer?.loading
+    const TotalRecords = store?.soldProductDataReducer?.leadData?.totalRecords || 0;
 
-    const TotalRecords = store?.leadDataReducer?.leadData?.totalRecords;
-    console.log({ TotalRecords })
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -25,7 +24,7 @@ const AuctionLead = () => {
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
-        dispatch(getLeadActions({ search: search, limit: pageSize, page: pageIndex }));
+        dispatch(getSoldProductDataActions({ search: search, limit: pageSize, page: pageIndex, soldStatus: true }));
     }, [dispatch, pageIndex, pageSize, search]);
 
 
@@ -39,13 +38,61 @@ const AuctionLead = () => {
         }
     };
 
-    // Format keys: Remove underscores, convert camelCase to words
+    // Function to format keys into human-readable format
     const formatKey = (key) => {
-        return key
-            .replace(/_/g, " ") // Replace underscores
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase
-            .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter
+        switch (key) {
+            case "categoryId":
+                return "Category Name";
+            case "subCategoryId":
+                return "Subcategory Name";
+            // Add more custom labels if needed
+            default:
+                // Convert camelCase or snake_case to readable words
+                return key.replace(/([A-Z])/g, ' $1').replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
     };
+
+    // Function to format values (including nested objects and dates
+    // Function to check if a string is a valid date
+    const isDateString = (value) => {
+        if (typeof value !== 'string') return false;
+
+        // Regex to match ISO date strings (e.g., "2025-03-28T00:00:00.000Z")
+        const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
+        return isoDateRegex.test(value);
+    };
+
+    // Function to format values (including nested objects and dates)
+    // Function to format values (including nested objects and dates)
+    const formatValue = (value, key) => {
+        // Handle categoryId and subCategoryId specifically
+        if (key === "categoryId" || key === "subCategoryId") {
+            return value?.name || value?.subCategoryName || "N/A"; // Display the name or "N/A" if not available
+        }
+
+        if (typeof value === 'object' && value !== null) {
+            return (
+                <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ddd' }}>
+                    {Object.entries(value).map(([subKey, subValue]) => (
+                        <div key={subKey}>
+                            {console.log({ subKey, subValue })}
+                            <strong>{formatKey(subKey)}:</strong> {formatValue(subValue, subKey)}
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // Check if the value is a valid date string
+        if (isDateString(value)) {
+            const dateOnly = new Date(value).toISOString().split("T")[0];
+            return dateOnly;
+        }
+
+        return value;
+    };
+    const excludedKeys = ["_id", "createdAt", "updatedAt", "image", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
+
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -73,12 +120,12 @@ const AuctionLead = () => {
             <PageTitle
                 breadCrumbItems={[
                     {
-                        label: `Auction Lead's`,
-                        path: '/bmg/leads',
+                        label: 'Sold Products',
+                        path: '/bmg/sold-products',
                         active: true,
                     },
                 ]}
-                title={`Auction Lead's`}
+                title={`Sold Products`}
             />
             <Row>
                 <Col xs={12}>
@@ -88,10 +135,10 @@ const AuctionLead = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Lead's: {TotalRecords || 0}
+                                    Total Products: {TotalRecords}
                                 </span>
                                 <div className="d-flex">
-                                    <input
+                                    {/* <input
                                         type="text"
                                         className="form-control w-auto me-1"
                                         placeholder="Search..."
@@ -104,17 +151,17 @@ const AuctionLead = () => {
                                             onClick={() => setSearch("")}
                                             style={{ cursor: "pointer" }}
                                         ></i>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
 
-                            {LeadsLoading ? (
+                            {SoldAuctionLoading ? (
                                 <>
                                     <Loading />
                                 </>
                             ) : (
                                 <>
-                                    {LeadsData && LeadsData?.length > 0 ? (
+                                    {SoldAuctionData && SoldAuctionData?.length > 0 ? (
 
                                         <>
                                             <div className="d-flex justify-content-center table-responsive">
@@ -132,14 +179,15 @@ const AuctionLead = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {LeadsData?.map((data, index) => (
+                                                        {SoldAuctionData?.map((data, index) => (
                                                             <tr
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
+                                                                {console.log({ data })}
                                                                 <th scope="row">{index + 1}</th>
                                                                 <td className='text-uppercase fw-bold'>
-                                                                    {data?.productId?.productGenerateId ? (
-                                                                        <span>{data?.productId?.productGenerateId} </span>
+                                                                    {data?.productGenerateId ? (
+                                                                        <span>{data?.productGenerateId} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -161,9 +209,9 @@ const AuctionLead = () => {
                                                                             </Tooltip>
                                                                         }>
                                                                         <b>
-                                                                            {data?.productId?.Product_Name ? (
-                                                                                <span onClick={() => handleProductClick(data?.productId)}
-                                                                                >{data?.productId?.Product_Name} </span>
+                                                                            {data?.Product_Name ? (
+                                                                                <span onClick={() => handleProductClick(data)}
+                                                                                >{data?.Product_Name?.slice(0,50)+'...'} </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -173,8 +221,8 @@ const AuctionLead = () => {
                                                                     </OverlayTrigger>
                                                                 </td>
                                                                 <td className='text-uppercase fw-bold text-primary'>
-                                                                    {data?.productId?.Brand ? (
-                                                                        <span>{data?.productId?.Brand} </span>
+                                                                    {data?.Brand ? (
+                                                                        <span>{data?.Brand} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -182,8 +230,8 @@ const AuctionLead = () => {
                                                                     )}
                                                                 </td>
                                                                 <td className='text-uppercase fw-bold text-success'>
-                                                                    {data?.productId?.Ask_Price ? (
-                                                                        <span>$ {data?.productId?.Ask_Price} </span>
+                                                                    {data?.Ask_Price ? (
+                                                                        <span>$ {data?.Ask_Price} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -251,7 +299,7 @@ const AuctionLead = () => {
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
                                             <code className="fs-4">
-                                                No Lead's found.
+                                                No Products found.
                                             </code>
                                         </div>
                                     )}
@@ -297,73 +345,20 @@ const AuctionLead = () => {
                                 </Carousel>
                             )}
 
-
                             <Row className="border rounded p-3 bg-light">
                                 {Object.entries(selectedProduct)
-                                    .filter(([key, value]) =>
-                                        !["_id", "createdAt", "updatedAt", "image", "status"].includes(key) && // Remove unnecessary fields
-                                        !(typeof value === "string" && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
-                                        value // Ensure it's not empty
-                                    )
-                                    .map(([key, value]) => {
-                                        let displayValue;
-
-                                        if (Array.isArray(value)) {
-                                            displayValue = (
-                                                <ul className="mb-0">
-                                                    {value
-                                                        .filter(item => !(typeof item === "string" && /^[0-9a-fA-F]{24}$/.test(item))) // Remove ID-like values inside arrays
-                                                        .map((item, index) => (
-                                                            <li key={index}>{typeof item === "object" ? JSON.stringify(item, null, 2) : item}</li>
-                                                        ))}
-                                                </ul>
-                                            );
-                                        }
-                                        else if (typeof value === "object" && value !== null) {
-                                            displayValue = (
-                                                <ul className="mb-0">
-                                                    {Object.entries(value)
-                                                        .filter(([subKey, subValue]) =>
-                                                            !["_id", "createdAt", "updatedAt", "status", "image"].includes(subKey) &&
-                                                            !(typeof subValue === "string" && /^[0-9a-fA-F]{24}$/.test(subValue))
-                                                        )
-                                                        .map(([subKey, subValue]) => (
-                                                            <li key={subKey}>
-                                                                <strong>{formatKey(subKey)}:</strong> {isValidISODate(subValue) ? formatDate(subValue) : subValue}
-                                                            </li>
-                                                        ))}
-                                                </ul>
-                                            );
-                                        }
-                                        else if (typeof value === "string" && isValidISODate(value)) {
-                                            displayValue = formatDate(value);
-                                        }
-                                        else {
-                                            displayValue = value;
-                                        }
-
-                                        return (
-                                            <Col md={6} key={key} className="mb-3">
-                                                <strong className="text-muted">{formatKey(key)}</strong>
-                                                <div className="fw-bold">{displayValue}</div>
-                                            </Col>
-                                        );
-                                    })}
-                            </Row>
-                            {/* Product Details */}
-                            {/* <Row className="border rounded p-3 bg-light">
-                                {Object.entries(selectedProduct)
-                                    .filter(([key, value]) =>
-                                        !["_id", "createdAt", "updatedAt", "image"].includes(key) &&
-                                        !/^[0-9a-fA-F]{24}$/.test(value) && value // Remove ID fields & empty values
-                                    )
+                                    .filter(([key, value]) => !excludedKeys.includes(key) && value) // Exclude unnecessary fields
                                     .map(([key, value]) => (
                                         <Col md={6} key={key} className="mb-3">
-                                            <strong className="text-muted">{formatKey(key)}</strong>
-                                            <div className="fw-bold">{typeof value === "object" ? JSON.stringify(value) : value}</div>
+                                            <div className="d-flex flex-column">
+                                                <strong className="text-muted mb-1">{formatKey(key)}</strong>
+                                                <div className="fw-bold" style={{ wordBreak: 'break-word' }}>
+                                                    {formatValue(value, key)}
+                                                </div>
+                                            </div>
                                         </Col>
                                     ))}
-                            </Row> */}
+                            </Row>
                         </Container>
                     )}
                 </Modal.Body>
@@ -372,4 +367,4 @@ const AuctionLead = () => {
     )
 }
 
-export default AuctionLead
+export default SoldProducts

@@ -3,19 +3,19 @@ import { Row, Col, Card, OverlayTrigger, Tooltip, Modal, Container, Carousel } f
 import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
-import { getLeadActions } from '../../../redux/actions';
+import { getLiveBidDataActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination'
-const AuctionLead = () => {
+const LiveBidMonitoring = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const LeadsData = store?.leadDataReducer?.leadData?.data
+    const LiveBidData = store?.getLiveBidDataReducer?.leadData?.result
 
-    console.log(store?.leadDataReducer?.leadData)
-    const LeadsLoading = store?.leadDataReducer?.loading
+    console.log(store?.getLiveBidDataReducer?.leadData)
+    const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading
 
-    const TotalRecords = store?.leadDataReducer?.leadData?.totalRecords;
-    console.log({ TotalRecords })
+    const TotalRecords = store?.getLiveBidDataReducer?.leadData?.totalRecords;
+
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -25,7 +25,7 @@ const AuctionLead = () => {
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
-        dispatch(getLeadActions({ search: search, limit: pageSize, page: pageIndex }));
+        dispatch(getLiveBidDataActions());
     }, [dispatch, pageIndex, pageSize, search]);
 
 
@@ -73,12 +73,12 @@ const AuctionLead = () => {
             <PageTitle
                 breadCrumbItems={[
                     {
-                        label: `Auction Lead's`,
-                        path: '/bmg/leads',
+                        label: 'Live Bid Monitoring',
+                        path: '/bmg/live-bids',
                         active: true,
                     },
                 ]}
-                title={`Auction Lead's`}
+                title={`Live Bid Monitoring`}
             />
             <Row>
                 <Col xs={12}>
@@ -88,10 +88,10 @@ const AuctionLead = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Lead's: {TotalRecords || 0}
+                                    Total Bid's: {TotalRecords || 0}
                                 </span>
                                 <div className="d-flex">
-                                    <input
+                                    {/* <input
                                         type="text"
                                         className="form-control w-auto me-1"
                                         placeholder="Search..."
@@ -104,17 +104,17 @@ const AuctionLead = () => {
                                             onClick={() => setSearch("")}
                                             style={{ cursor: "pointer" }}
                                         ></i>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
 
-                            {LeadsLoading ? (
+                            {SoldAuctionLoading ? (
                                 <>
                                     <Loading />
                                 </>
                             ) : (
                                 <>
-                                    {LeadsData && LeadsData?.length > 0 ? (
+                                    {LiveBidData && LiveBidData?.length > 0 ? (
 
                                         <>
                                             <div className="d-flex justify-content-center table-responsive">
@@ -132,14 +132,14 @@ const AuctionLead = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {LeadsData?.map((data, index) => (
+                                                        {LiveBidData?.map((data, index) => (
                                                             <tr
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
                                                                 <td className='text-uppercase fw-bold'>
-                                                                    {data?.productId?.productGenerateId ? (
-                                                                        <span>{data?.productId?.productGenerateId} </span>
+                                                                    {data?.product?.productGenerateId ? (
+                                                                        <span>{data?.product?.productGenerateId} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -161,9 +161,9 @@ const AuctionLead = () => {
                                                                             </Tooltip>
                                                                         }>
                                                                         <b>
-                                                                            {data?.productId?.Product_Name ? (
-                                                                                <span onClick={() => handleProductClick(data?.productId)}
-                                                                                >{data?.productId?.Product_Name} </span>
+                                                                            {data?.product?.Product_Name ? (
+                                                                                <span onClick={() => handleProductClick(data?.product)}
+                                                                                >{data?.product?.Product_Name} </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -173,8 +173,8 @@ const AuctionLead = () => {
                                                                     </OverlayTrigger>
                                                                 </td>
                                                                 <td className='text-uppercase fw-bold text-primary'>
-                                                                    {data?.productId?.Brand ? (
-                                                                        <span>{data?.productId?.Brand} </span>
+                                                                    {data?.product?.Brand ? (
+                                                                        <span>{data?.product?.Brand} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -182,8 +182,8 @@ const AuctionLead = () => {
                                                                     )}
                                                                 </td>
                                                                 <td className='text-uppercase fw-bold text-success'>
-                                                                    {data?.productId?.Ask_Price ? (
-                                                                        <span>$ {data?.productId?.Ask_Price} </span>
+                                                                    {data?.product?.Ask_Price ? (
+                                                                        <span>$ {data?.product?.Ask_Price} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -192,9 +192,9 @@ const AuctionLead = () => {
                                                                 </td>
 
                                                                 <td className='fw-bold'>
-                                                                    {data?.userId ? (
+                                                                    {data?.user ? (
                                                                         <span className="fw-semibold">
-                                                                            {`${data?.userId?.name || ""} ${data?.userId?.lastName || ""}`.trim() || "N/A"}
+                                                                            {`${data?.user?.name || ""} ${data?.user?.lastName || ""}`.trim() || "N/A"}
                                                                         </span>
                                                                     ) : (
                                                                         <span className="text-danger">N/A</span>
@@ -202,8 +202,8 @@ const AuctionLead = () => {
 
                                                                 </td>
                                                                 <td className='fw-bold text-info'>
-                                                                    {data?.userId?.email ? (
-                                                                        <span>{data?.userId?.email} </span>
+                                                                    {data?.user?.email ? (
+                                                                        <span>{data?.user?.email} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -211,9 +211,9 @@ const AuctionLead = () => {
                                                                     )}
                                                                 </td>
                                                                 {/* <td className='fw-bold'>
-                                                                    {data?.userId ? (
-                                                                        <span className={`badge ${data?.userId?.isVerified ? "bg-success" : "bg-danger"} px-3 py-2`}>
-                                                                            {data?.userId?.isVerified ? "✅ Verified" : "❌ Not Verified"}
+                                                                    {data?.user ? (
+                                                                        <span className={`badge ${data?.user?.isVerified ? "bg-success" : "bg-danger"} px-3 py-2`}>
+                                                                            {data?.user?.isVerified ? "✅ Verified" : "❌ Not Verified"}
                                                                         </span>
                                                                     ) : (
                                                                         <span className="badge bg-secondary px-3 py-2">N/A</span>
@@ -251,19 +251,19 @@ const AuctionLead = () => {
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
                                             <code className="fs-4">
-                                                No Lead's found.
+                                                No Bid's found.
                                             </code>
                                         </div>
                                     )}
                                 </>
                             )}
-                            <Pagination
+                            {/* <Pagination
                                 pageIndex={pageIndex}
                                 pageSize={pageSize}
                                 totalPages={totalPages}
                                 setPageIndex={setPageIndex}
                                 onChangePageSize={setPageSize}
-                            />
+                            /> */}
                         </Card.Body>
                     </Card>
                 </Col>
@@ -372,4 +372,4 @@ const AuctionLead = () => {
     )
 }
 
-export default AuctionLead
+export default LiveBidMonitoring

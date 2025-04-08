@@ -32,7 +32,6 @@ const Enquiry = () => {
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: `Enquiries`, path: '/bmg/enquiry' },
                     {
                         label: `Enquiries`,
                         path: '/bmg/enquiry',

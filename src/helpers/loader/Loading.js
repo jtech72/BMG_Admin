@@ -5,9 +5,9 @@ const Loading = () => {
         <div style={{ height: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <RotatingLines
                 strokeColor="grey"
-                strokeWidth="5"
+                strokeWidth="4"
                 animationDuration="0.75"
-                width="96"
+                width="90"
                 visible={true}
             />
         </div>
@@ -21,8 +21,8 @@ const ButtonLoading = () => {
         <div className=" d-flex justify-content-center align-items-center w-100">
             <ColorRing
                 visible={true}
-                height="30"
-                width="30"
+                height="25"
+                width="25"
                 ariaLabel="blocks-loading"
                 wrapperStyle={{}}
                 wrapperClass="blocks-wrapper"
