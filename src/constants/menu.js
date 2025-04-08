@@ -15,6 +15,13 @@ const MENU_ITEMS = [
         url: '/bmg/leads',
     },
     {
+        key: 'live-bids',
+        label: 'Live Bids',
+        isTitle: false,
+        icon: 'uil-monitor-heart-rate',
+        url: '/bmg/live-bids',
+    },
+    {
         key: 'categories',
         label: 'Categories',
         isTitle: false,
@@ -29,6 +36,13 @@ const MENU_ITEMS = [
         url: '/bmg/products',
     },
     {
+        key: 'sold-products',
+        label: 'Sold Products',
+        isTitle: false,
+        icon: ' uil-image-broken',
+        url: '/bmg/sold-products',
+    },
+    {
         key: 'users',
         label: 'Buyers/Sellers',
         isTitle: false,
@@ -39,8 +53,15 @@ const MENU_ITEMS = [
         key: 'orders',
         label: 'Orders',
         isTitle: false,
-        icon: 'uil-bill',
+        icon: ' uil-list-ui-alt',
         url: '/bmg/orders',
+    },
+    {
+        key: 'platform-charges',
+        label: 'Platform Charges',
+        isTitle: false,
+        icon: 'uil-bill',
+        url: '/bmg/platform-charges',
     },
     {
         key: 'faq',

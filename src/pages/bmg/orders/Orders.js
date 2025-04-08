@@ -32,7 +32,6 @@ const Orders = () => {
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: `Order's`, path: '/bmg/orders' },
                     {
                         label: `Order's`,
                         path: '/bmg/orders',

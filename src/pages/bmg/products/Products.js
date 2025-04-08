@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, OverlayTrigger, Tooltip, Modal, Container, Carousel } from 'react-bootstrap';
+import { Row, Col, Card, OverlayTrigger, Tooltip, Modal, Container, Carousel, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
@@ -9,13 +9,13 @@ const Products = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const ProductsData = store?.productDataReducer?.productData?.products
-
+    const [type, setType] = useState('ongoing')
+    const ProductsData = store?.productDataReducer?.productData?.result
     console.log(ProductsData)
     const ProductsLoading = store?.productDataReducer?.loading
 
 
-    const TotalRecords = store?.productDataReducer?.productData?.totalRecords;
+    const TotalRecords = store?.productDataReducer?.productData?.totalRecords || 0;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -25,8 +25,8 @@ const Products = () => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
     useEffect(() => {
-        dispatch(getProductActions({ search: search, limit: pageSize, page: pageIndex }));
-    }, [dispatch, pageIndex, pageSize, search]);
+        dispatch(getProductActions({ search: search, limit: pageSize, page: pageIndex, type: type }));
+    }, [dispatch, pageIndex, pageSize, search, type]);
 
 
     const [showModal, setShowModal] = useState(false);
@@ -39,13 +39,60 @@ const Products = () => {
         }
     };
 
-    // Format keys: Remove underscores, convert camelCase to words
+    // Function to format keys into human-readable format
     const formatKey = (key) => {
-        return key
-            .replace(/_/g, " ") // Replace underscores
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase
-            .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter
+        switch (key) {
+            case "categoryId":
+                return "Category Name";
+            case "subCategoryId":
+                return "Subcategory Name";
+            // Add more custom labels if needed
+            default:
+                // Convert camelCase or snake_case to readable words
+                return key.replace(/([A-Z])/g, ' $1').replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
     };
+
+    // Function to format values (including nested objects and dates
+    // Function to check if a string is a valid date
+    const isDateString = (value) => {
+        if (typeof value !== 'string') return false;
+
+        // Regex to match ISO date strings (e.g., "2025-03-28T00:00:00.000Z")
+        const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
+        return isoDateRegex.test(value);
+    };
+
+    // Function to format values (including nested objects and dates)
+    // Function to format values (including nested objects and dates)
+    const formatValue = (value, key) => {
+        // Handle categoryId and subCategoryId specifically
+        if (key === "categoryId" || key === "subCategoryId") {
+            return value?.name || value?.subCategoryName || "N/A"; // Display the name or "N/A" if not available
+        }
+
+        if (typeof value === 'object' && value !== null) {
+            return (
+                <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ddd' }}>
+                    {Object.entries(value).map(([subKey, subValue]) => (
+                        <div key={subKey}>
+                            {console.log({ subKey, subValue })}
+                            <strong>{formatKey(subKey)}:</strong> {formatValue(subValue, subKey)}
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // Check if the value is a valid date string
+        if (isDateString(value)) {
+            const dateOnly = new Date(value).toISOString().split("T")[0];
+            return dateOnly;
+        }
+
+        return value;
+    };
+    const excludedKeys = ["_id", "createdAt", "updatedAt", "image", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
 
 
     const formatDate = (dateString) => {
@@ -68,12 +115,12 @@ const Products = () => {
         const date = new Date(value);
         return !isNaN(date.getTime()) && value.includes("T");
     };
+    const types = ['ongoing', 'upcoming', 'sold', 'unsold'];
 
     return (
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: `Product's`, path: '/bmg/products' },
                     {
                         label: 'Product',
                         path: '/bmg/products',
@@ -82,6 +129,26 @@ const Products = () => {
                 ]}
                 title={`Product's`}
             />
+            <Row className="mb-3 ms-1" style={{ borderBottom: '1px solid #ddd' }}>
+                {types.map((item) => (
+                    <Col sm={1}
+                        key={item}
+                        className="text-center fw-bold"
+                        style={{
+                            cursor: 'pointer',
+                            padding: '10px 0',
+                            color: type === item ? '#008003' : 'black',
+                            borderBottom: type === item ? '3px solid #008003' : '3px solid transparent',
+                            fontWeight: type === item ? 'bold' : 'normal',
+                            transition: 'all 0.2s ease-in-out',
+                            textTransform: 'capitalize',
+                        }}
+                        onClick={() => setType(item)}
+                    >
+                        {item}
+                    </Col>
+                ))}
+            </Row>
             <Row>
                 <Col xs={12}>
                     <Card
@@ -90,7 +157,7 @@ const Products = () => {
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
-                                    Total Product's: {TotalRecords || 0}
+                                    Total Products: {TotalRecords}
                                 </span>
                                 <div className="d-flex">
                                     <input
@@ -173,7 +240,7 @@ const Products = () => {
                                                                         <b>
                                                                             {data?.Product_Name ? (
                                                                                 <span onClick={() => handleProductClick(data)}
-                                                                                >{data?.Product_Name} </span>
+                                                                                >{data?.Product_Name?.slice(0, 50) + '...'} </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -250,7 +317,7 @@ const Products = () => {
                         <Container>
                             {/* Image Section */}
                             {selectedProduct.image?.length > 0 && (
-                                <Carousel interval={3000} className="mb-3 shadow-sm rounded">
+                                <Carousel interval={5000} className="mb-3 shadow-sm rounded">
                                     {selectedProduct.image.map((img, index) => (
                                         <Carousel.Item key={index}>
                                             <img
@@ -270,55 +337,17 @@ const Products = () => {
 
                             <Row className="border rounded p-3 bg-light">
                                 {Object.entries(selectedProduct)
-                                    .filter(([key, value]) =>
-                                        !["_id", "createdAt", "updatedAt", "image", "status"].includes(key) && // Remove unnecessary fields
-                                        !(typeof value === "string" && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
-                                        value // Ensure it's not empty
-                                    )
-                                    .map(([key, value]) => {
-                                        let displayValue;
-
-                                        if (Array.isArray(value)) {
-                                            displayValue = (
-                                                <ul className="mb-0">
-                                                    {value
-                                                        .filter(item => !(typeof item === "string" && /^[0-9a-fA-F]{24}$/.test(item))) // Remove ID-like values inside arrays
-                                                        .map((item, index) => (
-                                                            <li key={index}>{typeof item === "object" ? JSON.stringify(item, null, 2) : item}</li>
-                                                        ))}
-                                                </ul>
-                                            );
-                                        }
-                                        else if (typeof value === "object" && value !== null) {
-                                            displayValue = (
-                                                <ul className="mb-0">
-                                                    {Object.entries(value)
-                                                        .filter(([subKey, subValue]) =>
-                                                            !["_id", "createdAt", "updatedAt", "status", "image"].includes(subKey) &&
-                                                            !(typeof subValue === "string" && /^[0-9a-fA-F]{24}$/.test(subValue))
-                                                        )
-                                                        .map(([subKey, subValue]) => (
-                                                            <li key={subKey}>
-                                                                <strong>{formatKey(subKey)}:</strong> {isValidISODate(subValue) ? formatDate(subValue) : subValue}
-                                                            </li>
-                                                        ))}
-                                                </ul>
-                                            );
-                                        }
-                                        else if (typeof value === "string" && isValidISODate(value)) {
-                                            displayValue = formatDate(value);
-                                        }
-                                        else {
-                                            displayValue = value;
-                                        }
-
-                                        return (
-                                            <Col md={6} key={key} className="mb-3">
-                                                <strong className="text-muted">{formatKey(key)}</strong>
-                                                <div className="fw-bold">{displayValue}</div>
-                                            </Col>
-                                        );
-                                    })}
+                                    .filter(([key, value]) => !excludedKeys.includes(key) && value) // Exclude unnecessary fields
+                                    .map(([key, value]) => (
+                                        <Col md={6} key={key} className="mb-3">
+                                            <div className="d-flex flex-column">
+                                                <strong className="text-muted mb-1">{formatKey(key)}</strong>
+                                                <div className="fw-bold" style={{ wordBreak: 'break-word' }}>
+                                                    {formatValue(value, key)}
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    ))}
                             </Row>
 
 

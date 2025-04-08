@@ -56,12 +56,15 @@ function* createNotificationFunction(data) {
             ToastContainer(response?.data?.data?.message, 'success')
 
         } else {
+            ToastContainer(response?.data?.data?.message, 'danger')
             yield put({
                 type: NotificationActionTypes.CREATE_NOTIFICATION_ERROR,
                 payload: { ...response.data },
             });
         }
     } catch (error) {
+        ToastContainer(error, 'danger')
+
         yield put({
             type: NotificationActionTypes.CREATE_NOTIFICATION_ERROR,
             payload: error,
@@ -91,10 +94,9 @@ function* updateNotificationFunction(payload) {
                 type: NotificationActionTypes.UPDATE_NOTIFICATION_DATA_ERROR,
                 payload: response.data,
             });
-            ToastContainer(response.data.message, 'danger')
+            ToastContainer(response?.data?.message, 'danger')
         }
     } catch (error) {
-        console.log({ error })
         yield put({
             type: NotificationActionTypes.UPDATE_NOTIFICATION_DATA_ERROR,
             payload: { message: error },

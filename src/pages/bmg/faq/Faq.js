@@ -42,7 +42,6 @@ const Faq = () => {
     <>
       <PageTitle
         breadCrumbItems={[
-          { label: "Faq", path: "/bmg/faq" },
           { label: "Faq", path: "/bmg/faq", active: true },
         ]}
         title="FAQ Management"
@@ -50,7 +49,8 @@ const Faq = () => {
 
       <Row>
         <Col xs={12}>
-          <Card className="shadow-sm">
+          <Card  style={{ boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset' }}
+          >
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <span className="px-3 py-1 bg-dark text-light rounded">
@@ -103,7 +103,7 @@ const Faq = () => {
                               </Tooltip>
                             }
                           >
-                            <td>{data?.question.slice(0,70)+'...' || "N/A"}</td>
+                            <td>{data?.question.slice(0, 70) + '...' || "N/A"}</td>
                           </OverlayTrigger>
                           <OverlayTrigger
                             placement="top"

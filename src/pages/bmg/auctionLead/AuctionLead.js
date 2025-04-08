@@ -72,9 +72,8 @@ const AuctionLead = () => {
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: `Auction Lead's`, path: '/bmg/leads' },
                     {
-                        label: 'Leads',
+                        label: `Auction Lead's`,
                         path: '/bmg/leads',
                         active: true,
                     },
@@ -280,7 +279,7 @@ const AuctionLead = () => {
                         <Container>
                             {/* Image Section */}
                             {selectedProduct.image?.length > 0 && (
-                                <Carousel interval={3000} className="mb-3 shadow-sm rounded">
+                                <Carousel interval={5000} className="mb-3 shadow-sm rounded">
                                     {selectedProduct.image.map((img, index) => (
                                         <Carousel.Item key={index}>
                                             <img
