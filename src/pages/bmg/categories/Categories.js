@@ -138,7 +138,7 @@ const Categories = () => {
                                             {CategoryData && CategoryData?.length > 0 ? (
 
                                                 <>
-                                                    <div className="d-flex justify-content-center">
+                                                    <div className="table-responsive">
                                                         <table className="table table-striped bg-white">
                                                             <thead>
                                                                 <tr className="" style={{ color: '#703133' }}>
@@ -245,7 +245,7 @@ const Categories = () => {
                                                 {SubCategoryData && SubCategoryData?.length > 0 ? (
 
                                                     <>
-                                                        <div className="d-flex justify-content-center">
+                                                        <div className="table-responsive">
                                                             <table className="table table-striped bg-white">
                                                                 <thead>
                                                                     <tr className="" style={{ color: '#703133' }}>

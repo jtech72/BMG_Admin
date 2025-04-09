@@ -185,7 +185,7 @@ const Products = () => {
                                     {ProductsData && ProductsData.length > 0 ? (
 
                                         <>
-                                            <div className="d-flex justify-content-center table-responsive">
+                                            <div className="table-responsive">
                                                 <table className="table table-striped bg-white ">
                                                     <thead>
                                                         <tr className="text-nowrap" style={{ color: '#703133' }}>
@@ -240,7 +240,7 @@ const Products = () => {
                                                                         <b>
                                                                             {data?.Product_Name ? (
                                                                                 <span onClick={() => handleProductClick(data)}
-                                                                                >{data?.Product_Name?.slice(0, 50) + '...'} </span>
+                                                                                >{data?.Product_Name?.slice(0, 30) + '...'} </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A

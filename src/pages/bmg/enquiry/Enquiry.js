@@ -77,7 +77,7 @@ const Enquiry = () => {
                                     {EnquiryData && EnquiryData?.length > 0 ? (
 
                                         <>
-                                            <div className="d-flex justify-content-center table-responsive">
+                                            <div className="table-responsive">
                                                 <table className="table table-striped bg-white ">
                                                     <thead>
                                                         <tr className="text-nowrap" style={{ color: '#703133' }}>

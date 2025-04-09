@@ -84,7 +84,7 @@ const Buyer_Seller = () => {
                                             {UserData && UserData.length > 0 ? (
 
                                                 <>
-                                                    <div className="d-flex justify-content-center">
+                                                    <div className="table-responsive">
                                                         <table className="table table-striped bg-white">
                                                             <thead>
                                                                 <tr className="" style={{ color: '#703133' }}>
@@ -220,7 +220,7 @@ const Buyer_Seller = () => {
                                                 {UserData && UserData?.length > 0 ? (
 
                                                     <>
-                                                        <div className="d-flex justify-content-center">
+                                                        <div className="table-responsive">
                                                             <table className="table table-striped bg-white">
                                                                 <thead>
                                                                     <tr className="" style={{ color: '#703133' }}>
