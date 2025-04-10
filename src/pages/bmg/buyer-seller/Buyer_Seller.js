@@ -26,21 +26,31 @@ const Buyer_Seller = () => {
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
+
+    
     useEffect(() => {
         dispatch(getBuyerSellerActions({ search: search, limit: pageSize, page: pageIndex, type: activeTab === 0 ? 'buyer' : 'seller' }));
     }, [dispatch, pageIndex, pageSize, search, activeTab]);
+
+
+    useEffect(() => {
+        if (activeTab === 0) {
+            setPageIndex(1)
+        } else if (activeTab === 1) {
+            setPageIndex(1)
+        }
+    }, [activeTab]);
     return (
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: `Buyer's & Seller's`, path: '/bmg/buyer-seller' },
                     {
-                        label: 'Users',
-                        path: '/bmg/buyer-seller',
+                        label: `${activeTab === 0 ? 'Buyers' : 'Sellers'}`,
+                        path: '/bmg/users',
                         active: true,
                     },
                 ]}
-                title={`Buyer's & Seller's`}
+                title={'Users'}
             />
             <Row>
                 <Col lg={6} className="d-flex justify-content-start ">

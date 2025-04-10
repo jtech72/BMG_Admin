@@ -120,12 +120,12 @@ const SoldProducts = () => {
             <PageTitle
                 breadCrumbItems={[
                     {
-                        label: 'Sold Products',
-                        path: '/bmg/sold-products',
+                        label: 'Sold Items',
+                        path: '/bmg/sold-items',
                         active: true,
                     },
                 ]}
-                title={`Sold Products`}
+                title={`Sold Items`}
             />
             <Row>
                 <Col xs={12}>

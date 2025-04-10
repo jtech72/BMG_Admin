@@ -19,6 +19,7 @@ import { enquiryDataReducer } from './enquiry/reducers';
 import { getSupportDataReducer, updateSupportDataReducer } from './help&support/reducers';
 import {getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer } from './notification/reducers';
 import { getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer } from './commision/reducers';
+import { getPaidAuctionDataReducer,getNonPaidAuctionDataReducer } from './transactions/reducer';
 export default (combineReducers({
   Auth,
   Layout,
@@ -32,5 +33,6 @@ export default (combineReducers({
   enquiryDataReducer,
   getSupportDataReducer,updateSupportDataReducer,
   getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer,
-  getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer
+  getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer,
+  getPaidAuctionDataReducer,getNonPaidAuctionDataReducer
 }): any);

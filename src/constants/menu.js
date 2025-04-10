@@ -29,32 +29,39 @@ const MENU_ITEMS = [
         url: '/bmg/categories',
     },
     {
-        key: 'products',
-        label: 'Products',
+        key: 'items',
+        label: 'Items',
         isTitle: false,
         icon: 'uil-box',
-        url: '/bmg/products',
+        url: '/bmg/items',
     },
     {
-        key: 'sold-products',
-        label: 'Sold Products',
+        key: 'sold-items',
+        label: 'Sold Items',
         isTitle: false,
         icon: ' uil-image-broken',
-        url: '/bmg/sold-products',
+        url: '/bmg/sold-items',
     },
     {
         key: 'users',
-        label: 'Buyers/Sellers',
+        label: 'Users',
         isTitle: false,
         icon: ' uil-users-alt',
-        url: '/bmg/buyer&seller',
+        url: '/bmg/users',
     },
     {
         key: 'orders',
         label: 'Orders',
         isTitle: false,
-        icon: ' uil-list-ui-alt',
+        icon: 'uil-list-ui-alt',
         url: '/bmg/orders',
+    },
+    {
+        key: 'transactions',
+        label: 'Transactions',
+        isTitle: false,
+        icon: ' uil-usd-circle',
+        url: '/bmg/transactions',
     },
     {
         key: 'platform-charges',
@@ -84,7 +91,7 @@ const MENU_ITEMS = [
         icon: 'uil-comments-alt',
         url: '/bmg/enquiry',
     },
-   
+
 ];
 
 export default MENU_ITEMS;

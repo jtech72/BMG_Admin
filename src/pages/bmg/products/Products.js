@@ -92,7 +92,7 @@ const Products = () => {
 
         return value;
     };
-    const excludedKeys = ["_id", "createdAt", "updatedAt", "image", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
+    const excludedKeys = ["_id", "createdAt", "updatedAt", "image","categoryId","subCategoryId","soldStatus", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
 
 
     const formatDate = (dateString) => {
@@ -122,12 +122,12 @@ const Products = () => {
             <PageTitle
                 breadCrumbItems={[
                     {
-                        label: 'Product',
-                        path: '/bmg/products',
+                        label: 'Item',
+                        path: '/bmg/items',
                         active: true,
                     },
                 ]}
-                title={`Product's`}
+                title={'Item'}
             />
             <Row className="mb-3 ms-1" style={{ borderBottom: '1px solid #ddd' }}>
                 {types.map((item) => (

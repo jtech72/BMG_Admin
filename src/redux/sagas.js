@@ -13,9 +13,10 @@ import orderSaga from './orders/saga';
 import enquirySaga from './enquiry/saga';
 import notificationSaga from './notification/saga';
 import comissionSaga from './commision/saga';
+import transactionSaga from './transactions/saga';
 
 export default function* rootSaga(): any {
     yield all([authSaga(), layoutSaga(), dashboardSaga(), categorySaga(), productSaga(),
-         userSaga(), leadSaga(),faqSaga(),orderSaga(),enquirySaga(),notificationSaga(),comissionSaga()]);
+    userSaga(), leadSaga(), faqSaga(), orderSaga(), enquirySaga(), notificationSaga(), comissionSaga(), transactionSaga()]);
 
 }
