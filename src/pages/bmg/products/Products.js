@@ -92,7 +92,7 @@ const Products = () => {
 
         return value;
     };
-    const excludedKeys = ["_id", "createdAt", "updatedAt", "image", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
+    const excludedKeys = ["_id", "createdAt", "updatedAt", "image","categoryId","subCategoryId","soldStatus", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
 
 
     const formatDate = (dateString) => {
@@ -122,12 +122,12 @@ const Products = () => {
             <PageTitle
                 breadCrumbItems={[
                     {
-                        label: 'Product',
-                        path: '/bmg/products',
+                        label: 'Item',
+                        path: '/bmg/items',
                         active: true,
                     },
                 ]}
-                title={`Product's`}
+                title={'Item'}
             />
             <Row className="mb-3 ms-1" style={{ borderBottom: '1px solid #ddd' }}>
                 {types.map((item) => (
@@ -185,7 +185,7 @@ const Products = () => {
                                     {ProductsData && ProductsData.length > 0 ? (
 
                                         <>
-                                            <div className="d-flex justify-content-center table-responsive">
+                                            <div className="table-responsive">
                                                 <table className="table table-striped bg-white ">
                                                     <thead>
                                                         <tr className="text-nowrap" style={{ color: '#703133' }}>
@@ -240,7 +240,7 @@ const Products = () => {
                                                                         <b>
                                                                             {data?.Product_Name ? (
                                                                                 <span onClick={() => handleProductClick(data)}
-                                                                                >{data?.Product_Name?.slice(0, 50) + '...'} </span>
+                                                                                >{data?.Product_Name?.slice(0, 30) + '...'} </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A

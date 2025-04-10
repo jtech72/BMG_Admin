@@ -48,3 +48,7 @@ export const GET_COMISSION_ENDPOINT='/api/admin/commision/getAllCommisions'
 export const CREATE_COMISSION_ENDPOINT='/api/admin/commision/createCommision'
 export const UPDATE_COMISSION_ENDPOINT='/api/admin/commision/updateCommision'
 
+//transaction details
+export const GET_PAID_AUCTION='/api/admin/getAllPaidAuctionForAdmin'
+export const GET_NON_PAID_AUCTION='/api/admin/getNonPaidAuctionDeatilsForAdmin'
+

@@ -17,34 +17,37 @@ const Categories = () => {
     const SubCategoryLoading = store?.subCategoryDataReducer?.loading
     const [activeTab, setActiveTab] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0)
-    
+
     const connectTab = (tabIndex) => {
         setActiveTab(tabIndex);
     };
-    const TotalRecords = totalRecords;
+
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
+    const [totalPages, setTotalPages] = useState(Math.ceil(totalRecords / pageSize));
 
     useEffect(() => {
-        setTotalPages(Math.ceil(TotalRecords / pageSize));
-    }, [TotalRecords, pageSize]);
+        setTotalPages(Math.ceil(totalRecords / pageSize));
+    }, [totalRecords, pageSize]);
+    
+    useEffect(() => {
+        if (activeTab === 0) {
+            dispatch(getCategoryActions({ search, limit: pageSize, page: pageIndex }));
+        } else if (activeTab === 1) {
+            dispatch(getSubCategoryActions({ search, limit: pageSize, page: pageIndex }));
+        }
+    }, [dispatch, activeTab, pageIndex, pageSize, search]);
 
+    // Separate useEffect to watch for store updates and set totalRecords
     useEffect(() => {
         if (activeTab === 0) {
-            setTotalRecords(store?.categoryDataReducer?.categoryData?.totalRecords)
+            setTotalRecords(store?.categoryDataReducer?.categoryData?.totalRecords || 0);
+            setPageIndex(1)
         } else if (activeTab === 1) {
-            setTotalRecords(store?.subCategoryDataReducer?.categoryData?.totalRecords)
+            setTotalRecords(store?.subCategoryDataReducer?.categoryData?.totalRecords || 0);
+            setPageIndex(1)
         }
-    }, [activeTab]);
-    console.log(store?.categoryDataReducer?.categoryData)
-    useEffect(() => {
-        if (activeTab === 0) {
-        dispatch(getCategoryActions({ search: search, limit: pageSize, page: pageIndex }));
-        } else if (activeTab === 1) {
-        dispatch(getSubCategoryActions({ search: search, limit: pageSize, page: pageIndex }));
-        }
-    }, [dispatch,activeTab, pageIndex, pageSize, search]);
+    }, [store?.categoryDataReducer?.categoryData?.totalRecords, store?.subCategoryDataReducer?.categoryData?.totalRecords, activeTab]);
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -87,9 +90,8 @@ const Categories = () => {
         <>
             <PageTitle
                 breadCrumbItems={[
-                    { label: 'Categories', path: '/bmg/categories' },
                     {
-                        label: 'Categories',
+                        label: `${activeTab===0?'Categories':'Sub-Categories'}`,
                         path: '/bmg/categories',
                         active: true,
                     },
@@ -109,7 +111,7 @@ const Categories = () => {
                                 <Card.Body className="text-center">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <span className="px-3 py-1 bg-dark text-light rounded">
-                                            Total Categories: {TotalRecords || 0}
+                                            Total Categories: {totalRecords}
                                         </span>
                                         <div className="d-flex">
                                             <input
@@ -138,7 +140,7 @@ const Categories = () => {
                                             {CategoryData && CategoryData?.length > 0 ? (
 
                                                 <>
-                                                    <div className="d-flex justify-content-center">
+                                                    <div className="table-responsive">
                                                         <table className="table table-striped bg-white">
                                                             <thead>
                                                                 <tr className="" style={{ color: '#703133' }}>
@@ -217,7 +219,7 @@ const Categories = () => {
                                     <Card.Body className="text-center">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                             <span className="px-3 py-1 bg-dark text-light rounded">
-                                                Total Sub Categories: {TotalRecords || 0}
+                                                Total Sub Categories: {totalRecords}
                                             </span>
                                             <div className="d-flex">
                                                 <input
@@ -245,7 +247,7 @@ const Categories = () => {
                                                 {SubCategoryData && SubCategoryData?.length > 0 ? (
 
                                                     <>
-                                                        <div className="d-flex justify-content-center">
+                                                        <div className="table-responsive">
                                                             <table className="table table-striped bg-white">
                                                                 <thead>
                                                                     <tr className="" style={{ color: '#703133' }}>

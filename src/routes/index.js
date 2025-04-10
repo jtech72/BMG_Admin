@@ -37,6 +37,7 @@ const Notification=React.lazy(()=>import('../pages/bmg/notification/Notification
 const Comission=React.lazy(()=>import('../pages/bmg/comission/Comission'))
 const SoldProducts=React.lazy(()=>import('../pages/bmg/soldProducts/SoldProducts'))
 const LiveBids=React.lazy(()=>import('../pages/bmg/liveBids/LiveBidMonitoring'))
+const Transactions=React.lazy(()=>import('../pages/bmg/transactions/Transactions'))
 
 // error handlers
 const ErrorPageNotFound = React.lazy(() => import('../pages/error/PageNotFound'));
@@ -135,11 +136,11 @@ const AllRoutes = () => {
                         },
                        
                         {
-                            path: 'products',
+                            path: 'items',
                             element: <LoadComponent component={Products} />,
                         },
                         {
-                            path: 'buyer&seller',
+                            path: 'users',
                             element: <LoadComponent component={Buyer_Seller} />,
                         },
                         {
@@ -163,12 +164,16 @@ const AllRoutes = () => {
                             element: <LoadComponent component={Comission} />,
                         },
                         {
-                            path: 'sold-products',
+                            path: 'sold-items',
                             element: <LoadComponent component={SoldProducts} />,
                         },
                         {
                             path: 'live-bids',
                             element: <LoadComponent component={LiveBids} />,
+                        },
+                        {
+                            path: 'transactions',
+                            element: <LoadComponent component={Transactions} />,
                         },
                        
 
