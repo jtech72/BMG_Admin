@@ -35,13 +35,13 @@ const MENU_ITEMS = [
         icon: 'uil-box',
         url: '/bmg/items',
     },
-    {
-        key: 'sold-items',
-        label: 'Sold Items',
-        isTitle: false,
-        icon: ' uil-image-broken',
-        url: '/bmg/sold-items',
-    },
+    // {
+    //     key: 'sold-items',
+    //     label: 'Sold Items',
+    //     isTitle: false,
+    //     icon: ' uil-image-broken',
+    //     url: '/bmg/sold-items',
+    // },
     {
         key: 'users',
         label: 'Users',

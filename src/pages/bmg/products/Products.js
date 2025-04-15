@@ -9,13 +9,32 @@ const Products = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const [type, setType] = useState('ongoing')
+    const [type, setType] = useState('Auction')
+    const [productType, setProductType] = useState('ongoing')
     const ProductsData = store?.productDataReducer?.productData?.result
     console.log(ProductsData)
     const ProductsLoading = store?.productDataReducer?.loading
 
 
     const TotalRecords = store?.productDataReducer?.productData?.totalRecords || 0;
+    const auctionCounts = store?.productDataReducer?.productData?.auctionCounts || {};
+    const saleCounts = store?.productDataReducer?.productData?.saleCounts || {};
+    const DraftCount = store?.productDataReducer?.productData?.totalDraftCount || 0;
+
+    const {
+        total: AuctionCounts,
+        ongoing: ongoingCounts,
+        upcoming: upcomingCounts,
+        sold: soldCounts,
+        unsold: unSoldCounts,
+    } = auctionCounts;
+
+    const {
+        total: SaleCounts,
+        sold: soldSaleCounts,
+        unsold: unsoldSaleCounts,
+    } = saleCounts || {};
+
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -25,8 +44,8 @@ const Products = () => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
     useEffect(() => {
-        dispatch(getProductActions({ search: search, limit: pageSize, page: pageIndex, type: type }));
-    }, [dispatch, pageIndex, pageSize, search, type]);
+        dispatch(getProductActions({ search: search, limit: pageSize, page: pageIndex, type: type, productType: type !== 'Draft' ? productType : '', publish: type !== 'Draft' ? true : false }));
+    }, [dispatch, pageIndex, pageSize, search, type, productType]);
 
 
     const [showModal, setShowModal] = useState(false);
@@ -92,7 +111,7 @@ const Products = () => {
 
         return value;
     };
-    const excludedKeys = ["_id", "createdAt", "updatedAt", "image","categoryId","subCategoryId","soldStatus", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
+    const excludedKeys = ["_id", "createdAt", "updatedAt", "image", "categoryId", "subCategoryId", "soldStatus", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
 
 
     const formatDate = (dateString) => {
@@ -115,7 +134,17 @@ const Products = () => {
         const date = new Date(value);
         return !isNaN(date.getTime()) && value.includes("T");
     };
-    const types = ['ongoing', 'upcoming', 'sold', 'unsold'];
+    const types = ['Auction', 'Sale'];
+    // const types = ['Auction', 'Sale', 'Draft'];
+    const productTypes = ['ongoing', 'upcoming', 'sold', 'unsold'];
+
+    useEffect(() => {
+        if (type === 'Auction') {
+            setProductType('ongoing')
+        } else if (type === 'Sale') {
+            setProductType('sold')
+        }
+    }, [type]);
 
     return (
         <>
@@ -129,26 +158,78 @@ const Products = () => {
                 ]}
                 title={'Item'}
             />
-            <Row className="mb-3 ms-1" style={{ borderBottom: '1px solid #ddd' }}>
-                {types.map((item) => (
-                    <Col sm={1}
-                        key={item}
-                        className="text-center fw-bold"
-                        style={{
-                            cursor: 'pointer',
-                            padding: '10px 0',
-                            color: type === item ? '#008003' : 'black',
-                            borderBottom: type === item ? '3px solid #008003' : '3px solid transparent',
-                            fontWeight: type === item ? 'bold' : 'normal',
-                            transition: 'all 0.2s ease-in-out',
-                            textTransform: 'capitalize',
-                        }}
-                        onClick={() => setType(item)}
-                    >
-                        {item}
-                    </Col>
-                ))}
+            <Row className="mb-2 ms-1 border-bottom pb-1">
+                {types?.map((item) => {
+                    let count = '';
+                    if (item === 'Auction') count = AuctionCounts ?? '';
+                    if (item === 'Sale') count = SaleCounts ?? '';
+                    if (item === 'Draft') count = DraftCount ?? '';
+
+                    return (
+                        <Col
+                            sm="auto"
+                            key={item}
+                            className={`text-center me-3 px-3 py-1 rounded`}
+                            style={{
+                                cursor: 'pointer',
+                                color: type === item ? '#fff' : '#333',
+                                backgroundColor: type === item ? '#008003' : '#f1f1f1',
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                            }}
+                            onClick={() => setType(item)}
+                        >
+                            {item.charAt(0).toUpperCase() + item.slice(1)}{' '}
+                            {count !== '' && (
+                                <span className="badge bg-secondary text-light ms-1">{count}</span>
+                            )}
+                        </Col>
+                    );
+                })}
             </Row>
+
+            {type !== 'Draft' && (
+                <Row className="mb-3 ms-1 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                    {productTypes.map((item) => {
+                        if (type === 'Sale' && item !== 'sold' && item !== 'unsold') return null;
+
+                        let count = '';
+                        if (type === 'Auction') {
+                            if (item === 'ongoing') count = ongoingCounts ?? '';
+                            if (item === 'upcoming') count = upcomingCounts ?? '';
+                            if (item === 'sold') count = soldCounts ?? '';
+                            if (item === 'unsold') count = unSoldCounts ?? '';
+                        } else if (type === 'Sale') {
+                            if (item === 'sold') count = soldSaleCounts ?? '';
+                            if (item === 'unsold') count = unsoldSaleCounts ?? '';
+                        }
+
+                        return (
+                            <Col
+                                sm="auto"
+                                key={item}
+                                className={`text-center me-2 px-3 py-1`}
+                                style={{
+                                    cursor: 'pointer',
+                                    color: productType === item ? '#fff' : '#333',
+                                    backgroundColor: productType === item ? '#008003' : '#e9ecef',
+                                    fontSize: '0.9rem',
+                                    fontWeight: '500',
+                                    borderRadius: '20px',
+                                }}
+                                onClick={() => setProductType(item)}
+                            >
+                                {item.charAt(0).toUpperCase() + item.slice(1)}{' '}
+                                {count !== '' && (
+                                    <span className="badge bg-secondary ms-1">{count}</span>
+                                )}
+                            </Col>
+                        );
+                    })}
+                </Row>
+            )}
+
+
             <Row>
                 <Col xs={12}>
                     <Card
@@ -195,7 +276,7 @@ const Products = () => {
                                                             <th scope="col">Product Name</th>
                                                             <th scope="col">Brand</th>
                                                             <th scope="col">Ask Price</th>
-                                                            <th scope="col">Bidding Amount</th>
+                                                            {type === 'Auction' && <th scope="col">Bidding Amount</th>}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -268,16 +349,16 @@ const Products = () => {
                                                                     )}
                                                                 </td>
 
-
-                                                                <td className='text-uppercase fw-bold text-success'>
-                                                                    {data?.Start_Bid_Price ? (
-                                                                        <span>$ {data?.Start_Bid_Price} </span>
-                                                                    ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
-                                                                </td>
+                                                                {type === 'Auction' &&
+                                                                    <td className='text-uppercase fw-bold text-success'>
+                                                                        {data?.Start_Bid_Price ? (
+                                                                            <span>$ {data?.Start_Bid_Price} </span>
+                                                                        ) : (
+                                                                            <span className="d-flex text-danger justify-content-center">
+                                                                                N/A
+                                                                            </span>
+                                                                        )}
+                                                                    </td>}
                                                             </tr>
                                                         ))}
                                                     </tbody>

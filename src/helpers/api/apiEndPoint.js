@@ -10,7 +10,7 @@ export const DELETE_CATEGORY = '';
 
 //product
 export const CREATE_PRODUCT = '';
-export const GET_PRODUCT = '/api/admin/product/getAllProducts';
+export const GET_PRODUCT = '/api/product/getAllProductsForAdmin';
 export const UPDATE_PRODUCT = '';
 export const DELETE_PRODUCT = '';
 
