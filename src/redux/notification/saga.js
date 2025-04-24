@@ -2,17 +2,12 @@
 import { all, fork, put, takeEvery, call, takeLatest } from 'redux-saga/effects';
 import { NotificationActionTypes } from './constants';
 
-import {
-    createNotificationApi, updateNotificationApi,
-    getNotificationApi
-} from './api';
+import { createNotificationApi, updateNotificationApi, getNotificationApi, getNotificationByAdminApi } from './api';
 import ToastContainer from '../../helpers/toast/ToastContainer';
 /**
  * Login the user
  * @param {*} payload - username and password
  */
-
-
 
 function* getNotificationFunction(data) {
     try {
@@ -38,7 +33,35 @@ function* getNotificationFunction(data) {
             payload: error,
         });
     }
-};
+}
+
+function* getNotificationByAdminFunction(data) {
+    console.log(data, 'responseresponse');
+    try {
+        yield put({
+            type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_LOADING,
+            payload: {},
+        });
+        const response = yield call(getNotificationByAdminApi, data || {});
+        if (response.data.status) {
+            yield put({
+                type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_SUCCESS,
+                payload: { ...response.data },
+            });
+        } else {
+            yield put({
+                type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_ERROR,
+                payload: { ...response.data },
+            });
+        }
+    } catch (error) {
+        console.log(error, 'responseresponse');
+        yield put({
+            type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_ERROR,
+            payload: error,
+        });
+    }
+}
 
 function* createNotificationFunction(data) {
     try {
@@ -47,30 +70,29 @@ function* createNotificationFunction(data) {
             payload: {},
         });
         const response = yield call(createNotificationApi, data);
-        console.log({response})
+        console.log({ response });
         if (response.data.status) {
             yield put({
                 type: NotificationActionTypes.CREATE_NOTIFICATION_SUCCESS,
                 payload: { ...response.data },
             });
-            ToastContainer(response?.data?.data?.message, 'success')
-
+            ToastContainer(response?.data?.message, 'success');
         } else {
-            ToastContainer(response?.data?.data?.message, 'danger')
+            ToastContainer(response?.data?.message, 'danger');
             yield put({
                 type: NotificationActionTypes.CREATE_NOTIFICATION_ERROR,
                 payload: { ...response.data },
             });
         }
     } catch (error) {
-        ToastContainer(error, 'danger')
+        ToastContainer(error, 'danger');
 
         yield put({
             type: NotificationActionTypes.CREATE_NOTIFICATION_ERROR,
             payload: error,
         });
     }
-};
+}
 
 function* updateNotificationFunction(payload) {
     try {
@@ -79,7 +101,7 @@ function* updateNotificationFunction(payload) {
         });
 
         const response = yield call(updateNotificationApi, payload);
-        console.log({ response })
+        console.log({ response });
 
         if (response && response.data) {
             yield put({
@@ -87,39 +109,32 @@ function* updateNotificationFunction(payload) {
                 payload: response.data,
             });
 
-            ToastContainer(response?.data?.message, 'success')
-
+            ToastContainer(response?.data?.message, 'success');
         } else {
             yield put({
                 type: NotificationActionTypes.UPDATE_NOTIFICATION_DATA_ERROR,
                 payload: response.data,
             });
-            ToastContainer(response?.data?.message, 'danger')
+            ToastContainer(response?.data?.message, 'danger');
         }
     } catch (error) {
         yield put({
             type: NotificationActionTypes.UPDATE_NOTIFICATION_DATA_ERROR,
             payload: { message: error },
         });
-        ToastContainer(error, 'danger')
-
+        ToastContainer(error, 'danger');
     }
-};
-
-
+}
 
 export function* watchNotificationData() {
     yield takeEvery(NotificationActionTypes.GET_NOTIFICATION_FIRST, getNotificationFunction);
+    yield takeEvery(NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN, getNotificationByAdminFunction);
     yield takeEvery(NotificationActionTypes.CREATE_NOTIFICATION_FIRST, createNotificationFunction);
     yield takeLatest(NotificationActionTypes.UPDATE_NOTIFICATION_DATA_FIRST, updateNotificationFunction);
 }
 
 function* notificationSaga() {
-    yield all([
-        fork(watchNotificationData)
-    ]);
+    yield all([fork(watchNotificationData)]);
 }
 
 export default notificationSaga;
-
-

@@ -6,33 +6,66 @@ import Auth from './auth/reducers';
 import Layout from './layout/reducers';
 
 import { dashboardDataReducer } from './dashboard/reducers';
-import { categoryDataReducer, subCategoryDataReducer, createCategoryDataReducer, updatecategoryDataReducer, deletecategoryDataReducer, } from './category/reducers'
+import {
+    categoryDataReducer,
+    subCategoryDataReducer,
+    createCategoryDataReducer,
+    updatecategoryDataReducer,
+    deletecategoryDataReducer,
+} from './category/reducers';
 
 import {
-  productDataReducer, createProductDataReducer, updateProductDataReducer, deleteProductDataReducer,
+    productDataReducer,
+    createProductDataReducer,
+    updateProductDataReducer,
+    deleteProductDataReducer,
 } from './products/reducers';
-import {     faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer} from './faq/reducers';
+import { faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer } from './faq/reducers';
 import { userDataReducer } from './user/reducers';
 import { getOrderDataReducer } from './orders/reducers';
-import { leadDataReducer,soldProductDataReducer,getLiveBidDataReducer } from './auctionLead/reducers';
+import { leadDataReducer, soldProductDataReducer, getLiveBidDataReducer } from './auctionLead/reducers';
 import { enquiryDataReducer } from './enquiry/reducers';
 import { getSupportDataReducer, updateSupportDataReducer } from './help&support/reducers';
-import {getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer } from './notification/reducers';
-import { getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer } from './commision/reducers';
-import { getPaidAuctionDataReducer,getNonPaidAuctionDataReducer } from './transactions/reducer';
+import {
+    getNotificationDataReducer,
+    createNotificationDataReducer,
+    updateNotificationDataReducer,
+    getNotificationByAdminReducer,
+} from './notification/reducers';
+import { getComissionDataReducer, createComissionDataReducer, updateComissionDataReducer } from './commision/reducers';
+import { getPaidAuctionDataReducer, getNonPaidAuctionDataReducer } from './transactions/reducer';
 export default (combineReducers({
-  Auth,
-  Layout,
-  dashboardDataReducer,
-  categoryDataReducer, subCategoryDataReducer, createCategoryDataReducer, updatecategoryDataReducer, deletecategoryDataReducer,
-  productDataReducer, createProductDataReducer, updateProductDataReducer, deleteProductDataReducer,
-  faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer,
-  userDataReducer,
-  leadDataReducer,soldProductDataReducer,getLiveBidDataReducer,
-  getOrderDataReducer,
-  enquiryDataReducer,
-  getSupportDataReducer,updateSupportDataReducer,
-  getNotificationDataReducer,createNotificationDataReducer, updateNotificationDataReducer,
-  getComissionDataReducer,createComissionDataReducer,updateComissionDataReducer,
-  getPaidAuctionDataReducer,getNonPaidAuctionDataReducer
+    Auth,
+    Layout,
+    dashboardDataReducer,
+    categoryDataReducer,
+    subCategoryDataReducer,
+    createCategoryDataReducer,
+    updatecategoryDataReducer,
+    deletecategoryDataReducer,
+    productDataReducer,
+    createProductDataReducer,
+    updateProductDataReducer,
+    deleteProductDataReducer,
+    faqDataReducer,
+    createFaqDataReducer,
+    updateFaqDataReducer,
+    deleteFaqDataReducer,
+    userDataReducer,
+    leadDataReducer,
+    soldProductDataReducer,
+    getLiveBidDataReducer,
+    getOrderDataReducer,
+    enquiryDataReducer,
+    getSupportDataReducer,
+    updateSupportDataReducer,
+    getNotificationDataReducer,
+    getNotificationByAdminReducer,
+    createNotificationDataReducer,
+    updateNotificationDataReducer,
+    getComissionDataReducer,
+    createComissionDataReducer,
+    updateComissionDataReducer,
+    getPaidAuctionDataReducer,
+    getNonPaidAuctionDataReducer,
 }): any);

@@ -1,57 +1,82 @@
 //------------------------------------R E D U C E R S-------------------------------------------------
-import { NotificationActionTypes } from "./constants"
+import { NotificationActionTypes } from './constants';
 
 const NOTIFICATION_DATA_INITIAL_STATE = {
     notificationData: [],
-    loading: false
-}
-
+    loading: false,
+};
 
 const getNotificationDataReducer = (state = NOTIFICATION_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case NotificationActionTypes.GET_NOTIFICATION_LOADING:
             return {
                 notificationData: state.notificationData,
-                loading: true
-            }
+                loading: true,
+            };
         case NotificationActionTypes.GET_NOTIFICATION_SUCCESS:
             return {
                 notificationData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case NotificationActionTypes.GET_NOTIFICATION_ERROR:
             return {
                 notificationData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case NotificationActionTypes.STATE_EMPTY_SUCCESS:
-            return NOTIFICATION_DATA_INITIAL_STATE
-        default: return state
+            return NOTIFICATION_DATA_INITIAL_STATE;
+        default:
+            return state;
     }
-}
+};
+
+const getNotificationByAdminReducer = (state = NOTIFICATION_DATA_INITIAL_STATE, action) => {
+    switch (action.type) {
+        case NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_LOADING:
+            return {
+                notificationData: state.notificationData,
+                loading: true,
+            };
+        case NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_SUCCESS:
+            return {
+                notificationData: action.payload,
+                loading: false,
+            };
+        case NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_ERROR:
+            return {
+                notificationData: action.payload,
+                loading: false,
+            };
+        case NotificationActionTypes.STATE_EMPTY_SUCCESS:
+            return NOTIFICATION_DATA_INITIAL_STATE;
+        default:
+            return state;
+    }
+};
 
 const createNotificationDataReducer = (state = NOTIFICATION_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case NotificationActionTypes.CREATE_NOTIFICATION_LOADING:
             return {
                 notificationData: state.notificationData,
-                loading: true
-            }
+                loading: true,
+            };
         case NotificationActionTypes.CREATE_NOTIFICATION_SUCCESS:
             return {
                 notificationData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case NotificationActionTypes.CREATE_NOTIFICATION_ERROR:
             return {
                 notificationData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case NotificationActionTypes.STATE_EMPTY_SUCCESS:
-            return NOTIFICATION_DATA_INITIAL_STATE
-        default: return state
+            return NOTIFICATION_DATA_INITIAL_STATE;
+        default:
+            return state;
     }
-}
+};
 
 const updateNotificationDataReducer = (state = NOTIFICATION_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
@@ -74,11 +99,15 @@ const updateNotificationDataReducer = (state = NOTIFICATION_DATA_INITIAL_STATE, 
                 loading: false,
             };
         case NotificationActionTypes.STATE_EMPTY_SUCCESS:
-            return NOTIFICATION_DATA_INITIAL_STATE
+            return NOTIFICATION_DATA_INITIAL_STATE;
         default:
             return state;
     }
 };
 
-
-export { getNotificationDataReducer, createNotificationDataReducer, updateNotificationDataReducer }
+export {
+    getNotificationDataReducer,
+    createNotificationDataReducer,
+    updateNotificationDataReducer,
+    getNotificationByAdminReducer,
+};
