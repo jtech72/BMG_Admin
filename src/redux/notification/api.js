@@ -4,10 +4,16 @@ import * as URL from '../../helpers/api/apiEndPoint';
 
 const api = new APICore();
 
-
 function getNotificationApi(params: any): any {
-    const { search,limit,page } = params?.data
-    return api.get(`${URL.GET_NOTIFICATION}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
+    const { search, limit, page, type } = params?.data;
+    return api.get(
+        `${URL.GET_NOTIFICATION}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}&type=${type}`
+    );
+}
+function getNotificationByAdminApi(params: any): any {
+    // const { search, limit, page, type } = params?.data;
+    const { data } = params;
+    return api.get(`${URL.GET_NOTIFICATION_BY_ADMIN}`, data);
 }
 
 function createNotificationApi(params: any): any {
@@ -19,4 +25,4 @@ function updateNotificationApi(params: any): any {
     return api.update(URL.UPDATE_NOTIFICATION, data);
 }
 
-export {getNotificationApi,createNotificationApi,updateNotificationApi};
+export { getNotificationApi, createNotificationApi, updateNotificationApi, getNotificationByAdminApi };

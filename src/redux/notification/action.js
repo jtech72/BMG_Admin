@@ -4,15 +4,21 @@ import { NotificationActionTypes } from './constants';
 
 export const getNotificationActions = (data) => ({
     type: NotificationActionTypes.GET_NOTIFICATION_FIRST,
-    data
+    data,
 });
+export const getNotificationByAdminActions = (data) => {
+    console.log('lkjhgfdsdfgyhujikol');
+    return {
+        type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN,
+        data,
+    };
+};
 export const createNotificationActions = (data) => ({
     type: NotificationActionTypes.CREATE_NOTIFICATION_FIRST,
-    data
+    data,
 });
 
 export const updateNotificationActions = (data) => ({
     type: NotificationActionTypes.UPDATE_NOTIFICATION_DATA_FIRST,
-    data
+    data,
 });
-

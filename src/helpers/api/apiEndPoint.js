@@ -1,5 +1,5 @@
-//Dashboard 
-export const GET_DASHBOARD_DATA='/api/admin/dashboard/getAllDashBoardData'
+//Dashboard
+export const GET_DASHBOARD_DATA = '/api/admin/dashboard/getAllDashBoardData';
 //category
 export const CREATE_CATEGORY = '';
 export const GET_CATEGORY = '/api/admin/subCategory/getAllSubCategories';
@@ -24,7 +24,7 @@ export const GET_AUCTION_SOLD_PRODUCT = '/api/admin/admin/getAuctionSoldProductD
 export const GET_LIVE_BIDS = '/api/admin/admin/showLiveAuctionBidForAdmin';
 
 //orders
-export const GET_ORDERS='/api/admin/order/getAllOrderDetails';
+export const GET_ORDERS = '/api/admin/order/getAllOrderDetails';
 
 //faq
 export const CREATE_FAQ = '/api/admin/faq/create';
@@ -32,23 +32,23 @@ export const GET_FAQ = '/api/admin/faq/get';
 export const UPDATE_FAQ = '/api/admin/faq/update';
 export const DELETE_FAQ = '/api/admin/faq/delete/';
 //enquiry
-export const GET_ENQUIRY='/api/admin/contact/getAllContactByAdmin';
+export const GET_ENQUIRY = '/api/admin/contact/getAllContactByAdmin';
 
 // support
-export const GET_SUPPORT='';
-export const UPDATE_SUPPORT='';
+export const GET_SUPPORT = '';
+export const UPDATE_SUPPORT = '';
 
 //notifications
-export const GET_NOTIFICATION='/api/notification/getNotificationByType'
-export const CREATE_NOTIFICATION='/api/notification/createNotification'
-export const UPDATE_NOTIFICATION='/api/notification/updateNotification'
+export const GET_NOTIFICATION = '/api/notification/getNotificationByType';
+export const GET_NOTIFICATION_BY_ADMIN = 'api/notification/getNotificationByAdmin';
+export const CREATE_NOTIFICATION = '/api/notification/createNotification';
+export const UPDATE_NOTIFICATION = '/api/notification/updateNotification';
 
 //comission
-export const GET_COMISSION_ENDPOINT='/api/admin/commision/getAllCommisions'
-export const CREATE_COMISSION_ENDPOINT='/api/admin/commision/createCommision'
-export const UPDATE_COMISSION_ENDPOINT='/api/admin/commision/updateCommision'
+export const GET_COMISSION_ENDPOINT = '/api/admin/commision/getAllCommisions';
+export const CREATE_COMISSION_ENDPOINT = '/api/admin/commision/createCommision';
+export const UPDATE_COMISSION_ENDPOINT = '/api/admin/commision/updateCommision';
 
 //transaction details
-export const GET_PAID_AUCTION='/api/admin/getAllPaidAuctionForAdmin'
-export const GET_NON_PAID_AUCTION='/api/admin/getNonPaidAuctionDeatilsForAdmin'
-
+export const GET_PAID_AUCTION = '/api/admin/getAllPaidAuctionForAdmin';
+export const GET_NON_PAID_AUCTION = '/api/admin/getNonPaidAuctionDeatilsForAdmin';
