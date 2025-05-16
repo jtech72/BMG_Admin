@@ -4,15 +4,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getLiveBidDataActions } from '../../../redux/actions';
-import Pagination from '../../../helpers/Pagination'
+import Pagination from '../../../helpers/Pagination';
+import SellerDetailsModal from './SellerDetailsModal/SellerDetailsModal';
+import { BsInfoCircle } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+
 const LiveBidMonitoring = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const LiveBidData = store?.getLiveBidDataReducer?.leadData?.result
+    const LiveBidData = store?.getLiveBidDataReducer?.leadData?.result;
 
-    console.log(store?.getLiveBidDataReducer?.leadData)
-    const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading
+    console.log(store?.getLiveBidDataReducer?.leadData);
+    const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading;
 
     const TotalRecords = store?.getLiveBidDataReducer?.leadData?.totalRecords;
 
@@ -25,9 +29,13 @@ const LiveBidMonitoring = () => {
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
-        dispatch(getLiveBidDataActions());
+        dispatch(
+            getLiveBidDataActions({
+                pageSize,
+                pageIndex,
+            })
+        );
     }, [dispatch, pageIndex, pageSize, search]);
-
 
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -42,35 +50,44 @@ const LiveBidMonitoring = () => {
     // Format keys: Remove underscores, convert camelCase to words
     const formatKey = (key) => {
         return key
-            .replace(/_/g, " ") // Replace underscores
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase
+            .replace(/_/g, ' ') // Replace underscores
+            .replace(/([a-z])([A-Z])/g, '$1 $2') // Convert camelCase
             .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter
     };
 
     const formatDate = (dateString) => {
-        if (!dateString) return "";
+        if (!dateString) return '';
 
         const date = new Date(dateString);
-        return date.toLocaleString("en-US", {
-            weekday: "short",   // "Thu"
-            month: "short",     // "Feb"
-            day: "2-digit",     // "27"
-            year: "numeric",    // "2025"
-            hour: "2-digit",    // "12"
-            minute: "2-digit",  // "00"
-            hour12: true,       // "AM/PM"
+        return date.toLocaleString('en-US', {
+            weekday: 'short', // "Thu"
+            month: 'short', // "Feb"
+            day: '2-digit', // "27"
+            year: 'numeric', // "2025"
+            hour: '2-digit', // "12"
+            minute: '2-digit', // "00"
+            hour12: true, // "AM/PM"
         });
     };
     const isValidISODate = (value) => {
-        if (typeof value !== "string") return false; // Ensure it's a string before calling includes()
+        if (typeof value !== 'string') return false; // Ensure it's a string before calling includes()
 
         const date = new Date(value);
-        return !isNaN(date.getTime()) && value.includes("T");
+        return !isNaN(date.getTime()) && value.includes('T');
     };
-
+    const [sellerDetailModal, setSellerDetailModal] = useState(false);
+    const [sellerDetails, setSellerDetails] = useState('');
+    const readableDate = (isoDate) => {
+        return new Date(isoDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+    };
+    const navigate = useNavigate();
     return (
         <>
-            <PageTitle
+            {/* <PageTitle
                 breadCrumbItems={[
                     {
                         label: 'Live Bid Monitoring',
@@ -79,12 +96,19 @@ const LiveBidMonitoring = () => {
                     },
                 ]}
                 title={`Live Bid Monitoring`}
+            /> */}
+            <SellerDetailsModal
+                open={sellerDetailModal}
+                close={() => setSellerDetailModal(false)}
+                sellerDetails={sellerDetails}
             />
             <Row>
                 <Col xs={12}>
                     <Card
-                        style={{ boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset' }}
-                    >
+                        style={{
+                            boxShadow:
+                                'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                        }}>
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
@@ -115,44 +139,33 @@ const LiveBidMonitoring = () => {
                             ) : (
                                 <>
                                     {LiveBidData && LiveBidData?.length > 0 ? (
-
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table bg-white">
                                                     <thead>
-                                                        <tr className="text-nowrap" style={{ color: '#703133' }}>
-                                                            <th scope="col"><i className="mdi mdi-merge"></i></th>
-                                                            <th scope="col">Product Id</th>
+                                                        <tr className="text-nowrap text-dark">
+                                                            {/* <th scope="col">
+                                                                <i className="mdi mdi-merge"></i>
+                                                            </th> */}
+                                                            <th scope="col">Seller Name</th>
                                                             <th scope="col">Product Name</th>
-                                                            <th scope="col">Brand</th>
-                                                            <th scope="col">Ask Price</th>
-                                                            <th scope="col">User Name</th>
-                                                            <th scope="col">User Email</th>
-                                                            {/* <th scope="col">User Verified</th> */}
+                                                            <th scope="col">Start Date</th>
+                                                            <th scope="col">End Date</th>
+                                                            <th scope="col">Start Bid Price</th>
+                                                            <th scope="col">Highest Bid</th>
+                                                            <th scope="col">No. of Bids</th>
+                                                            <th scope="col">Details</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         {LiveBidData?.map((data, index) => (
                                                             <tr
                                                                 key={index}
-                                                                className="text-dark fw-bold text-nowrap">
-                                                                <th scope="row">{index + 1}</th>
-                                                                <td className='text-uppercase fw-bold'>
-                                                                    {data?.product?.productGenerateId ? (
-                                                                        <span>{data?.product?.productGenerateId} </span>
-                                                                    ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
-                                                                </td>
-
-                                                                <td
-                                                                    className="text-uppercase fw-bold"
-                                                                    style={{ cursor: 'pointer', color: 'crimson', transition: 'color 0.3s ease-in-out' }}
-                                                                    onMouseOver={(e) => e.target.style.color = 'rgb(10 207 151)'}
-                                                                    onMouseOut={(e) => e.target.style.color = 'crimson'}
-                                                                >
+                                                                // style={{
+                                                                //     cursor: 'pointer',
+                                                                // }}
+                                                                className="text-nowrap">
+                                                                <td className="text-capitalize fw-bold">
                                                                     <OverlayTrigger
                                                                         placement="left"
                                                                         overlay={
@@ -161,85 +174,126 @@ const LiveBidMonitoring = () => {
                                                                             </Tooltip>
                                                                         }>
                                                                         <b>
-                                                                            {data?.product?.Product_Name ? (
-                                                                                <span onClick={() => handleProductClick(data?.product)}
-                                                                                >{data?.product?.Product_Name} </span>
-                                                                            ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
-                                                                                    N/A
-                                                                                </span>
-                                                                            )}
+                                                                            <span
+                                                                                onClick={() => {
+                                                                                    setSellerDetailModal(true);
+                                                                                    setSellerDetails(
+                                                                                        data?.product?.userId
+                                                                                    );
+                                                                                }}
+                                                                                className="text-primary"
+                                                                                style={{ cursor: 'pointer' }}>
+                                                                                {data?.product?.userId?.name}
+                                                                            </span>
                                                                         </b>
                                                                     </OverlayTrigger>
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-primary'>
-                                                                    {data?.product?.Brand ? (
-                                                                        <span>{data?.product?.Brand} </span>
-                                                                    ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
+                                                                <td
+                                                                    className="text-uppercase fw-bold"
+                                                                    // style={{ cursor: 'pointer' }}
+                                                                >
+                                                                    {/* <OverlayTrigger
+                                                                        placement="left"
+                                                                        overlay={
+                                                                            <Tooltip id="overlay-example">
+                                                                                View Detail's
+                                                                            </Tooltip>
+                                                                        }> */}
+                                                                    <b>
+                                                                        {data?.product?.Product_Name ? (
+                                                                            <span
+                                                                            // onClick={() =>
+                                                                            //     handleProductClick(
+                                                                            //         data?.product
+                                                                            //     )
+                                                                            // }
+                                                                            >
+                                                                                {data?.product?.Product_Name}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className="d-flex justify-content-center">
+                                                                                N/A
+                                                                            </span>
+                                                                        )}
+                                                                    </b>
+                                                                    {/* </OverlayTrigger> */}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-success'>
-                                                                    {data?.product?.Ask_Price ? (
-                                                                        <span>$ {data?.product?.Ask_Price} </span>
+
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {data?.product?.startBidDateTime ? (
+                                                                        <span>
+                                                                            {readableDate(
+                                                                                data?.product?.startBidDateTime
+                                                                            )}
+                                                                        </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
 
-                                                                <td className='fw-bold'>
-                                                                    {data?.user ? (
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {data?.product?.endBidDateTime ? (
+                                                                        <span>
+                                                                            {readableDate(
+                                                                                data?.product?.endBidDateTime
+                                                                            )}
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="d-flex justify-content-center">
+                                                                            N/A
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+
+                                                                <td className="fw-bold">
+                                                                    {data?.product ? (
                                                                         <span className="fw-semibold">
-                                                                            {`${data?.user?.name || ""} ${data?.user?.lastName || ""}`.trim() || "N/A"}
+                                                                            {data?.product?.Start_Bid_Price}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="text-danger">N/A</span>
+                                                                        <span>N/A</span>
                                                                     )}
-
                                                                 </td>
-                                                                <td className='fw-bold text-info'>
-                                                                    {data?.user?.email ? (
-                                                                        <span>{data?.user?.email} </span>
+
+                                                                <td className="fw-bold">
+                                                                    {data?.product?.highBidingAmount ? (
+                                                                        <span>{data?.product?.highBidingAmount}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                {/* <td className='fw-bold'>
-                                                                    {data?.user ? (
-                                                                        <span className={`badge ${data?.user?.isVerified ? "bg-success" : "bg-danger"} px-3 py-2`}>
-                                                                            {data?.user?.isVerified ? "✅ Verified" : "❌ Not Verified"}
-                                                                        </span>
-                                                                    ) : (
-                                                                        <span className="badge bg-secondary px-3 py-2">N/A</span>
-                                                                    )}
 
-                                                                </td> */}
-                                                                {/* <td>
-                                                            <OverlayTrigger
-                                                                placement="left"
-                                                                overlay={
-                                                                    <Tooltip id="overlay-example">
-                                                                        Send Mail
-                                                                    </Tooltip>
-                                                                }>
-                                                                <a href={`mailto:${data?.email}`}>
-                                                                    {data?.email ? (
-                                                                        data?.email
+                                                                <td className="fw-bold">
+                                                                    {data?.product?.totalBidders ? (
+                                                                        <span>{data?.product?.totalBidders}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
-                                                                </a>
-                                                            </OverlayTrigger>
-                                                        </td> */}
-
+                                                                </td>
+                                                                <td className="fw-bold">
+                                                                    <BsInfoCircle
+                                                                        size={18}
+                                                                        onClick={() =>
+                                                                            navigate(
+                                                                                `/bmg/items/${data?.product?._id}`,
+                                                                                {
+                                                                                    state: { product: data?.product },
+                                                                                }
+                                                                            )
+                                                                        }
+                                                                        style={{
+                                                                            marginRight: '5px',
+                                                                            cursor: 'pointer',
+                                                                            color: '#0d6efd', // optional: makes it look like a link/info icon
+                                                                        }}
+                                                                    />
+                                                                </td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -250,29 +304,30 @@ const LiveBidMonitoring = () => {
                                         <div
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
-                                            <code className="fs-4">
-                                                No Bid's found.
-                                            </code>
+                                            <code className="fs-4">No Bid's found.</code>
                                         </div>
                                     )}
                                 </>
                             )}
-                            {/* <Pagination
+                            <Pagination
                                 pageIndex={pageIndex}
                                 pageSize={pageSize}
                                 totalPages={totalPages}
                                 setPageIndex={setPageIndex}
                                 onChangePageSize={setPageSize}
-                            /> */}
+                            />
                         </Card.Body>
                     </Card>
                 </Col>
             </Row>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
-                <Modal.Header className='px-2 py-1 text-light' style={{ backgroundColor: '#008003' }}>
+                <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                     <Modal.Title className="fw-semibold">Product Details</Modal.Title>
-                    <i className="mdi mdi-close fs-3" onClick={() => setShowModal(false)} style={{ cursor: 'pointer' }}></i>
+                    <i
+                        className="mdi mdi-close fs-3"
+                        onClick={() => setShowModal(false)}
+                        style={{ cursor: 'pointer' }}></i>
                 </Modal.Header>
                 <Modal.Body>
                     {selectedProduct && (
@@ -287,9 +342,9 @@ const LiveBidMonitoring = () => {
                                                 alt={`Slide ${index}`}
                                                 className="d-block w-100 rounded"
                                                 style={{
-                                                    maxHeight: "400px",
-                                                    objectFit: "contain",
-                                                    boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                                                    maxHeight: '400px',
+                                                    objectFit: 'contain',
+                                                    boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
                                                 }}
                                             />
                                         </Carousel.Item>
@@ -297,13 +352,13 @@ const LiveBidMonitoring = () => {
                                 </Carousel>
                             )}
 
-
                             <Row className="border rounded p-3 bg-light">
                                 {Object.entries(selectedProduct)
-                                    .filter(([key, value]) =>
-                                        !["_id", "createdAt", "updatedAt", "image", "status"].includes(key) && // Remove unnecessary fields
-                                        !(typeof value === "string" && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
-                                        value // Ensure it's not empty
+                                    .filter(
+                                        ([key, value]) =>
+                                            !['_id', 'createdAt', 'updatedAt', 'image', 'status'].includes(key) && // Remove unnecessary fields
+                                            !(typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
+                                            value // Ensure it's not empty
                                     )
                                     .map(([key, value]) => {
                                         let displayValue;
@@ -312,33 +367,53 @@ const LiveBidMonitoring = () => {
                                             displayValue = (
                                                 <ul className="mb-0">
                                                     {value
-                                                        .filter(item => !(typeof item === "string" && /^[0-9a-fA-F]{24}$/.test(item))) // Remove ID-like values inside arrays
+                                                        .filter(
+                                                            (item) =>
+                                                                !(
+                                                                    typeof item === 'string' &&
+                                                                    /^[0-9a-fA-F]{24}$/.test(item)
+                                                                )
+                                                        ) // Remove ID-like values inside arrays
                                                         .map((item, index) => (
-                                                            <li key={index}>{typeof item === "object" ? JSON.stringify(item, null, 2) : item}</li>
-                                                        ))}
-                                                </ul>
-                                            );
-                                        }
-                                        else if (typeof value === "object" && value !== null) {
-                                            displayValue = (
-                                                <ul className="mb-0">
-                                                    {Object.entries(value)
-                                                        .filter(([subKey, subValue]) =>
-                                                            !["_id", "createdAt", "updatedAt", "status", "image"].includes(subKey) &&
-                                                            !(typeof subValue === "string" && /^[0-9a-fA-F]{24}$/.test(subValue))
-                                                        )
-                                                        .map(([subKey, subValue]) => (
-                                                            <li key={subKey}>
-                                                                <strong>{formatKey(subKey)}:</strong> {isValidISODate(subValue) ? formatDate(subValue) : subValue}
+                                                            <li key={index}>
+                                                                {typeof item === 'object'
+                                                                    ? JSON.stringify(item, null, 2)
+                                                                    : item}
                                                             </li>
                                                         ))}
                                                 </ul>
                                             );
-                                        }
-                                        else if (typeof value === "string" && isValidISODate(value)) {
+                                        } else if (typeof value === 'object' && value !== null) {
+                                            displayValue = (
+                                                <ul className="mb-0">
+                                                    {Object.entries(value)
+                                                        .filter(
+                                                            ([subKey, subValue]) =>
+                                                                ![
+                                                                    '_id',
+                                                                    'createdAt',
+                                                                    'updatedAt',
+                                                                    'status',
+                                                                    'image',
+                                                                ].includes(subKey) &&
+                                                                !(
+                                                                    typeof subValue === 'string' &&
+                                                                    /^[0-9a-fA-F]{24}$/.test(subValue)
+                                                                )
+                                                        )
+                                                        .map(([subKey, subValue]) => (
+                                                            <li key={subKey}>
+                                                                <strong>{formatKey(subKey)}:</strong>{' '}
+                                                                {isValidISODate(subValue)
+                                                                    ? formatDate(subValue)
+                                                                    : subValue}
+                                                            </li>
+                                                        ))}
+                                                </ul>
+                                            );
+                                        } else if (typeof value === 'string' && isValidISODate(value)) {
                                             displayValue = formatDate(value);
-                                        }
-                                        else {
+                                        } else {
                                             displayValue = value;
                                         }
 
@@ -369,7 +444,7 @@ const LiveBidMonitoring = () => {
                 </Modal.Body>
             </Modal>
         </>
-    )
-}
+    );
+};
 
-export default LiveBidMonitoring
+export default LiveBidMonitoring;

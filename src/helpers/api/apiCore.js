@@ -14,24 +14,24 @@ axios.interceptors.response.use(
     (error) => {
         if (!error.response) {
             // Network errors or no response from server
-            return Promise.reject("Network error. Please check your internet connection.");
+            return Promise.reject('Network error. Please check your internet connection.');
         }
 
         const { status, data } = error.response;
-        let message = data?.message || "An unexpected error occurred.";
+        let message = data?.message || 'An unexpected error occurred.';
 
         switch (status) {
             case 400:
-                console.error("Bad Request:", data);
+                console.error('Bad Request:', data);
                 break;
             case 403:
-                window.location.href = "/access-denied";
+                window.location.href = '/access-denied';
                 return;
             case 404:
-                message = "Sorry! The data you are looking for could not be found.";
+                message = 'Sorry! The data you are looking for could not be found.';
                 break;
             case 500:
-                message = "Internal Server Error. Please try again later.";
+                message = 'Internal Server Error. Please try again later.';
                 break;
             default:
                 console.error(`Error ${status}:`, data);
@@ -40,7 +40,6 @@ axios.interceptors.response.use(
         return Promise.reject(message);
     }
 );
-
 
 const AUTH_SESSION_KEY = 'bmg_user';
 
@@ -54,7 +53,7 @@ const setAuthorization = (token) => {
     else delete axios.defaults.headers.common['Authorization'];
 };
 
-const getUserFromSession = () => {
+export const getUserFromSession = () => {
     const user = sessionStorage.getItem(AUTH_SESSION_KEY);
     return user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
 };
@@ -67,8 +66,8 @@ class APICore {
         if (params) {
             var queryString = params
                 ? Object.keys(params)
-                    .map((key) => key + '=' + params[key])
-                    .join('&')
+                      .map((key) => key + '=' + params[key])
+                      .join('&')
                 : '';
             response = axios.get(`${url}?${queryString}`, params);
         } else {
@@ -82,8 +81,8 @@ class APICore {
         if (params) {
             var queryString = params
                 ? Object.keys(params)
-                    .map((key) => key + '=' + params[key])
-                    .join('&')
+                      .map((key) => key + '=' + params[key])
+                      .join('&')
                 : '';
             response = axios.get(`${url}?${queryString}`, { responseType: 'blob' });
         } else {
@@ -98,8 +97,8 @@ class APICore {
         if (params) {
             queryString = params
                 ? Object.keys(params)
-                    .map((key) => key + '=' + params[key])
-                    .join('&')
+                      .map((key) => key + '=' + params[key])
+                      .join('&')
                 : '';
         }
 

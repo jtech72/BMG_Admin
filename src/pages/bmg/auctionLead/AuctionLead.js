@@ -4,18 +4,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getLeadActions } from '../../../redux/actions';
-import Pagination from '../../../helpers/Pagination'
+import Pagination from '../../../helpers/Pagination';
 const AuctionLead = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const LeadsData = store?.leadDataReducer?.leadData?.data
+    const LeadsData = store?.leadDataReducer?.leadData?.data;
 
-    console.log(store?.leadDataReducer?.leadData)
-    const LeadsLoading = store?.leadDataReducer?.loading
+    console.log(store?.leadDataReducer?.leadData);
+    const LeadsLoading = store?.leadDataReducer?.loading;
 
     const TotalRecords = store?.leadDataReducer?.leadData?.totalRecords;
-    console.log({ TotalRecords })
+    console.log({ TotalRecords });
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -25,9 +25,12 @@ const AuctionLead = () => {
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
-        dispatch(getLeadActions({ search: search, limit: pageSize, page: pageIndex }));
-    }, [dispatch, pageIndex, pageSize, search]);
+        const handler = setTimeout(() => {
+            dispatch(getLeadActions({ search, limit: pageSize, page: pageIndex }));
+        }, 500); // 500ms debounce
 
+        return () => clearTimeout(handler); // Cleanup on unmount or dependency change
+    }, [search, pageIndex, pageSize, dispatch]);
 
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -42,30 +45,30 @@ const AuctionLead = () => {
     // Format keys: Remove underscores, convert camelCase to words
     const formatKey = (key) => {
         return key
-            .replace(/_/g, " ") // Replace underscores
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Convert camelCase
+            .replace(/_/g, ' ') // Replace underscores
+            .replace(/([a-z])([A-Z])/g, '$1 $2') // Convert camelCase
             .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter
     };
 
     const formatDate = (dateString) => {
-        if (!dateString) return "";
+        if (!dateString) return '';
 
         const date = new Date(dateString);
-        return date.toLocaleString("en-US", {
-            weekday: "short",   // "Thu"
-            month: "short",     // "Feb"
-            day: "2-digit",     // "27"
-            year: "numeric",    // "2025"
-            hour: "2-digit",    // "12"
-            minute: "2-digit",  // "00"
-            hour12: true,       // "AM/PM"
+        return date.toLocaleString('en-US', {
+            weekday: 'short', // "Thu"
+            month: 'short', // "Feb"
+            day: '2-digit', // "27"
+            year: 'numeric', // "2025"
+            hour: '2-digit', // "12"
+            minute: '2-digit', // "00"
+            hour12: true, // "AM/PM"
         });
     };
     const isValidISODate = (value) => {
-        if (typeof value !== "string") return false; // Ensure it's a string before calling includes()
+        if (typeof value !== 'string') return false; // Ensure it's a string before calling includes()
 
         const date = new Date(value);
-        return !isNaN(date.getTime()) && value.includes("T");
+        return !isNaN(date.getTime()) && value.includes('T');
     };
 
     return (
@@ -83,8 +86,10 @@ const AuctionLead = () => {
             <Row>
                 <Col xs={12}>
                     <Card
-                        style={{ boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset' }}
-                    >
+                        style={{
+                            boxShadow:
+                                'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                        }}>
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
@@ -101,9 +106,8 @@ const AuctionLead = () => {
                                     {search && (
                                         <i
                                             className="mdi mdi-backspace-outline text-danger fs-3"
-                                            onClick={() => setSearch("")}
-                                            style={{ cursor: "pointer" }}
-                                        ></i>
+                                            onClick={() => setSearch('')}
+                                            style={{ cursor: 'pointer' }}></i>
                                     )}
                                 </div>
                             </div>
@@ -115,13 +119,14 @@ const AuctionLead = () => {
                             ) : (
                                 <>
                                     {LeadsData && LeadsData?.length > 0 ? (
-
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table table-hover bg-white">
                                                     <thead>
-                                                        <tr className="text-nowrap" style={{ color: '#703133' }}>
-                                                            <th scope="col"><i className="mdi mdi-merge"></i></th>
+                                                        <tr className="text-nowrap text-dark">
+                                                            <th scope="col">
+                                                                <i className="mdi mdi-merge"></i>
+                                                            </th>
                                                             <th scope="col">Product Id</th>
                                                             <th scope="col">Product Name</th>
                                                             <th scope="col">Brand</th>
@@ -134,112 +139,77 @@ const AuctionLead = () => {
                                                     <tbody>
                                                         {LeadsData?.map((data, index) => (
                                                             <tr
+                                                                style={{ cursor: 'pointer' }}
+                                                                onClick={() => handleProductClick(data?.productId)}
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
-                                                                <td className='text-uppercase fw-bold'>
+
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.productId?.productGenerateId ? (
-                                                                        <span>{data?.productId?.productGenerateId} </span>
+                                                                        <span>
+                                                                            {data?.productId?.productGenerateId}
+                                                                        </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
 
-                                                                <td
-                                                                    className="text-uppercase fw-bold"
-                                                                    style={{ cursor: 'pointer', color: 'crimson', transition: 'color 0.3s ease-in-out' }}
-                                                                    onMouseOver={(e) => e.target.style.color = 'rgb(10 207 151)'}
-                                                                    onMouseOut={(e) => e.target.style.color = 'crimson'}
-                                                                >
-                                                                    <OverlayTrigger
-                                                                        placement="left"
-                                                                        overlay={
-                                                                            <Tooltip id="overlay-example">
-                                                                                View Detail's
-                                                                            </Tooltip>
-                                                                        }>
-                                                                        <b>
-                                                                            {data?.productId?.Product_Name ? (
-                                                                                <span onClick={() => handleProductClick(data?.productId)}
-                                                                                >{data?.productId?.Product_Name} </span>
-                                                                            ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
-                                                                                    N/A
-                                                                                </span>
-                                                                            )}
-                                                                        </b>
-                                                                    </OverlayTrigger>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    <b>
+                                                                        {data?.productId?.Product_Name ? (
+                                                                            <span>{data?.productId?.Product_Name}</span>
+                                                                        ) : (
+                                                                            <span className="d-flex justify-content-center">
+                                                                                N/A
+                                                                            </span>
+                                                                        )}
+                                                                    </b>
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-primary'>
+
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.productId?.Brand ? (
-                                                                        <span>{data?.productId?.Brand} </span>
+                                                                        <span>{data?.productId?.Brand}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
-                                                                </td>
-                                                                <td className='text-uppercase fw-bold text-success'>
-                                                                    {data?.productId?.Ask_Price ? (
-                                                                        <span>$ {data?.productId?.Ask_Price} </span>
-                                                                    ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
 
-                                                                <td className='fw-bold'>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {data?.productId?.Ask_Price ? (
+                                                                        <span>$ {data?.productId?.Ask_Price}</span>
+                                                                    ) : (
+                                                                        <span className="d-flex justify-content-center">
+                                                                            N/A
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+
+                                                                <td className="fw-bold">
                                                                     {data?.userId ? (
                                                                         <span className="fw-semibold">
-                                                                            {`${data?.userId?.name || ""} ${data?.userId?.lastName || ""}`.trim() || "N/A"}
+                                                                            {`${data?.userId?.name || ''} ${
+                                                                                data?.userId?.lastName || ''
+                                                                            }`.trim() || 'N/A'}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="text-danger">N/A</span>
+                                                                        <span>N/A</span>
                                                                     )}
-
                                                                 </td>
-                                                                <td className='fw-bold text-info'>
+
+                                                                <td className="fw-bold">
                                                                     {data?.userId?.email ? (
-                                                                        <span>{data?.userId?.email} </span>
+                                                                        <span>{data?.userId?.email}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                {/* <td className='fw-bold'>
-                                                                    {data?.userId ? (
-                                                                        <span className={`badge ${data?.userId?.isVerified ? "bg-success" : "bg-danger"} px-3 py-2`}>
-                                                                            {data?.userId?.isVerified ? "✅ Verified" : "❌ Not Verified"}
-                                                                        </span>
-                                                                    ) : (
-                                                                        <span className="badge bg-secondary px-3 py-2">N/A</span>
-                                                                    )}
-
-                                                                </td> */}
-                                                                {/* <td>
-                                                            <OverlayTrigger
-                                                                placement="left"
-                                                                overlay={
-                                                                    <Tooltip id="overlay-example">
-                                                                        Send Mail
-                                                                    </Tooltip>
-                                                                }>
-                                                                <a href={`mailto:${data?.email}`}>
-                                                                    {data?.email ? (
-                                                                        data?.email
-                                                                    ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
-                                                                </a>
-                                                            </OverlayTrigger>
-                                                        </td> */}
-
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -250,9 +220,7 @@ const AuctionLead = () => {
                                         <div
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
-                                            <code className="fs-4">
-                                                No Lead's found.
-                                            </code>
+                                            <code className="fs-4">No Lead's found.</code>
                                         </div>
                                     )}
                                 </>
@@ -270,9 +238,12 @@ const AuctionLead = () => {
             </Row>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
-                <Modal.Header className='px-2 py-1 text-light' style={{ backgroundColor: '#008003' }}>
+                <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                     <Modal.Title className="fw-semibold">Product Details</Modal.Title>
-                    <i className="mdi mdi-close fs-3" onClick={() => setShowModal(false)} style={{ cursor: 'pointer' }}></i>
+                    <i
+                        className="mdi mdi-close fs-3"
+                        onClick={() => setShowModal(false)}
+                        style={{ cursor: 'pointer' }}></i>
                 </Modal.Header>
                 <Modal.Body>
                     {selectedProduct && (
@@ -287,9 +258,9 @@ const AuctionLead = () => {
                                                 alt={`Slide ${index}`}
                                                 className="d-block w-100 rounded"
                                                 style={{
-                                                    maxHeight: "400px",
-                                                    objectFit: "contain",
-                                                    boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                                                    maxHeight: '400px',
+                                                    objectFit: 'contain',
+                                                    boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
                                                 }}
                                             />
                                         </Carousel.Item>
@@ -297,13 +268,13 @@ const AuctionLead = () => {
                                 </Carousel>
                             )}
 
-
                             <Row className="border rounded p-3 bg-light">
                                 {Object.entries(selectedProduct)
-                                    .filter(([key, value]) =>
-                                        !["_id", "createdAt", "updatedAt", "image", "status"].includes(key) && // Remove unnecessary fields
-                                        !(typeof value === "string" && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
-                                        value // Ensure it's not empty
+                                    .filter(
+                                        ([key, value]) =>
+                                            !['_id', 'createdAt', 'updatedAt', 'image', 'status'].includes(key) && // Remove unnecessary fields
+                                            !(typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value)) && // Remove any 24-char hex ID
+                                            value // Ensure it's not empty
                                     )
                                     .map(([key, value]) => {
                                         let displayValue;
@@ -312,33 +283,53 @@ const AuctionLead = () => {
                                             displayValue = (
                                                 <ul className="mb-0">
                                                     {value
-                                                        .filter(item => !(typeof item === "string" && /^[0-9a-fA-F]{24}$/.test(item))) // Remove ID-like values inside arrays
+                                                        .filter(
+                                                            (item) =>
+                                                                !(
+                                                                    typeof item === 'string' &&
+                                                                    /^[0-9a-fA-F]{24}$/.test(item)
+                                                                )
+                                                        ) // Remove ID-like values inside arrays
                                                         .map((item, index) => (
-                                                            <li key={index}>{typeof item === "object" ? JSON.stringify(item, null, 2) : item}</li>
-                                                        ))}
-                                                </ul>
-                                            );
-                                        }
-                                        else if (typeof value === "object" && value !== null) {
-                                            displayValue = (
-                                                <ul className="mb-0">
-                                                    {Object.entries(value)
-                                                        .filter(([subKey, subValue]) =>
-                                                            !["_id", "createdAt", "updatedAt", "status", "image"].includes(subKey) &&
-                                                            !(typeof subValue === "string" && /^[0-9a-fA-F]{24}$/.test(subValue))
-                                                        )
-                                                        .map(([subKey, subValue]) => (
-                                                            <li key={subKey}>
-                                                                <strong>{formatKey(subKey)}:</strong> {isValidISODate(subValue) ? formatDate(subValue) : subValue}
+                                                            <li key={index}>
+                                                                {typeof item === 'object'
+                                                                    ? JSON.stringify(item, null, 2)
+                                                                    : item}
                                                             </li>
                                                         ))}
                                                 </ul>
                                             );
-                                        }
-                                        else if (typeof value === "string" && isValidISODate(value)) {
+                                        } else if (typeof value === 'object' && value !== null) {
+                                            displayValue = (
+                                                <ul className="mb-0">
+                                                    {Object.entries(value)
+                                                        .filter(
+                                                            ([subKey, subValue]) =>
+                                                                ![
+                                                                    '_id',
+                                                                    'createdAt',
+                                                                    'updatedAt',
+                                                                    'status',
+                                                                    'image',
+                                                                ].includes(subKey) &&
+                                                                !(
+                                                                    typeof subValue === 'string' &&
+                                                                    /^[0-9a-fA-F]{24}$/.test(subValue)
+                                                                )
+                                                        )
+                                                        .map(([subKey, subValue]) => (
+                                                            <li key={subKey}>
+                                                                <strong>{formatKey(subKey)}:</strong>{' '}
+                                                                {isValidISODate(subValue)
+                                                                    ? formatDate(subValue)
+                                                                    : subValue}
+                                                            </li>
+                                                        ))}
+                                                </ul>
+                                            );
+                                        } else if (typeof value === 'string' && isValidISODate(value)) {
                                             displayValue = formatDate(value);
-                                        }
-                                        else {
+                                        } else {
                                             displayValue = value;
                                         }
 
@@ -369,7 +360,7 @@ const AuctionLead = () => {
                 </Modal.Body>
             </Modal>
         </>
-    )
-}
+    );
+};
 
-export default AuctionLead
+export default AuctionLead;

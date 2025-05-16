@@ -1,5 +1,6 @@
 //Dashboard
 export const GET_DASHBOARD_DATA = '/api/admin/dashboard/getAllDashBoardData';
+export const GET_RECENT_REGISTRATIONS_FOR_DASHBOARD = '/api/admin/getAllrecentRegisterUsers';
 //category
 export const CREATE_CATEGORY = '';
 export const GET_CATEGORY = '/api/admin/subCategory/getAllSubCategories';
@@ -11,6 +12,7 @@ export const DELETE_CATEGORY = '';
 //product
 export const CREATE_PRODUCT = '';
 export const GET_PRODUCT = '/api/product/getAllProductsForAdmin';
+export const GET_SPECIFIC_PRODUCT = '/api/product/getProductDeatils';
 export const UPDATE_PRODUCT = '';
 export const DELETE_PRODUCT = '';
 

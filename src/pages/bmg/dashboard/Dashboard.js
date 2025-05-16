@@ -1,56 +1,115 @@
-import { useEffect } from "react";
-import { Row, Col, Card } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import PageTitle from "../../../helpers/PageTitle";
-import { getDashboardActions } from "../../../redux/actions";
-import { FaUsers, FaLayerGroup, FaTags, FaUserShield } from "react-icons/fa";
-import { Loading } from "../../../helpers/loader/Loading";
+import { useEffect, useState } from 'react';
+import { Row, Col, Card, Table } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import PageTitle from '../../../helpers/PageTitle';
+import { getDashboardActions, getRecentRegistrationsForDashboardActions } from '../../../redux/actions';
+import { FaUsers, FaLayerGroup, FaTags, FaUserShield, FaGavel, FaMoneyBillWave } from 'react-icons/fa';
+import { Loading } from '../../../helpers/loader/Loading';
+import { AiOutlineLineChart } from 'react-icons/ai';
+import Pagination from '../../../helpers/Pagination';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const store = useSelector((state) => state);
-  const dashboardData = store?.dashboardDataReducer?.dashboardData;
-  const dashboardLoading = store?.dashboardDataReducer?.loading;
-  const dispatch = useDispatch();
+    const store = useSelector((state) => state);
+    const dashboardData = store?.dashboardDataReducer?.dashboardData;
+    const getRecentRegistrationsForDashboard = store?.getRecentRegistrationsForDashboardReducer;
 
-  useEffect(() => {
-    dispatch(getDashboardActions());
-  }, [dispatch]);
+    const dashboardLoading = store?.dashboardDataReducer?.loading;
+    const dispatch = useDispatch();
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+    useEffect(() => {
+        dispatch(getDashboardActions());
+        dispatch(
+            getRecentRegistrationsForDashboardActions({
+                page,
+                limit,
+            })
+        );
+    }, [dispatch, page]);
 
-  const dashboardItems = [
-    { title: "Total Users", value: dashboardData?.totalUser, icon: <FaUsers />, color: "primary" },
-    { title: "Total Categories", value: dashboardData?.totalCategory, icon: <FaLayerGroup />, color: "success" },
-    { title: "Total Sub-Categories", value: dashboardData?.totalSubCategory, icon: <FaTags />, color: "info" },
-    { title: "Total Admins", value: dashboardData?.totalAdmin, icon: <FaUserShield />, color: "danger" },
-  ];
-
-  return (
-    <>
-      <PageTitle
-        breadCrumbItems={[
-          { label: "BMG Dashboard", path: "/bmg/dashboard" },
-          { label: "Dashboard", path: "/bmg/dashboard", active: true },
-        ]}
-        title={"Dashboard"}
-      />
-{dashboardLoading?<Loading/>:
-  <Row className="g-4 mt-3">
-  {dashboardItems?.map((item, index) => (
-    <Col key={index} md={6} lg={3}>
-      <Card className={`shadow border-0 bg-${item.color} text-white`}>
-        <Card.Body className="d-flex align-items-center justify-content-between">
-          <div>
-            <h6 className="fw-semibold">{item.title}</h6>
-            <h2 className="fw-bold">{item.value}</h2>
-          </div>
-          <div className="fs-1">{item.icon}</div>
-        </Card.Body>
-      </Card>
-    </Col>
-  ))}
-</Row>}
-    
-    </>
-  );
+    const dashboardItems = [
+        { title: 'Total Users', value: dashboardData?.totalUser, icon: <FaUsers />, color: '' },
+        { title: 'Total Categories', value: dashboardData?.totalCategory, icon: <FaLayerGroup />, color: '' },
+        { title: 'Total Sub-Categories', value: dashboardData?.totalSubCategory, icon: <FaTags />, color: '' },
+        { title: 'Total Admins', value: dashboardData?.totalAdmin, icon: <FaUserShield />, color: '' },
+        { title: 'Auction', value: dashboardData?.totalLiveAuction, icon: <FaGavel />, color: '' },
+        { title: 'Sales', value: dashboardData?.totalUpComingAuction, icon: <AiOutlineLineChart />, color: '' },
+    ];
+    const navigate = useNavigate();
+    console.log(getRecentRegistrationsForDashboard?.dashboardData, 'getRecentRegistrationsForDashboard?.dashboardData');
+    return (
+        <>
+            <PageTitle
+                breadCrumbItems={[
+                    { label: 'BMG Dashboard', path: '/bmg/dashboard' },
+                    { label: 'Dashboard', path: '/bmg/dashboard', active: true },
+                ]}
+                title={'Dashboard'}
+            />
+            {dashboardLoading ? (
+                <Loading />
+            ) : (
+                <Row className="g-4">
+                    {dashboardItems?.map((item, index) => (
+                        <Col key={index} md={6} lg={4}>
+                            <Card className={`shadow border-0 bg-${item.color} text-dark`}>
+                                <Card.Body className="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 className="fw-semibold">{item.title}</h6>
+                                        <h2 className="fw-bold">{item.value}</h2>
+                                    </div>
+                                    <div className="fs-1">{item.icon}</div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                    <div className="table-responsive">
+                        <Table bordered hover className="bg-white text-center">
+                            <thead className="">
+                                <tr className="text-nowrap text-secondary">
+                                    <th>
+                                        <i className="mdi mdi-merge"></i>
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Role</th>
+                                    {/* <th>Action</th> */}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {getRecentRegistrationsForDashboard?.dashboardData?.allUsers?.map((data, index) => (
+                                    <tr
+                                        style={{
+                                            cursor: 'pointer',
+                                        }}
+                                        key={data._id || index}
+                                        onClick={() => navigate(`/bmg/users/${data?._id}`)}
+                                        className="fw-bold">
+                                        <td>{index + 1}</td>
+                                        <td>{data?.name ? `${data?.name} ${data?.lastName}` : 'N/A'}</td>
+                                        <td>{data?.email ? `${data?.email}` : 'N/A'}</td>
+                                        <td>{data?.phoneNumber ? `${data?.phoneNumber}` : 'N/A'}</td>
+                                        <td>
+                                            <span className={`text-capitalize px-2 py-1`}>{data?.role}</span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                        <Pagination
+                            pageIndex={page}
+                            pageSize={limit}
+                            totalPages={getRecentRegistrationsForDashboard?.dashboardData?.totalPages}
+                            setPageIndex={setPage}
+                            onChangePageSize={setLimit}
+                        />
+                    </div>
+                </Row>
+            )}
+        </>
+    );
 };
 
 export default Dashboard;

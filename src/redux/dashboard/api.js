@@ -9,6 +9,13 @@ function getDashboardApi(params: any): any {
     return api.get(`${URL.GET_DASHBOARD_DATA}`);
 }
 
-export {
-    getDashboardApi
-};
+function recentRegistrationsForDashboardApi(data) {
+    const { page, limit } = data?.data;
+    console.log(data, 'datadata');
+    return api.get(`${URL.GET_RECENT_REGISTRATIONS_FOR_DASHBOARD}`, {
+        page: page || 1,
+        limit: limit || 10,
+    });
+}
+
+export { getDashboardApi, recentRegistrationsForDashboardApi };

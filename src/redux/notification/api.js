@@ -13,7 +13,8 @@ function getNotificationApi(params: any): any {
 function getNotificationByAdminApi(params: any): any {
     // const { search, limit, page, type } = params?.data;
     const { data } = params;
-    return api.get(`${URL.GET_NOTIFICATION_BY_ADMIN}`, data);
+    console.log(data, 'kjhjgfdgrftyguhjikl');
+    return api.get(`${URL.GET_NOTIFICATION_BY_ADMIN}?message=${data?.search}`);
 }
 
 function createNotificationApi(params: any): any {
