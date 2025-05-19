@@ -7,7 +7,6 @@ export const getNotificationActions = (data) => ({
     data,
 });
 export const getNotificationByAdminActions = (data) => {
-    console.log('lkjhgfdsdfgyhujikol');
     return {
         type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN,
         data,

@@ -30,14 +30,38 @@ const Notification = () => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
     const [apiCall, setApiCall] = useState(false);
+    // useEffect(() => {
+    //     // dispatch(getNotificationActions({ search, limit: pageSize, page: pageIndex, type: 'both' }));
+    //     dispatch(getNotificationByAdminActions({ search }));
+    // }, [dispatch, search, pageIndex, pageSize, apiCall]);
+
     useEffect(() => {
-        // dispatch(getNotificationActions({ search, limit: pageSize, page: pageIndex, type: 'both' }));
-        dispatch(getNotificationByAdminActions());
-    }, [dispatch, search, pageIndex, pageSize, apiCall]);
+        if (!search.trim()) {
+            // If search is empty, fetch default list immediately
+            dispatch(getNotificationByAdminActions({ search }));
+            return;
+        }
+
+        const delayDebounce = setTimeout(() => {
+            dispatch(getNotificationByAdminActions({ search }));
+        }, 200); // Debounce delay
+
+        return () => clearTimeout(delayDebounce);
+    }, [search, dispatch, pageIndex, pageSize]);
 
     const handleNotificationModal = (type, data = null) => {
         setNotificationModal({ type, data, isVisible: true });
     };
+    // useEffect(() => {
+    //     if (!search.trim()) return;
+
+    //     const delayDebounce = setTimeout(() => {
+    //         // ✅ Call your API or search logic here
+    //         console.log('Search triggered for:', search);
+    //     }, 200); // wait 200ms after user stops typing
+
+    //     return () => clearTimeout(delayDebounce);
+    // }, [search]);
 
     return (
         <>
@@ -117,7 +141,9 @@ const Notification = () => {
                                                     {/* </OverlayTrigger> */}
 
                                                     <td>
-                                                        <span
+                                                        <span>
+                                                            {data?.type}
+                                                            {/* <span
                                                             className={`badge ${
                                                                 data?.type === 'buyer'
                                                                     ? 'bg-info'
@@ -134,6 +160,7 @@ const Notification = () => {
                                                                 : data?.type === 'both'
                                                                 ? 'Both'
                                                                 : 'Unknown'}
+                                                        </span> */}
                                                         </span>
                                                     </td>
 
@@ -142,7 +169,7 @@ const Notification = () => {
                                                             className={`badge ${
                                                                 data?.status ? 'bg-success' : 'bg-danger'
                                                             } px-2 py-1`}>
-                                                            {data?.status ? '✅ Active' : '❌ Inactive'}
+                                                            {data?.status ? 'Active' : 'Inactive'}
                                                         </span>
                                                     </td>
 

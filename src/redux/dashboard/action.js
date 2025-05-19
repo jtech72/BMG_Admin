@@ -7,6 +7,10 @@ type AuthAction = { type: string, payload: {} | string };
 // Products
 export const getDashboardActions = (data): AuthAction => ({
     type: DashboardActionTypes.DASHBOARD_DATA_FIRST,
-    data
+    data,
 });
 
+export const getRecentRegistrationsForDashboardActions = (data): AuthAction => ({
+    type: DashboardActionTypes.RECENT_REGISTRATIONS_FOR_DASHBOARD,
+    data,
+});

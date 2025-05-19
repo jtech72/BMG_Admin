@@ -5,7 +5,7 @@ import Auth from './auth/reducers';
 
 import Layout from './layout/reducers';
 
-import { dashboardDataReducer } from './dashboard/reducers';
+import { dashboardDataReducer, getRecentRegistrationsForDashboardReducer } from './dashboard/reducers';
 import {
     categoryDataReducer,
     subCategoryDataReducer,
@@ -19,6 +19,7 @@ import {
     createProductDataReducer,
     updateProductDataReducer,
     deleteProductDataReducer,
+    specificProductDataReducer,
 } from './products/reducers';
 import { faqDataReducer, createFaqDataReducer, updateFaqDataReducer, deleteFaqDataReducer } from './faq/reducers';
 import { userDataReducer } from './user/reducers';
@@ -68,4 +69,6 @@ export default (combineReducers({
     updateComissionDataReducer,
     getPaidAuctionDataReducer,
     getNonPaidAuctionDataReducer,
+    getRecentRegistrationsForDashboardReducer,
+    specificProductDataReducer,
 }): any);

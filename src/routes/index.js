@@ -21,23 +21,26 @@ const Register = React.lazy(() => import('../pages/account/Register'));
 const Confirm = React.lazy(() => import('../pages/account/Confirm'));
 const ForgetPassword = React.lazy(() => import('../pages/account/ForgetPassword'));
 const LockScreen = React.lazy(() => import('../pages/account/LockScreen'));
-
-
+const PageDetails = React.lazy(() => import('../pages/bmg/products/ProductDetails/ProductDetails'));
 const Dashboard = React.lazy(() => import('../pages/bmg/dashboard/Dashboard'));
 
 //BMG pages
-const AuctionLead=React.lazy(()=>import('../pages/bmg/auctionLead/AuctionLead'))
-const Category=React.lazy(()=>import('../pages/bmg/categories/Categories'))
-const Products=React.lazy(()=>import('../pages/bmg/products/Products'))
-const Buyer_Seller=React.lazy(()=>import('../pages/bmg/buyer-seller/Buyer_Seller'))
-const Faq=React.lazy(()=>import('../pages/bmg/faq/Faq'))
-const Orders=React.lazy(()=>import('../pages/bmg/orders/Orders'))
-const Enquiry=React.lazy(()=>import('../pages/bmg/enquiry/Enquiry'))
-const Notification=React.lazy(()=>import('../pages/bmg/notification/Notification'))
-const Comission=React.lazy(()=>import('../pages/bmg/comission/Comission'))
-const SoldProducts=React.lazy(()=>import('../pages/bmg/soldProducts/SoldProducts'))
-const LiveBids=React.lazy(()=>import('../pages/bmg/liveBids/LiveBidMonitoring'))
-const Transactions=React.lazy(()=>import('../pages/bmg/transactions/Transactions'))
+const AuctionLead = React.lazy(() => import('../pages/bmg/auctionLead/AuctionLead'));
+const Category = React.lazy(() => import('../pages/bmg/categories/Categories'));
+const Products = React.lazy(() => import('../pages/bmg/products/Products'));
+// const Buyer_Seller = React.lazy(() => import('../pages/bmg/buyer-seller/Buyer_Seller'));
+const Seller = React.lazy(() => import('../pages/bmg/Seller/Seller'));
+const Buyer = React.lazy(() => import('../pages/bmg/Buyer/Buyer'));
+const Faq = React.lazy(() => import('../pages/bmg/faq/Faq'));
+const Orders = React.lazy(() => import('../pages/bmg/orders/Orders'));
+const Enquiry = React.lazy(() => import('../pages/bmg/enquiry/Enquiry'));
+const Notification = React.lazy(() => import('../pages/bmg/notification/Notification'));
+const Comission = React.lazy(() => import('../pages/bmg/comission/Comission'));
+const SoldProducts = React.lazy(() => import('../pages/bmg/soldProducts/SoldProducts'));
+const LiveBids = React.lazy(() => import('../pages/bmg/liveBids/LiveBidMonitoring'));
+const LiveBidsMonitoring = React.lazy(() => import('../pages/bmg/liveBids/liveBidsMonitoring/LiveBidsMonitoring'));
+const Transactions = React.lazy(() => import('../pages/bmg/transactions/Transactions'));
+const UserDetails = React.lazy(() => import('../pages/bmg/UserDetails/UserDetails'));
 
 // error handlers
 const ErrorPageNotFound = React.lazy(() => import('../pages/error/PageNotFound'));
@@ -134,14 +137,29 @@ const AllRoutes = () => {
                             path: 'categories',
                             element: <LoadComponent component={Category} />,
                         },
-                       
                         {
                             path: 'items',
                             element: <LoadComponent component={Products} />,
                         },
                         {
-                            path: 'users',
-                            element: <LoadComponent component={Buyer_Seller} />,
+                            path: 'items/:id',
+                            element: <LoadComponent component={PageDetails} />,
+                        },
+                        // {
+                        //     path: 'users',
+                        //     element: <LoadComponent component={Buyer_Seller} />,
+                        // },
+                        {
+                            path: 'buyers',
+                            element: <LoadComponent component={Buyer} />,
+                        },
+                        {
+                            path: 'sellers',
+                            element: <LoadComponent component={Seller} />,
+                        },
+                        {
+                            path: 'users/:id',
+                            element: <LoadComponent component={UserDetails} />,
                         },
                         {
                             path: 'faq',
@@ -172,11 +190,13 @@ const AllRoutes = () => {
                             element: <LoadComponent component={LiveBids} />,
                         },
                         {
+                            path: 'live-bids/live-monitoring/:id',
+                            element: <LoadComponent component={LiveBidsMonitoring} />,
+                        },
+                        {
                             path: 'transactions',
                             element: <LoadComponent component={Transactions} />,
                         },
-                       
-
                     ],
                 },
             ],

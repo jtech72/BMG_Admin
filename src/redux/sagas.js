@@ -16,7 +16,19 @@ import comissionSaga from './commision/saga';
 import transactionSaga from './transactions/saga';
 
 export default function* rootSaga(): any {
-    yield all([authSaga(), layoutSaga(), dashboardSaga(), categorySaga(), productSaga(),
-    userSaga(), leadSaga(), faqSaga(), orderSaga(), enquirySaga(), notificationSaga(), comissionSaga(), transactionSaga()]);
-
+    yield all([
+        authSaga(),
+        layoutSaga(),
+        dashboardSaga(),
+        categorySaga(),
+        productSaga(),
+        userSaga(),
+        leadSaga(),
+        faqSaga(),
+        orderSaga(),
+        enquirySaga(),
+        notificationSaga(),
+        comissionSaga(),
+        transactionSaga(),
+    ]);
 }

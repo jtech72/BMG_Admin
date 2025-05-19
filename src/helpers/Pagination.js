@@ -23,14 +23,19 @@ const Pagination = ({ pageIndex, pageSize, totalPages, setPageIndex, onChangePag
                     }}
                     className="form-select d-inline-block w-auto">
                     {[10, 20, 50, 100].map((size) => (
-                        <option key={size} value={size}>{size}</option>
+                        <option key={size} value={size}>
+                            {size}
+                        </option>
                     ))}
                 </select>
             </div>
 
             {/* Page Info */}
             <span className="me-3">
-                Page <strong>{pageIndex} of {totalPages}</strong>
+                Page{' '}
+                <strong>
+                    {pageIndex} of {totalPages}
+                </strong>
             </span>
 
             {/* Go to Page Input */}
@@ -55,7 +60,9 @@ const Pagination = ({ pageIndex, pageSize, totalPages, setPageIndex, onChangePag
                 {/* Previous Button */}
                 {pageIndex > 1 && (
                     <li className="page-item" onClick={() => setPageIndex(pageIndex - 1)}>
-                        <Link to="#" className="page-link">Previous</Link>
+                        <Link to="#" className="page-link">
+                            Previous
+                        </Link>
                     </li>
                 )}
 
@@ -68,13 +75,26 @@ const Pagination = ({ pageIndex, pageSize, totalPages, setPageIndex, onChangePag
 
                     if (totalPages <= 5 || isNearCurrent || isEdgePage) {
                         return (
-                            <li key={page} className={`page-item ${isCurrentPage ? 'active' : ''}`}
+                            <li
+                                key={page}
+                                className={`page-item ${isCurrentPage ? 'active' : ''}`}
                                 onClick={() => setPageIndex(page)}>
-                                <Link to="#" className="page-link">{page}</Link>
+                                <Link to="#" className="page-link">
+                                    {page}
+                                </Link>
                             </li>
                         );
-                    } else if ((page === 2 && pageIndex >= 5) || (page === totalPages - 1 && pageIndex <= totalPages - 4)) {
-                        return <li key={page} className="page-item disabled"><Link to="#" className="page-link px-0">...</Link></li>;
+                    } else if (
+                        (page === 2 && pageIndex >= 5) ||
+                        (page === totalPages - 1 && pageIndex <= totalPages - 4)
+                    ) {
+                        return (
+                            <li key={page} className="page-item disabled">
+                                <Link to="#" className="page-link px-0">
+                                    ...
+                                </Link>
+                            </li>
+                        );
                     }
 
                     return null;
@@ -83,7 +103,9 @@ const Pagination = ({ pageIndex, pageSize, totalPages, setPageIndex, onChangePag
                 {/* Next Button */}
                 {pageIndex < totalPages && (
                     <li className="page-item" onClick={() => setPageIndex(pageIndex + 1)}>
-                        <Link to="#" className="page-link">Next</Link>
+                        <Link to="#" className="page-link">
+                            Next
+                        </Link>
                     </li>
                 )}
             </ul>

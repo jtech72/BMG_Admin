@@ -4,17 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getProductActions } from '../../../redux/actions';
-import Pagination from '../../../helpers/Pagination'
+import Pagination from '../../../helpers/Pagination';
 const Products = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const [type, setType] = useState('Auction')
-    const [productType, setProductType] = useState('ongoing')
-    const ProductsData = store?.productDataReducer?.productData?.result
-    console.log(ProductsData)
-    const ProductsLoading = store?.productDataReducer?.loading
-
+    const [type, setType] = useState('Auction');
+    const [productType, setProductType] = useState('ongoing');
+    const ProductsData = store?.productDataReducer?.productData?.result;
+    console.log(ProductsData);
+    const ProductsLoading = store?.productDataReducer?.loading;
 
     const TotalRecords = store?.productDataReducer?.productData?.totalRecords || 0;
     const auctionCounts = store?.productDataReducer?.productData?.auctionCounts || {};
@@ -29,24 +28,28 @@ const Products = () => {
         unsold: unSoldCounts,
     } = auctionCounts;
 
-    const {
-        total: SaleCounts,
-        sold: soldSaleCounts,
-        unsold: unsoldSaleCounts,
-    } = saleCounts || {};
+    const { total: SaleCounts, sold: soldSaleCounts, unsold: unsoldSaleCounts } = saleCounts || {};
 
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
-    console.log('making build console for checking')
+    console.log('making build console for checking');
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
     useEffect(() => {
-        dispatch(getProductActions({ search: search, limit: pageSize, page: pageIndex, type: type, productType: type !== 'Draft' ? productType : '', publish: type !== 'Draft' ? true : false }));
+        dispatch(
+            getProductActions({
+                search: search,
+                limit: pageSize,
+                page: pageIndex,
+                type: type == 'Direct Sale' ? 'Sale' : type,
+                productType: type !== 'Draft' ? productType : '',
+                publish: type !== 'Draft' ? true : false,
+            })
+        );
     }, [dispatch, pageIndex, pageSize, search, type, productType]);
-
 
     const [showModal, setShowModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -61,14 +64,17 @@ const Products = () => {
     // Function to format keys into human-readable format
     const formatKey = (key) => {
         switch (key) {
-            case "categoryId":
-                return "Category Name";
-            case "subCategoryId":
-                return "Subcategory Name";
+            case 'categoryId':
+                return 'Category Name';
+            case 'subCategoryId':
+                return 'Subcategory Name';
             // Add more custom labels if needed
             default:
                 // Convert camelCase or snake_case to readable words
-                return key.replace(/([A-Z])/g, ' $1').replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                return key
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/[_-]/g, ' ')
+                    .replace(/\b\w/g, (c) => c.toUpperCase());
         }
     };
 
@@ -86,8 +92,8 @@ const Products = () => {
     // Function to format values (including nested objects and dates)
     const formatValue = (value, key) => {
         // Handle categoryId and subCategoryId specifically
-        if (key === "categoryId" || key === "subCategoryId") {
-            return value?.name || value?.subCategoryName || "N/A"; // Display the name or "N/A" if not available
+        if (key === 'categoryId' || key === 'subCategoryId') {
+            return value?.name || value?.subCategoryName || 'N/A'; // Display the name or "N/A" if not available
         }
 
         if (typeof value === 'object' && value !== null) {
@@ -105,50 +111,65 @@ const Products = () => {
 
         // Check if the value is a valid date string
         if (isDateString(value)) {
-            const dateOnly = new Date(value).toISOString().split("T")[0];
+            const dateOnly = new Date(value).toISOString().split('T')[0];
             return dateOnly;
         }
 
         return value;
     };
-    const excludedKeys = ["_id", "createdAt", "updatedAt", "image", "categoryId", "subCategoryId", "soldStatus", "status", "userId", "publish", "negotiable", "productGenerateId", "endBidDateTime", "startBidDateTime", "buyerId"];
-
+    const excludedKeys = [
+        '_id',
+        'createdAt',
+        'updatedAt',
+        'image',
+        'categoryId',
+        'subCategoryId',
+        'soldStatus',
+        'status',
+        'userId',
+        'publish',
+        'negotiable',
+        'productGenerateId',
+        'endBidDateTime',
+        'startBidDateTime',
+        'buyerId',
+    ];
 
     const formatDate = (dateString) => {
-        if (!dateString) return "";
+        if (!dateString) return '';
 
         const date = new Date(dateString);
-        return date.toLocaleString("en-US", {
-            weekday: "short",   // "Thu"
-            month: "short",     // "Feb"
-            day: "2-digit",     // "27"
-            year: "numeric",    // "2025"
-            hour: "2-digit",    // "12"
-            minute: "2-digit",  // "00"
-            hour12: true,       // "AM/PM"
+        return date.toLocaleString('en-US', {
+            weekday: 'short', // "Thu"
+            month: 'short', // "Feb"
+            day: '2-digit', // "27"
+            year: 'numeric', // "2025"
+            hour: '2-digit', // "12"
+            minute: '2-digit', // "00"
+            hour12: true, // "AM/PM"
         });
     };
     const isValidISODate = (value) => {
-        if (typeof value !== "string") return false; // Ensure it's a string before calling includes()
+        if (typeof value !== 'string') return false; // Ensure it's a string before calling includes()
 
         const date = new Date(value);
-        return !isNaN(date.getTime()) && value.includes("T");
+        return !isNaN(date.getTime()) && value.includes('T');
     };
-    const types = ['Auction', 'Sale'];
+    const types = ['Auction', 'Direct Sale'];
     // const types = ['Auction', 'Sale', 'Draft'];
     const productTypes = ['ongoing', 'upcoming', 'sold', 'unsold'];
 
     useEffect(() => {
         if (type === 'Auction') {
-            setProductType('ongoing')
-        } else if (type === 'Sale') {
-            setProductType('sold')
+            setProductType('ongoing');
+        } else if (type === 'Direct Sale') {
+            setProductType('sold');
         }
     }, [type]);
 
     return (
         <>
-            <PageTitle
+            {/* <PageTitle
                 breadCrumbItems={[
                     {
                         label: 'Item',
@@ -157,12 +178,12 @@ const Products = () => {
                     },
                 ]}
                 title={'Item'}
-            />
+            /> */}
             <Row className="mb-2 ms-1 border-bottom pb-1">
                 {types?.map((item) => {
                     let count = '';
                     if (item === 'Auction') count = AuctionCounts ?? '';
-                    if (item === 'Sale') count = SaleCounts ?? '';
+                    if (item === 'Direct Sale') count = SaleCounts ?? '';
                     if (item === 'Draft') count = DraftCount ?? '';
 
                     return (
@@ -177,12 +198,9 @@ const Products = () => {
                                 fontSize: '1rem',
                                 fontWeight: '600',
                             }}
-                            onClick={() => setType(item)}
-                        >
+                            onClick={() => setType(item)}>
                             {item.charAt(0).toUpperCase() + item.slice(1)}{' '}
-                            {count !== '' && (
-                                <span className="badge bg-secondary text-light ms-1">{count}</span>
-                            )}
+                            {count !== '' && <span className="badge bg-secondary text-light ms-1">{count}</span>}
                         </Col>
                     );
                 })}
@@ -191,7 +209,7 @@ const Products = () => {
             {type !== 'Draft' && (
                 <Row className="mb-3 ms-1 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
                     {productTypes.map((item) => {
-                        if (type === 'Sale' && item !== 'sold' && item !== 'unsold') return null;
+                        if (type === 'Direct Sale' && item !== 'sold' && item !== 'unsold') return null;
 
                         let count = '';
                         if (type === 'Auction') {
@@ -199,7 +217,7 @@ const Products = () => {
                             if (item === 'upcoming') count = upcomingCounts ?? '';
                             if (item === 'sold') count = soldCounts ?? '';
                             if (item === 'unsold') count = unSoldCounts ?? '';
-                        } else if (type === 'Sale') {
+                        } else if (type === 'Direct Sale') {
                             if (item === 'sold') count = soldSaleCounts ?? '';
                             if (item === 'unsold') count = unsoldSaleCounts ?? '';
                         }
@@ -217,24 +235,22 @@ const Products = () => {
                                     fontWeight: '500',
                                     borderRadius: '20px',
                                 }}
-                                onClick={() => setProductType(item)}
-                            >
+                                onClick={() => setProductType(item)}>
                                 {item.charAt(0).toUpperCase() + item.slice(1)}{' '}
-                                {count !== '' && (
-                                    <span className="badge bg-secondary ms-1">{count}</span>
-                                )}
+                                {count !== '' && <span className="badge bg-secondary ms-1">{count}</span>}
                             </Col>
                         );
                     })}
                 </Row>
             )}
 
-
             <Row>
                 <Col xs={12}>
                     <Card
-                        style={{ boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset' }}
-                    >
+                        style={{
+                            boxShadow:
+                                'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                        }}>
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
@@ -251,9 +267,8 @@ const Products = () => {
                                     {search && (
                                         <i
                                             className="mdi mdi-backspace-outline text-danger fs-3"
-                                            onClick={() => setSearch("")}
-                                            style={{ cursor: "pointer" }}
-                                        ></i>
+                                            onClick={() => setSearch('')}
+                                            style={{ cursor: 'pointer' }}></i>
                                     )}
                                 </div>
                             </div>
@@ -264,13 +279,14 @@ const Products = () => {
                             ) : (
                                 <>
                                     {ProductsData && ProductsData.length > 0 ? (
-
                                         <>
                                             <div className="table-responsive">
                                                 <table className="table table-striped bg-white ">
                                                     <thead>
                                                         <tr className="text-nowrap" style={{ color: '#703133' }}>
-                                                            <th scope="col"><i className="mdi mdi-merge"></i></th>
+                                                            <th scope="col">
+                                                                <i className="mdi mdi-merge"></i>
+                                                            </th>
                                                             <th scope="col">Product Id</th>
                                                             <th scope="col">Serial No</th>
                                                             <th scope="col">Product Name</th>
@@ -281,12 +297,10 @@ const Products = () => {
                                                     </thead>
                                                     <tbody>
                                                         {ProductsData?.map((data, index) => (
-                                                            <tr
-                                                                key={index}
-                                                                className="text-dark fw-bold text-nowrap">
+                                                            <tr key={index} className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
                                                                 {console.log({ data })}
-                                                                <td className='text-uppercase fw-bold'>
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.productGenerateId ? (
                                                                         <span>{data?.productGenerateId} </span>
                                                                     ) : (
@@ -295,7 +309,7 @@ const Products = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-info'>
+                                                                <td className="text-uppercase fw-bold text-info">
                                                                     {data?.Serial_No ? (
                                                                         <span>{data?.Serial_No} </span>
                                                                     ) : (
@@ -307,10 +321,17 @@ const Products = () => {
 
                                                                 <td
                                                                     className="text-uppercase fw-bold"
-                                                                    style={{ cursor: 'pointer', color: 'crimson', transition: 'color 0.3s ease-in-out' }}
-                                                                    onMouseOver={(e) => e.target.style.color = 'rgb(10 207 151)'}
-                                                                    onMouseOut={(e) => e.target.style.color = 'crimson'}
-                                                                >
+                                                                    style={{
+                                                                        cursor: 'pointer',
+                                                                        color: 'crimson',
+                                                                        transition: 'color 0.3s ease-in-out',
+                                                                    }}
+                                                                    onMouseOver={(e) =>
+                                                                        (e.target.style.color = 'rgb(10 207 151)')
+                                                                    }
+                                                                    onMouseOut={(e) =>
+                                                                        (e.target.style.color = 'crimson')
+                                                                    }>
                                                                     <OverlayTrigger
                                                                         placement="left"
                                                                         overlay={
@@ -320,8 +341,13 @@ const Products = () => {
                                                                         }>
                                                                         <b>
                                                                             {data?.Product_Name ? (
-                                                                                <span onClick={() => handleProductClick(data)}
-                                                                                >{data?.Product_Name?.slice(0, 30) + '...'} </span>
+                                                                                <span
+                                                                                    onClick={() =>
+                                                                                        handleProductClick(data)
+                                                                                    }>
+                                                                                    {data?.Product_Name?.slice(0, 30) +
+                                                                                        '...'}{' '}
+                                                                                </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -330,7 +356,7 @@ const Products = () => {
                                                                         </b>
                                                                     </OverlayTrigger>
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-primary'>
+                                                                <td className="text-uppercase fw-bold text-primary">
                                                                     {data?.Brand ? (
                                                                         <span>{data?.Brand} </span>
                                                                     ) : (
@@ -339,7 +365,7 @@ const Products = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-success'>
+                                                                <td className="text-uppercase fw-bold text-success">
                                                                     {data?.Ask_Price ? (
                                                                         <span>$ {data?.Ask_Price} </span>
                                                                     ) : (
@@ -349,8 +375,8 @@ const Products = () => {
                                                                     )}
                                                                 </td>
 
-                                                                {type === 'Auction' &&
-                                                                    <td className='text-uppercase fw-bold text-success'>
+                                                                {type === 'Auction' && (
+                                                                    <td className="text-uppercase fw-bold text-success">
                                                                         {data?.Start_Bid_Price ? (
                                                                             <span>$ {data?.Start_Bid_Price} </span>
                                                                         ) : (
@@ -358,7 +384,8 @@ const Products = () => {
                                                                                 N/A
                                                                             </span>
                                                                         )}
-                                                                    </td>}
+                                                                    </td>
+                                                                )}
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -369,9 +396,7 @@ const Products = () => {
                                         <div
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
-                                            <code className="fs-4">
-                                                No Product's found.
-                                            </code>
+                                            <code className="fs-4">No Product's found.</code>
                                         </div>
                                     )}
                                 </>
@@ -386,12 +411,15 @@ const Products = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row >
+            </Row>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
-                <Modal.Header className='px-2 py-1 text-light' style={{ backgroundColor: '#008003' }}>
+                <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                     <Modal.Title className="fw-semibold">Product Details</Modal.Title>
-                    <i className="mdi mdi-close fs-3" onClick={() => setShowModal(false)} style={{ cursor: 'pointer' }}></i>
+                    <i
+                        className="mdi mdi-close fs-3"
+                        onClick={() => setShowModal(false)}
+                        style={{ cursor: 'pointer' }}></i>
                 </Modal.Header>
                 <Modal.Body>
                     {selectedProduct && (
@@ -406,9 +434,9 @@ const Products = () => {
                                                 alt={`Slide ${index}`}
                                                 className="d-block w-100 rounded"
                                                 style={{
-                                                    maxHeight: "400px",
-                                                    objectFit: "contain",
-                                                    boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                                                    maxHeight: '400px',
+                                                    objectFit: 'contain',
+                                                    boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
                                                 }}
                                             />
                                         </Carousel.Item>
@@ -430,14 +458,12 @@ const Products = () => {
                                         </Col>
                                     ))}
                             </Row>
-
-
                         </Container>
                     )}
                 </Modal.Body>
             </Modal>
         </>
-    )
-}
+    );
+};
 
-export default Products
+export default Products;

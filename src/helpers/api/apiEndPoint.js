@@ -1,5 +1,6 @@
 //Dashboard
 export const GET_DASHBOARD_DATA = '/api/admin/dashboard/getAllDashBoardData';
+export const GET_RECENT_REGISTRATIONS_FOR_DASHBOARD = '/api/admin/getAllrecentRegisterUsers';
 //category
 export const CREATE_CATEGORY = '';
 export const GET_CATEGORY = '/api/admin/subCategory/getAllSubCategories';
@@ -11,6 +12,7 @@ export const DELETE_CATEGORY = '';
 //product
 export const CREATE_PRODUCT = '';
 export const GET_PRODUCT = '/api/product/getAllProductsForAdmin';
+export const GET_SPECIFIC_PRODUCT = '/api/product/getProductDeatils';
 export const UPDATE_PRODUCT = '';
 export const DELETE_PRODUCT = '';
 
@@ -21,7 +23,7 @@ export const GET_BUYER_SELLER = '/api/admin/seller/getAllBuyerOrSeller';
 //leads
 export const GET_AUCTION_LEAD = '/api/lead/getLead';
 export const GET_AUCTION_SOLD_PRODUCT = '/api/admin/admin/getAuctionSoldProductDeatilsForAmdmin';
-export const GET_LIVE_BIDS = '/api/admin/admin/showLiveAuctionBidForAdmin';
+export const GET_LIVE_BIDS = '/api/admin/showLiveAuctionBidForAdmin';
 
 //orders
 export const GET_ORDERS = '/api/admin/order/getAllOrderDetails';
