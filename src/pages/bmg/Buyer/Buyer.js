@@ -5,7 +5,6 @@ import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getBuyerSellerActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination';
-import Tab from './tabs/Tab';
 import { useLocation } from 'react-router-dom';
 const Buyer_Seller = () => {
     const store = useSelector((state) => state);
@@ -35,22 +34,12 @@ const Buyer_Seller = () => {
                 search: search,
                 limit: pageSize,
                 page: pageIndex,
-                type: location.pathname === '/bmg/buyers' ? 'buyer' : 'seller',
+                type: 'buyer',
             })
         );
     }, [dispatch, pageSize, search, pageIndex]);
     return (
         <>
-            {/* <PageTitle
-                breadCrumbItems={[
-                    {
-                        label: `${activeTab === 0 ? 'Buyers' : 'Sellers'}`,
-                        path: '/bmg/users',
-                        active: true,
-                    },
-                ]}
-                title={'Users'}
-            /> */}
             <Row>
                 <Col lg={6} className="d-flex justify-content-start ">
                     {/* <Tab connectTab={connectTab} /> */}
@@ -64,7 +53,7 @@ const Buyer_Seller = () => {
                             className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
                             // onClick={() => handleClick('Sellers', 1)}
                         >
-                            {location?.pathname == '/bmg/sellers' ? `Seller` : 'Buyers'}
+                            Buyers
                         </div>
                     </div>
                 </Col>
@@ -79,8 +68,7 @@ const Buyer_Seller = () => {
                                 <Card.Body className="text-center">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <span className="px-3 py-1 bg-dark text-light rounded">
-                                            Total {location?.pathname == '/bmg/sellers' ? `Seller` : 'Buyers'}:{' '}
-                                            {TotalRecords || 0}
+                                            Total Buyers: {TotalRecords || 0}
                                         </span>
                                         <div className="d-flex">
                                             <input

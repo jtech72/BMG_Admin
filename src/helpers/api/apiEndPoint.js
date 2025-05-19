@@ -23,7 +23,7 @@ export const GET_BUYER_SELLER = '/api/admin/seller/getAllBuyerOrSeller';
 //leads
 export const GET_AUCTION_LEAD = '/api/lead/getLead';
 export const GET_AUCTION_SOLD_PRODUCT = '/api/admin/admin/getAuctionSoldProductDeatilsForAmdmin';
-export const GET_LIVE_BIDS = '/api/admin/admin/showLiveAuctionBidForAdmin';
+export const GET_LIVE_BIDS = '/api/admin/showLiveAuctionBidForAdmin';
 
 //orders
 export const GET_ORDERS = '/api/admin/order/getAllOrderDetails';

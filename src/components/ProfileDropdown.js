@@ -35,12 +35,10 @@ const ProfileDropdown = (props: ProfileDropdownProps, state: ProfileDropdownStat
     return (
         <Dropdown show={dropdownOpen} onToggle={toggleDropdown}>
             <Dropdown.Toggle
-                variant="link"
-                id="dropdown-profile"
-                as={Link}
-                to="#"
-                onClick={toggleDropdown}
-                className="nav-link dropdown-toggle nav-user arrow-none me-0">
+                as="button"
+                type="button"
+                className="nav-link dropdown-toggle nav-user arrow-none me-0"
+                onClick={toggleDropdown}>
                 <span className="account-user-avatar">
                     <img src={profilePic} className="rounded-circle" alt="user" />
                 </span>

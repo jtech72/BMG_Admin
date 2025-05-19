@@ -168,12 +168,12 @@ const MENU_ITEMS = [
         children: [
             { key: 'leads', label: 'Auction Leads', url: '/bmg/leads', parentKey: 'Seller' },
             { key: 'live-bids', label: 'Live Bids', url: '/bmg/live-bids', parentKey: 'Seller' },
-            { key: 'categories', label: 'Categories', url: '/bmg/categories', parentKey: 'Seller' },
+            // { key: 'categories', label: 'Categories', url: '/bmg/categories', parentKey: 'Seller' },
             { key: 'items', label: 'Items', url: '/bmg/items', parentKey: 'Seller' },
             { key: 'sold-items', label: 'Sold Items', url: '/bmg/sold-items', parentKey: 'Seller' },
             { key: 'orders', label: 'Orders', url: '/bmg/orders', parentKey: 'Seller' },
             { key: 'transactions', label: 'Transactions', url: '/bmg/transactions', parentKey: 'Seller' },
-            { key: 'platform-charges', label: 'Platform Charges', url: '/bmg/platform-charges', parentKey: 'Seller' },
+            { key: 'seller', label: 'Seller-List', url: '/bmg/sellers', parentKey: 'Seller' },
         ],
     },
 
@@ -183,9 +183,10 @@ const MENU_ITEMS = [
         icon: 'mdi mdi-store-outline',
         children: [
             // { key: 'analytics', label: 'Analytics', url: '/dashboard/analytics', parentKey: 'Buyer' },
-            { key: 'faq', label: 'Faq', url: '/bmg/faq', parentKey: 'Buyer' },
-            { key: 'notification', label: 'Notification', url: '/bmg/notification', parentKey: 'Buyer' },
-            { key: 'enquiry', label: 'Enquiry', url: '/bmg/enquiry', parentKey: 'Buyer' },
+            // { key: 'faq', label: 'Faq', url: '/bmg/faq', parentKey: 'Buyer' },
+            // { key: 'notification', label: 'Notification', url: '/bmg/notification', parentKey: 'Buyer' },
+            // { key: 'enquiry', label: 'Enquiry', url: '/bmg/enquiry', parentKey: 'Buyer' },
+            { key: 'buyer', label: 'Buyer-List', url: '/bmg/buyers', parentKey: 'Buyer' },
         ],
     },
 
@@ -195,6 +196,14 @@ const MENU_ITEMS = [
         isTitle: false,
         icon: 'mdi mdi-cog',
         url: '/bmg/leads',
+        children: [
+            { key: 'platform-charges', label: 'Platform Charges', url: '/bmg/platform-charges', parentKey: 'Settings' },
+            // { key: 'analytics', label: 'Analytics', url: '/dashboard/analytics', parentKey: 'Buyer' },
+            { key: 'faq', label: 'Faq', url: '/bmg/faq', parentKey: 'Settings' },
+            { key: 'notification', label: 'Notification', url: '/bmg/notification', parentKey: 'Settings' },
+            { key: 'enquiry', label: 'Enquiry', url: '/bmg/enquiry', parentKey: 'Settings' },
+            { key: 'categories', label: 'Categories', url: '/bmg/categories', parentKey: 'Settings' },
+        ],
     },
 ];
 

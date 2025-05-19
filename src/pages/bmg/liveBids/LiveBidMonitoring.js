@@ -8,6 +8,7 @@ import Pagination from '../../../helpers/Pagination';
 import SellerDetailsModal from './SellerDetailsModal/SellerDetailsModal';
 import { BsInfoCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { FaRegEye } from 'react-icons/fa6';
 
 const LiveBidMonitoring = () => {
     const store = useSelector((state) => state);
@@ -192,24 +193,9 @@ const LiveBidMonitoring = () => {
                                                                     className="text-uppercase fw-bold"
                                                                     // style={{ cursor: 'pointer' }}
                                                                 >
-                                                                    {/* <OverlayTrigger
-                                                                        placement="left"
-                                                                        overlay={
-                                                                            <Tooltip id="overlay-example">
-                                                                                View Detail's
-                                                                            </Tooltip>
-                                                                        }> */}
                                                                     <b>
                                                                         {data?.product?.Product_Name ? (
-                                                                            <span
-                                                                            // onClick={() =>
-                                                                            //     handleProductClick(
-                                                                            //         data?.product
-                                                                            //     )
-                                                                            // }
-                                                                            >
-                                                                                {data?.product?.Product_Name}
-                                                                            </span>
+                                                                            <span>{data?.product?.Product_Name}</span>
                                                                         ) : (
                                                                             <span className="d-flex justify-content-center">
                                                                                 N/A
@@ -277,6 +263,22 @@ const LiveBidMonitoring = () => {
                                                                     )}
                                                                 </td>
                                                                 <td className="fw-bold">
+                                                                    <FaRegEye
+                                                                        onClick={() => {
+                                                                            navigate(
+                                                                                `/bmg/live-bids/live-monitoring/${data?.product?._id}`,
+                                                                                {
+                                                                                    state: { product: data?.product },
+                                                                                }
+                                                                            );
+                                                                        }}
+                                                                        size={18}
+                                                                        cursor={'pointer'}
+                                                                        style={{
+                                                                            color: '#0d6efd', // optional: makes it look like a link/info icon
+                                                                        }}
+                                                                    />
+
                                                                     <BsInfoCircle
                                                                         size={18}
                                                                         onClick={() =>

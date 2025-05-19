@@ -28,7 +28,9 @@ const Dashboard = React.lazy(() => import('../pages/bmg/dashboard/Dashboard'));
 const AuctionLead = React.lazy(() => import('../pages/bmg/auctionLead/AuctionLead'));
 const Category = React.lazy(() => import('../pages/bmg/categories/Categories'));
 const Products = React.lazy(() => import('../pages/bmg/products/Products'));
-const Buyer_Seller = React.lazy(() => import('../pages/bmg/buyer-seller/Buyer_Seller'));
+// const Buyer_Seller = React.lazy(() => import('../pages/bmg/buyer-seller/Buyer_Seller'));
+const Seller = React.lazy(() => import('../pages/bmg/Seller/Seller'));
+const Buyer = React.lazy(() => import('../pages/bmg/Buyer/Buyer'));
 const Faq = React.lazy(() => import('../pages/bmg/faq/Faq'));
 const Orders = React.lazy(() => import('../pages/bmg/orders/Orders'));
 const Enquiry = React.lazy(() => import('../pages/bmg/enquiry/Enquiry'));
@@ -36,6 +38,7 @@ const Notification = React.lazy(() => import('../pages/bmg/notification/Notifica
 const Comission = React.lazy(() => import('../pages/bmg/comission/Comission'));
 const SoldProducts = React.lazy(() => import('../pages/bmg/soldProducts/SoldProducts'));
 const LiveBids = React.lazy(() => import('../pages/bmg/liveBids/LiveBidMonitoring'));
+const LiveBidsMonitoring = React.lazy(() => import('../pages/bmg/liveBids/liveBidsMonitoring/LiveBidsMonitoring'));
 const Transactions = React.lazy(() => import('../pages/bmg/transactions/Transactions'));
 const UserDetails = React.lazy(() => import('../pages/bmg/UserDetails/UserDetails'));
 
@@ -142,9 +145,17 @@ const AllRoutes = () => {
                             path: 'items/:id',
                             element: <LoadComponent component={PageDetails} />,
                         },
+                        // {
+                        //     path: 'users',
+                        //     element: <LoadComponent component={Buyer_Seller} />,
+                        // },
                         {
-                            path: 'users',
-                            element: <LoadComponent component={Buyer_Seller} />,
+                            path: 'buyers',
+                            element: <LoadComponent component={Buyer} />,
+                        },
+                        {
+                            path: 'sellers',
+                            element: <LoadComponent component={Seller} />,
                         },
                         {
                             path: 'users/:id',
@@ -177,6 +188,10 @@ const AllRoutes = () => {
                         {
                             path: 'live-bids',
                             element: <LoadComponent component={LiveBids} />,
+                        },
+                        {
+                            path: 'live-bids/live-monitoring/:id',
+                            element: <LoadComponent component={LiveBidsMonitoring} />,
                         },
                         {
                             path: 'transactions',
