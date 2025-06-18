@@ -24,9 +24,9 @@ axios.interceptors.response.use(
             case 400:
                 console.error('Bad Request:', data);
                 break;
-            // case 403:
-            //     window.location.href = '/access-denied';
-            //     return;
+            case 403:
+                // window.location.href = '/access-denied';
+                return;
             case 404:
                 message = 'Sorry! The data you are looking for could not be found.';
                 break;

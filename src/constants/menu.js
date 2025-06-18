@@ -189,6 +189,12 @@ const MENU_ITEMS = [
             { key: 'buyer', label: 'Buyer-List', url: '/bmg/buyers', parentKey: 'Buyer' },
         ],
     },
+    {
+        key: 'Handler',
+        label: 'Handler',
+        icon: 'mdi mdi-account-cash',
+        children: [{ key: 'bidPercentage', label: 'Bid Percentage', url: '/bmg/bidPercentage', parentKey: 'Handler' }],
+    },
 
     {
         key: 'Settings',

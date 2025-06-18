@@ -2,8 +2,7 @@
 import { all, fork, put, takeEvery, call, takeLatest } from 'redux-saga/effects';
 import { FaqActionTypes } from './constants';
 
-import {
-    faqData, createFaqData, updateFaqData, deleteFaqData} from './api';
+import { faqData, createFaqData, updateFaqData, deleteFaqData } from './api';
 import ToastContainer from '../../helpers/toast/ToastContainer';
 /**
  * Login the user
@@ -50,8 +49,7 @@ function* createFaqFunction(data) {
                 type: FaqActionTypes.CREATE_FAQ_SUCCESS,
                 payload: { ...response.data },
             });
-            ToastContainer(response?.data?.data?.message,'success')
-
+            ToastContainer(response?.data?.data?.message, 'success');
         } else {
             yield put({
                 type: FaqActionTypes.CREATE_FAQ_ERROR,
@@ -63,8 +61,7 @@ function* createFaqFunction(data) {
             type: FaqActionTypes.CREATE_FAQ_ERROR,
             payload: error,
         });
-        ToastContainer(error,'danger')
-
+        ToastContainer(error, 'danger');
     }
 }
 
@@ -80,7 +77,7 @@ function* updateFaqFunction(payload) {
                 type: FaqActionTypes.UPDATE_FAQ_DATA_SUCCESS,
                 payload: response.data,
             });
-            ToastContainer(response?.data?.message,'success')
+            ToastContainer(response?.data?.message, 'success');
         } else {
             yield put({
                 type: FaqActionTypes.UPDATE_FAQ_DATA_ERROR,
@@ -92,8 +89,7 @@ function* updateFaqFunction(payload) {
             type: FaqActionTypes.UPDATE_FAQ_DATA_ERROR,
             payload: { message: error },
         });
-                ToastContainer(error,'danger')
-        
+        ToastContainer(error, 'danger');
     }
 }
 
@@ -105,8 +101,7 @@ function* deleteFaqFunction(payload) {
 
         const response = yield call(deleteFaqData, payload);
 
-
-        if (response && response.data ) {
+        if (response && response.data) {
             yield put({
                 type: FaqActionTypes.DELETE_FAQ_DATA_SUCCESS,
                 payload: response.data,
@@ -126,11 +121,9 @@ function* deleteFaqFunction(payload) {
             type: FaqActionTypes.DELETE_FAQ_DATA_ERROR,
             payload: { message: error },
         });
-        ToastContainer(error,'danger')
-
+        ToastContainer(error, 'danger');
     }
 }
-
 
 export function* watchFaqData() {
     yield takeEvery(FaqActionTypes.FAQ_DATA_FIRST, getFaqFunction);
@@ -140,11 +133,7 @@ export function* watchFaqData() {
 }
 
 function* faqSaga() {
-    yield all([
-        fork(watchFaqData)
-    ]);
+    yield all([fork(watchFaqData)]);
 }
 
 export default faqSaga;
-
-

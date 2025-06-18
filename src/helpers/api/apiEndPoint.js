@@ -4,7 +4,8 @@ export const GET_RECENT_REGISTRATIONS_FOR_DASHBOARD = '/api/admin/getAllrecentRe
 //category
 export const CREATE_CATEGORY = '';
 export const GET_CATEGORY = '/api/admin/subCategory/getAllSubCategories';
-// export const GET_CATEGORY = '/api/admin/category/getAllCategory';
+
+export const GET_ALL_CATEGORY = '/api/admin/category/getAllCategory';
 export const GET_SUB_CATEGORY = '/api/admin/subCategory/getAllSubCategory';
 export const UPDATE_CATEGORY = '';
 export const DELETE_CATEGORY = '';
@@ -60,3 +61,9 @@ export const GET_TICKETS = '/api/helpAndSupport/getAllTickets';
 export const ADD_TICKET = '/api/helpAndSupport/createTicket';
 export const UPDATE_TICKET = '/api/helpAndSupport/updateTicket';
 export const GET_CHAT_BY_ID = '/api/helpAndSupport/supportChatById';
+
+// Bid Percentage
+export const GET_BID_HANDLER = '/api/v1/getAll/PercentageHandler';
+export const POST_BID_HANDLER = '/api/v1/create/percentageHandler';
+export const DELETE_BID_HANDLER = '/api/v1/delete/percentageHandler';
+export const EDIT_BID_HANDLER = '/api/v1/update/percentageHandler';
