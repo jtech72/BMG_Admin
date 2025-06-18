@@ -1,76 +1,99 @@
 //------------------------------------R E D U C E R S-------------------------------------------------
-import { CategoryActionTypes } from "./constants"
+import { CategoryActionTypes } from './constants';
 
 const CATEGORY_DATA_INITIAL_STATE = {
     categoryData: [],
-    loading: false
-}
-
+    loading: false,
+};
 
 const categoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case CategoryActionTypes.CATEGORY_DATA_LOADING:
             return {
                 categoryData: state.categoryData,
-                loading: true
-            }
+                loading: true,
+            };
         case CategoryActionTypes.CATEGORY_DATA_SUCCESS:
             return {
                 categoryData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case CategoryActionTypes.CATEGORY_DATA_ERROR:
             return {
                 categoryData: action.payload,
-                loading: false
-            }
-        default: return state
+                loading: false,
+            };
+        default:
+            return state;
     }
-}
+};
+
+export const categoryAllDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
+    switch (action.type) {
+        case CategoryActionTypes.GET_ALL_CATEGORY_LOADING:
+            return {
+                categoryData: state.categoryData,
+                loading: true,
+            };
+        case CategoryActionTypes.GET_ALL_CATEGORY_SUCCESS:
+            return {
+                categoryData: action.payload,
+                loading: false,
+            };
+        case CategoryActionTypes.GET_ALL_CATEGORY_ERROR:
+            return {
+                categoryData: action.payload,
+                loading: false,
+            };
+        default:
+            return state;
+    }
+};
 const subCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case CategoryActionTypes.SUB_CATEGORY_DATA_LOADING:
             return {
                 categoryData: state.categoryData,
-                loading: true
-            }
+                loading: true,
+            };
         case CategoryActionTypes.SUB_CATEGORY_DATA_SUCCESS:
             return {
                 categoryData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case CategoryActionTypes.SUB_CATEGORY_DATA_ERROR:
             return {
                 categoryData: action.payload,
-                loading: false
-            }
-        default: return state
+                loading: false,
+            };
+        default:
+            return state;
     }
-}
-
+};
 
 const createCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case CategoryActionTypes.CREATE_CATEGORY_LOADING:
             return {
                 categoryData: state.categoryData,
-                loading: true
-            }
+                loading: true,
+            };
         case CategoryActionTypes.CREATE_CATEGORY_SUCCESS:
             return {
                 categoryData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case CategoryActionTypes.CREATE_CATEGORY_ERROR:
             return {
                 categoryData: action.payload,
-                loading: false
-            }
+                loading: false,
+            };
         case CategoryActionTypes.STATE_EMPTY_SUCCESS:
-            return CATEGORY_DATA_INITIAL_STATE
-        default: return state
+            return CATEGORY_DATA_INITIAL_STATE;
+        default:
+            return state;
     }
-}
+};
 const updatecategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case CategoryActionTypes.UPDATE_CATEGORY_DATA_LOADING:
@@ -92,7 +115,7 @@ const updatecategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) 
                 loading: false,
             };
         case CategoryActionTypes.STATE_EMPTY_SUCCESS:
-            return CATEGORY_DATA_INITIAL_STATE
+            return CATEGORY_DATA_INITIAL_STATE;
         default:
             return state;
     }
@@ -118,12 +141,16 @@ const deletecategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) 
                 loading: false,
             };
         case CategoryActionTypes.STATE_EMPTY_SUCCESS:
-            return CATEGORY_DATA_INITIAL_STATE
+            return CATEGORY_DATA_INITIAL_STATE;
         default:
             return state;
     }
 };
 
 export {
-    categoryDataReducer,subCategoryDataReducer, createCategoryDataReducer, updatecategoryDataReducer, deletecategoryDataReducer,
-}
+    categoryDataReducer,
+    subCategoryDataReducer,
+    createCategoryDataReducer,
+    updatecategoryDataReducer,
+    deletecategoryDataReducer,
+};

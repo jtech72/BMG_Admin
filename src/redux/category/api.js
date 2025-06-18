@@ -5,18 +5,22 @@ import * as URL from '../../helpers/api/apiEndPoint';
 const api = new APICore();
 
 function categoryData(params: any): any {
-    const { search,limit,page } = params?.data
+    const { search, limit, page } = params?.data;
 
     return api.get(`${URL.GET_CATEGORY}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
+export function getCategoryData(params: any): any {
+    const { search, limit, page } = params?.data;
+
+    return api.get(`${URL.GET_ALL_CATEGORY}`);
+}
+
 function subCategoryData(params: any): any {
-    const { search,limit,page } = params?.data
+    const { search, limit, page } = params?.data;
 
     return api.get(`${URL.GET_SUB_CATEGORY}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
-
-
 
 function createCategoryData(params: any): any {
     const { data } = params;
@@ -31,6 +35,4 @@ function deleteCategoryData(params: any): any {
     return api.create(URL.DELETE_CATEGORY, data);
 }
 
-export {
-    categoryData,subCategoryData, createCategoryData, updateCategoryData, deleteCategoryData,
-};
+export { categoryData, subCategoryData, createCategoryData, updateCategoryData, deleteCategoryData };

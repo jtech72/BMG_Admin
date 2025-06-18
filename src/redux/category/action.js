@@ -7,11 +7,15 @@ type AuthAction = { type: string, payload: {} | string };
 // common success
 export const getCategoryActions = (data): AuthAction => ({
     type: CategoryActionTypes.CATEGORY_DATA_FIRST,
-    data
+    data,
+});
+export const getAllCategoryActions = (data): AuthAction => ({
+    type: CategoryActionTypes.GET_ALL_CATEGORY,
+    data,
 });
 export const getSubCategoryActions = (data): AuthAction => ({
     type: CategoryActionTypes.SUB_CATEGORY_DATA_FIRST,
-    data
+    data,
 });
 
 // export const createCategoryActions = (data): AuthAction => ({

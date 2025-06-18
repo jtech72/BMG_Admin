@@ -2,12 +2,18 @@
 import { all, fork, put, takeEvery, call, takeLatest } from 'redux-saga/effects';
 import { CategoryActionTypes } from './constants';
 
-import { categoryData,subCategoryData, createCategoryData, updateCategoryData, deleteCategoryData } from './api';
+import {
+    categoryData,
+    subCategoryData,
+    createCategoryData,
+    updateCategoryData,
+    deleteCategoryData,
+    getCategoryData,
+} from './api';
 /**
  * Login the user
  * @param {*} payload - username and password
  */
-
 
 function* getCategoryFunction(data) {
     try {
@@ -31,6 +37,33 @@ function* getCategoryFunction(data) {
     } catch (error) {
         yield put({
             type: CategoryActionTypes.CATEGORY_DATA_ERROR,
+            payload: error,
+        });
+    }
+}
+
+function* getAllCategoryFunction(data) {
+    try {
+        yield put({
+            type: CategoryActionTypes.GET_ALL_CATEGORY_LOADING,
+            payload: {},
+        });
+        const response = yield call(getCategoryData, data);
+        // console.log(response,'api response')
+        if (response?.status === 200) {
+            yield put({
+                type: CategoryActionTypes.GET_ALL_CATEGORY_SUCCESS,
+                payload: { ...response.data },
+            });
+        } else {
+            yield put({
+                type: CategoryActionTypes.GET_ALL_CATEGORY_ERROR,
+                payload: { ...response.data },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: CategoryActionTypes.GET_ALL_CATEGORY_ERROR,
             payload: error,
         });
     }
@@ -128,7 +161,6 @@ function* deleteCategoryFunction(payload) {
 
         const response = yield call(deleteCategoryData, payload);
 
-
         if (response && response.data && response.data.status === 'success') {
             yield put({
                 type: CategoryActionTypes.DELETE_CATEGORY_DATA_SUCCESS,
@@ -152,21 +184,16 @@ function* deleteCategoryFunction(payload) {
     }
 }
 
-
-
 export function* CategoryData() {
     yield takeEvery(CategoryActionTypes.CATEGORY_DATA_FIRST, getCategoryFunction);
     yield takeEvery(CategoryActionTypes.SUB_CATEGORY_DATA_FIRST, getSubCategoryFunction);
     yield takeEvery(CategoryActionTypes.CREATE_CATEGORY_FIRST, createCategoryFunction);
     yield takeLatest(CategoryActionTypes.UPDATE_CATEGORY_DATA_FIRST, updateCategoryFunction);
     yield takeEvery(CategoryActionTypes.DELETE_CATEGORY_DATA_FIRST, deleteCategoryFunction);
+    yield takeEvery(CategoryActionTypes.GET_ALL_CATEGORY, getAllCategoryFunction);
 }
 
 function* categorySaga() {
-    yield all([
-        fork(CategoryData)
-    ]);
+    yield all([fork(CategoryData)]);
 }
 export default categorySaga;
-
-

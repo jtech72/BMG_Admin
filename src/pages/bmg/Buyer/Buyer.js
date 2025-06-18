@@ -5,7 +5,7 @@ import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getBuyerSellerActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Buyer_Seller = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
@@ -38,6 +38,7 @@ const Buyer_Seller = () => {
             })
         );
     }, [dispatch, pageSize, search, pageIndex]);
+    const navigate = useNavigate();
     return (
         <>
             <Row>
@@ -96,7 +97,7 @@ const Buyer_Seller = () => {
                                             {UserData && UserData.length > 0 ? (
                                                 <>
                                                     <div className="table-responsive">
-                                                        <table className="table table-striped bg-white">
+                                                        <table className="table bg-white table-hover">
                                                             <thead>
                                                                 <tr className="" style={{ color: '#703133' }}>
                                                                     <th scope="col">
@@ -112,6 +113,9 @@ const Buyer_Seller = () => {
                                                             <tbody>
                                                                 {UserData?.map((data, index) => (
                                                                     <tr
+                                                                        onClick={() =>
+                                                                            navigate(`order-history/${data?._id}`)
+                                                                        }
                                                                         key={index}
                                                                         className="text-dark fw-bold text-nowrap">
                                                                         <th scope="row">{index + 1}</th>
