@@ -35,6 +35,7 @@ import {
 } from './notification/reducers';
 import { getComissionDataReducer, createComissionDataReducer, updateComissionDataReducer } from './commision/reducers';
 import { getPaidAuctionDataReducer, getNonPaidAuctionDataReducer } from './transactions/reducer';
+import { getTicketsReducer, createTicketReducer, updateTicketReducer, getChatByIdReducer } from './support/reducers';
 export default (combineReducers({
     Auth,
     Layout,
@@ -71,4 +72,5 @@ export default (combineReducers({
     getNonPaidAuctionDataReducer,
     getRecentRegistrationsForDashboardReducer,
     specificProductDataReducer,
+    getTicketsReducer, createTicketReducer, updateTicketReducer, getChatByIdReducer,
 }): any);

@@ -24,9 +24,9 @@ axios.interceptors.response.use(
             case 400:
                 console.error('Bad Request:', data);
                 break;
-            case 403:
-                window.location.href = '/access-denied';
-                return;
+            // case 403:
+            //     window.location.href = '/access-denied';
+            //     return;
             case 404:
                 message = 'Sorry! The data you are looking for could not be found.';
                 break;
@@ -49,7 +49,7 @@ const AUTH_SESSION_KEY = 'bmg_user';
  */
 const setAuthorization = (token) => {
     // if (token) axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
-    if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (token) axios.defaults.headers.common['Authorization'] = `${token}`;
     else delete axios.defaults.headers.common['Authorization'];
 };
 

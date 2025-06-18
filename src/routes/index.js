@@ -41,6 +41,8 @@ const LiveBids = React.lazy(() => import('../pages/bmg/liveBids/LiveBidMonitorin
 const LiveBidsMonitoring = React.lazy(() => import('../pages/bmg/liveBids/liveBidsMonitoring/LiveBidsMonitoring'));
 const Transactions = React.lazy(() => import('../pages/bmg/transactions/Transactions'));
 const UserDetails = React.lazy(() => import('../pages/bmg/UserDetails/UserDetails'));
+const HelpAndSupport = React.lazy(() => import('../pages/bmg/help&support/Helpandsupport'));
+const TicketDetails = React.lazy(() => import('../pages/bmg/help&support/Tickets'));
 
 // error handlers
 const ErrorPageNotFound = React.lazy(() => import('../pages/error/PageNotFound'));
@@ -196,6 +198,14 @@ const AllRoutes = () => {
                         {
                             path: 'transactions',
                             element: <LoadComponent component={Transactions} />,
+                        },
+                         {
+                            path: 'help-support',
+                            element: <LoadComponent component={HelpAndSupport} />,
+                        },
+                         {
+                            path: 'ticket/:id',
+                            element: <LoadComponent component={TicketDetails} />,
                         },
                     ],
                 },

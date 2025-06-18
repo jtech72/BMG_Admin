@@ -54,3 +54,9 @@ export const UPDATE_COMISSION_ENDPOINT = '/api/admin/commision/updateCommision';
 //transaction details
 export const GET_PAID_AUCTION = '/api/admin/getAllPaidAuctionForAdmin';
 export const GET_NON_PAID_AUCTION = '/api/admin/getNonPaidAuctionDeatilsForAdmin';
+
+// help and support
+export const GET_TICKETS = '/api/helpAndSupport/getAllTickets';
+export const ADD_TICKET = '/api/helpAndSupport/createTicket';
+export const UPDATE_TICKET = '/api/helpAndSupport/updateTicket';
+export const GET_CHAT_BY_ID = '/api/helpAndSupport/supportChatById';
