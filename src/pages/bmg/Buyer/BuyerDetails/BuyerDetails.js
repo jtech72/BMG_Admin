@@ -14,6 +14,7 @@ import { FcRating } from 'react-icons/fc';
 import { getUserFromSession } from '../../../../helpers/api/apiCore';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { FaFileInvoice } from 'react-icons/fa';
+import { ButtonLoading } from '../../../../helpers/loader/Loading';
 
 const Purchases = () => {
     const store = useSelector((state) => state);
@@ -61,25 +62,25 @@ const Purchases = () => {
     };
 
     useEffect(() => {
-        dispatch(purchageHistoryAction());
-        dispatch(getBuyOrderAction({ userId: user?.id }));
+        // dispatch(purchageHistoryAction());
+        // dispatch(getBuyOrderAction({ userId: user?.id }));
     }, [dispatch]);
 
-    useEffect(() => {
-        if (getAddRatingAndReviewResponse?.data?.status === 200) {
-            setShowModal(false);
-            reset();
-            setRating(0);
-            ToastHandle(getAddRatingAndReviewResponse?.data?.message, 'success');
-            dispatch(purchageHistoryAction());
-        } else if (getAddRatingAndReviewResponse?.data?.status === 400) {
-            ToastHandle(getAddRatingAndReviewResponse?.data?.message, 'danger');
-        } else if (getAddRatingAndReviewResponse?.data?.status === 500) {
-            ToastHandle(getAddRatingAndReviewResponse?.data?.message, 'danger');
-        } else if (typeof getAddRatingAndReviewResponse?.data === 'string') {
-            ToastHandle(getAddRatingAndReviewResponse?.data, 'danger');
-        }
-    }, [getAddRatingAndReviewResponse, ToastHandle]);
+    // useEffect(() => {
+    //     if (getAddRatingAndReviewResponse?.data?.status === 200) {
+    //         setShowModal(false);
+    //         reset();
+    //         setRating(0);
+    //         ToastHandle(getAddRatingAndReviewResponse?.data?.message, 'success');
+    //         // dispatch(purchageHistoryAction());
+    //     } else if (getAddRatingAndReviewResponse?.data?.status === 400) {
+    //         ToastHandle(getAddRatingAndReviewResponse?.data?.message, 'danger');
+    //     } else if (getAddRatingAndReviewResponse?.data?.status === 500) {
+    //         ToastHandle(getAddRatingAndReviewResponse?.data?.message, 'danger');
+    //     } else if (typeof getAddRatingAndReviewResponse?.data === 'string') {
+    //         ToastHandle(getAddRatingAndReviewResponse?.data, 'danger');
+    //     }
+    // }, [getAddRatingAndReviewResponse, ToastHandle]);
 
     const [activeTab, setActiveTab] = useState('auction');
 
@@ -95,7 +96,7 @@ const Purchases = () => {
                         fontWeight: 'bold',
                         fontSize: '18px',
                     }}>
-                    <TableLoading />
+                    {/* <TableLoading /> */}
                 </div>
             ) : (
                 <>
@@ -293,14 +294,14 @@ const Purchases = () => {
                                         <Pagination className="justify-content-center mt-3 custom-pagination">
                                             {/* Previous Button */}
                                             <Pagination.Prev
-                                                onClick={() =>
-                                                    dispatch(
-                                                        purchageHistoryAction({
-                                                            userId: user?.id,
-                                                            page: Math.max(currentPage - 1, 1),
-                                                        })
-                                                    )
-                                                }
+                                                // onClick={() =>
+                                                // dispatch(
+                                                //     purchageHistoryAction({
+                                                //         userId: user?.id,
+                                                //         page: Math.max(currentPage - 1, 1),
+                                                //     })
+                                                // )
+                                                // }
                                                 disabled={currentPage === 1}>
                                                 Previous
                                             </Pagination.Prev>
@@ -309,25 +310,27 @@ const Purchases = () => {
                                                 <Pagination.Item
                                                     key={i}
                                                     active={i + 1 === currentPage}
-                                                    onClick={() =>
-                                                        dispatch(
-                                                            purchageHistoryAction({ userId: user?.id, page: i + 1 })
-                                                        )
-                                                    }>
+                                                    // onClick={() =
+                                                    // >
+                                                    // dispatch(
+                                                    //     purchageHistoryAction({ userId: user?.id, page: i + 1 })
+                                                    // )
+                                                    // }
+                                                >
                                                     {i + 1}
                                                 </Pagination.Item>
                                             ))}
 
                                             {/* Next Button */}
                                             <Pagination.Next
-                                                onClick={() =>
-                                                    dispatch(
-                                                        purchageHistoryAction({
-                                                            userId: user?.id,
-                                                            page: Math.min(currentPage + 1, totalPages),
-                                                        })
-                                                    )
-                                                }
+                                                // onClick={() =>
+                                                // dispatch(
+                                                //     purchageHistoryAction({
+                                                //         userId: user?.id,
+                                                //         page: Math.min(currentPage + 1, totalPages),
+                                                //     })
+                                                // )
+                                                // }
                                                 disabled={currentPage === totalPages}>
                                                 Next
                                             </Pagination.Next>

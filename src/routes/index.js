@@ -31,6 +31,8 @@ const Products = React.lazy(() => import('../pages/bmg/products/Products'));
 // const Buyer_Seller = React.lazy(() => import('../pages/bmg/buyer-seller/Buyer_Seller'));
 const Seller = React.lazy(() => import('../pages/bmg/Seller/Seller'));
 const Buyer = React.lazy(() => import('../pages/bmg/Buyer/Buyer'));
+const BuyerDetails = React.lazy(() => import('../pages/bmg/Buyer/BuyerDetails/BuyerDetails'));
+
 const Faq = React.lazy(() => import('../pages/bmg/faq/Faq'));
 const Orders = React.lazy(() => import('../pages/bmg/orders/Orders'));
 const Enquiry = React.lazy(() => import('../pages/bmg/enquiry/Enquiry'));
@@ -40,6 +42,7 @@ const SoldProducts = React.lazy(() => import('../pages/bmg/soldProducts/SoldProd
 const LiveBids = React.lazy(() => import('../pages/bmg/liveBids/LiveBidMonitoring'));
 const LiveBidsMonitoring = React.lazy(() => import('../pages/bmg/liveBids/liveBidsMonitoring/LiveBidsMonitoring'));
 const Transactions = React.lazy(() => import('../pages/bmg/transactions/Transactions'));
+const BidPercentage = React.lazy(() => import('../pages/bmg/bidPercentage/BidPercentage'));
 const UserDetails = React.lazy(() => import('../pages/bmg/UserDetails/UserDetails'));
 
 // error handlers
@@ -154,6 +157,10 @@ const AllRoutes = () => {
                             element: <LoadComponent component={Buyer} />,
                         },
                         {
+                            path: 'buyers/order-history/:id',
+                            element: <LoadComponent component={BuyerDetails} />,
+                        },
+                        {
                             path: 'sellers',
                             element: <LoadComponent component={Seller} />,
                         },
@@ -196,6 +203,10 @@ const AllRoutes = () => {
                         {
                             path: 'transactions',
                             element: <LoadComponent component={Transactions} />,
+                        },
+                        {
+                            path: 'bidPercentage',
+                            element: <LoadComponent component={BidPercentage} />,
                         },
                     ],
                 },

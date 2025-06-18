@@ -12,6 +12,7 @@ import {
     createCategoryDataReducer,
     updatecategoryDataReducer,
     deletecategoryDataReducer,
+    categoryAllDataReducer,
 } from './category/reducers';
 
 import {
@@ -35,7 +36,13 @@ import {
 } from './notification/reducers';
 import { getComissionDataReducer, createComissionDataReducer, updateComissionDataReducer } from './commision/reducers';
 import { getPaidAuctionDataReducer, getNonPaidAuctionDataReducer } from './transactions/reducer';
-export default (combineReducers({
+import {
+    getBidHandlerReducer,
+    postBidHandlerReducer,
+    deleteBidHandlerReducer,
+    editBidHandlerReducer,
+} from './bidHandler/reducer';
+export default combineReducers({
     Auth,
     Layout,
     dashboardDataReducer,
@@ -71,4 +78,8 @@ export default (combineReducers({
     getNonPaidAuctionDataReducer,
     getRecentRegistrationsForDashboardReducer,
     specificProductDataReducer,
-}): any);
+    getBidHandlerReducer,
+    categoryAllDataReducer,
+    postBidHandlerReducer,
+    editBidHandlerReducer,
+});
