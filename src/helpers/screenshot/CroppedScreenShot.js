@@ -104,7 +104,7 @@ const CroppedScreenShot = ({ color, height }) => {
                     transform: translate(-50%, -50%);
                     border: 1px solid #2c2c2c;
                     padding: 16px;
-                    width: min(500px, 90vw);
+                    width: min(900px, 90vw);
                     background: #1e1e1e;
                     border-radius: 8px;
                     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);

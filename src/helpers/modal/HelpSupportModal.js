@@ -164,7 +164,7 @@ const HelpSupportModal = ({ show, hide, file }) => {
                         <div className="mb-3">
                             <div className="d-flex align-items-center mb-2">
                                 <i className="bi bi-paperclip fs-5 text-primary me-2"></i>
-                                <h6 className="mb-0 fw-bold fs-6">Attachments</h6>
+                                <h6 className="mb-0 fw-bold fs-6">{file ? 'Captured screenshot' : 'Attachment'}</h6>
                             </div>
 
                             {file ? (
@@ -175,7 +175,6 @@ const HelpSupportModal = ({ show, hide, file }) => {
                                         className="img-fluid rounded border"
                                         style={{ maxHeight: '150px' }}
                                     />
-                                    <div className="mt-1 small text-muted">Captured screenshot</div>
                                 </div>
                             ) : (
                                 <Form.Group controlId="formFile" className="mb-2">
