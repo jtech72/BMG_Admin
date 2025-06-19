@@ -209,6 +209,7 @@ const MENU_ITEMS = [
             { key: 'notification', label: 'Notification', url: '/bmg/notification', parentKey: 'Settings' },
             { key: 'enquiry', label: 'Enquiry', url: '/bmg/enquiry', parentKey: 'Settings' },
             { key: 'categories', label: 'Categories', url: '/bmg/categories', parentKey: 'Settings' },
+            { key: 'help-support', label: 'Help & Support', url: '/bmg/help-support', parentKey: 'Settings' },
         ],
     },
 ];
