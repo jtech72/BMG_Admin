@@ -255,7 +255,7 @@ const HelpSupportModal = ({ show, hide, file }) => {
                                 disabled={store?.createTicketReducer?.loading}
                             >
                                 {store?.createTicketReducer?.loading ? (
-                                    <div style={{width: '92.6758px' }}><ButtonLoading /></div>
+                                    <div style={{width: '91px' }}><ButtonLoading /></div>
                                 ) : (
                                     <>
                                         <i className="mdi mdi-send me-1"></i>

@@ -28,9 +28,9 @@ const HelpAndSupport = () => {
 
     useEffect(() => {
         if (createStatus === 200) {
-            dispatch(getTicketsAction({ userId: user?.id, search: search, limit: pageSize, page: pageIndex }));
+            dispatch(getTicketsAction({ limit: pageSize, page: pageIndex }));
         }
-        dispatch(getTicketsAction({ userId: user?.id, search: search, limit: pageSize, page: pageIndex }));
+        dispatch(getTicketsAction({ limit: pageSize, page: pageIndex }));
     }, [dispatch, createStatus, pageIndex, pageSize, search]);
 
     const getStatusBadgeColor = (status) => {

@@ -275,14 +275,6 @@ const Tickets = () => {
                     )}
 
                     <Col md={2} className="text-end mb-2">
-                      {/* <Button
-                        variant="outline-secondary"
-                        onClick={toggleReply}
-                        className="rounded-circle p-1"
-                        style={{ width: '32px', height: '32px' }}
-                      >
-                        <BiX size={18} />
-                      </Button> */}
                       <BiX onClick={toggleReply}
                         className="p-1 rounded-circle text-danger"
                         style={{
