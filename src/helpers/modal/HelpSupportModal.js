@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-// import { addTicketsAction, resetTicketsDataAction } from '../../redux/actions';
+import { addTicketsAction, resetTicketsDataAction } from '../../redux/actions';
 import { ButtonLoading } from '../loader/Loading';
 
 const HelpSupportModal = ({ show, hide, file }) => {
@@ -13,7 +13,7 @@ const HelpSupportModal = ({ show, hide, file }) => {
     const [issueType, setIssueType] = useState('');
     const [priorityType, setPriorityType] = useState('Medium');
     const store = useSelector((state) => state);
-    const createStatus = store?.createTicketReducer?.data?.status;
+    const createStatus = store?.createTicketReducer?.supportData?.status;
     const user = store?.Auth?.user;
 
     const getCurrentPageInfo = () => {
@@ -80,7 +80,7 @@ const HelpSupportModal = ({ show, hide, file }) => {
         formData.append('userId', user?.id);
         formData.append('sellerMail', user?.email);
 
-        // dispatch(addTicketsAction(formData));
+        dispatch(addTicketsAction(formData));
     };
 
     const resetForm = () => {
@@ -97,7 +97,7 @@ const HelpSupportModal = ({ show, hide, file }) => {
     useEffect(() => {
         if (createStatus === 200) {
             close();
-            // dispatch(resetTicketsDataAction());
+            dispatch(resetTicketsDataAction());
         }
     }, [createStatus]);
 
@@ -114,9 +114,9 @@ const HelpSupportModal = ({ show, hide, file }) => {
                 size="lg"
                 className="help-support-modal"
             >
-                <Modal.Header className="bg-success text-white border-0 py-3">
-                    <Modal.Title className="fw-bold fs-6">
-                        <i className="bi bi-headset me-2"></i>
+                <Modal.Header className="bg-success text-white border-0 py-1">
+                    <Modal.Title className="fw-bold fs-4">
+                        <i className="mdi mdi-headset me-2"></i>
                         Help & Support
                     </Modal.Title>
                     <button
@@ -255,10 +255,10 @@ const HelpSupportModal = ({ show, hide, file }) => {
                                 disabled={store?.createTicketReducer?.loading}
                             >
                                 {store?.createTicketReducer?.loading ? (
-                                    <ButtonLoading />
+                                    <div style={{width: '92.6758px' }}><ButtonLoading /></div>
                                 ) : (
                                     <>
-                                        <i className="bi bi-send-fill me-1"></i>
+                                        <i className="mdi mdi-send me-1"></i>
                                         Submit
                                     </>
                                 )}

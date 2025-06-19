@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, OverlayTrigger, Tooltip, Modal, Container, Carousel, Badge } from 'react-bootstrap';
+import { Row, Col, Card, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { getTicketsAction } from '../../../redux/actions';
@@ -7,12 +7,13 @@ import { Loading } from '../../../helpers/loader/Loading';
 import Pagination from '../../../helpers/Pagination'
 import { getUserFromSession } from '../../../helpers/api/apiCore';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../../helpers/Functions';
 const HelpAndSupport = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const SupportData = store?.getTicketsReducer?.supportData?.response
-    console.log({ SupportData })
+    const SupportData = store?.getTicketsReducer?.supportData?.response;
+    const createStatus = store?.createTicketReducer?.supportData?.status
     const SupportLoading = store?.getTicketsReducer?.loading
     const user = getUserFromSession()
 
@@ -26,8 +27,11 @@ const HelpAndSupport = () => {
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
+        if (createStatus === 200) {
+            dispatch(getTicketsAction({ userId: user?.id, search: search, limit: pageSize, page: pageIndex }));
+        }
         dispatch(getTicketsAction({ userId: user?.id, search: search, limit: pageSize, page: pageIndex }));
-    }, [dispatch, pageIndex, pageSize, search]);
+    }, [dispatch, createStatus, pageIndex, pageSize, search]);
 
     const getStatusBadgeColor = (status) => {
         switch (status?.toLowerCase()) {
@@ -98,6 +102,7 @@ const HelpAndSupport = () => {
                                                             <th scope="col">Email</th>
                                                             <th scope="col">Issue Type</th>
                                                             <th scope="col">Status</th>
+                                                            <th scope="col">Created On</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -106,9 +111,19 @@ const HelpAndSupport = () => {
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
+
                                                                 <td className='text-uppercase fw-bold'>
                                                                     {data?.ticketId ? (
-                                                                        <Link to={`/bmg/ticket/${data?._id}`}state={data}>{data?.ticketId} </Link>
+                                                                        <OverlayTrigger
+                                                                            placement="left"
+                                                                            overlay={
+                                                                                <Tooltip id="overlay-example">
+                                                                                    View Detail's
+                                                                                </Tooltip>}>
+                                                                            <Link style={{ cursor: 'pointer', color: 'crimson' }}
+                                                                                onMouseOver={(e) => e.target.style.color = 'rgb(10 207 151)'}
+                                                                                onMouseOut={(e) => e.target.style.color = 'crimson'} to={`/bmg/ticket/${data?._id}`} state={data}>{data?.ticketId} </Link>
+                                                                        </OverlayTrigger>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -143,6 +158,15 @@ const HelpAndSupport = () => {
                                                                         {data?.status || 'N/A'}
                                                                     </Badge>
                                                                 </td>
+                                                                <td className='fw-bold text-dark' style={{ cursor: 'pointer' }}>
+                                                                    {data?.createdAt ? (
+                                                                        <span>{formatDate(data?.createdAt)} </span>
+                                                                    ) : (
+                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                            N/A
+                                                                        </span>
+                                                                    )}
+                                                                </td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
@@ -154,7 +178,7 @@ const HelpAndSupport = () => {
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
                                             <code className="fs-4">
-                                                No Tickets found.{' '}
+                                                No Tickets found.
                                             </code>
                                         </div>
                                     )}

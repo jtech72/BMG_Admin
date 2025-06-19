@@ -11,9 +11,6 @@ import {
   Col,
   ProgressBar,
   Stack,
-  OverlayTrigger,
-  Tooltip,
-  Image
 } from 'react-bootstrap';
 import {
   getChatByIdAction,
@@ -132,11 +129,10 @@ const Tickets = () => {
   }
 
   return (
-    <Container fluid className="px-lg-4 py-3" style={{ minHeight: '100vh' }}>
+    <Container fluid className="p-2" style={{ minHeight: '100vh' }}>
       {/* Header Section */}
-      <Row className="align-items-center mb-4">
+      <Row className="align-items-center mb-2">
         <Col xs="auto">
-          <OverlayTrigger placement="bottom" overlay={<Tooltip>Go back</Tooltip>}>
             <b>
               <BiArrowBack onClick={handleBack}
                 className="p-2 rounded-circle"
@@ -146,11 +142,12 @@ const Tickets = () => {
                   border: '1px solid #dee2e6'
                 }} />
             </b>
-          </OverlayTrigger>
         </Col>
         <Col>
           <h2 className="mb-0 fw-semibold" style={{ color: '#212529' }}>Ticket Details</h2>
-          <small className="text-muted">Ticket #{ticketInfo?.ticketId}</small>
+        </Col>
+        <Col>
+          <h4 className="text-muted">Ticket: {ticketInfo?.ticketId}</h4>
         </Col>
       </Row>
 
@@ -320,12 +317,12 @@ const Tickets = () => {
                       <Button
                         variant="success"
                         type="submit"
-                        className="px-4 py-2 rounded-pill d-flex align-items-center"
+                        className="px-3 py-1 rounded-pill d-flex align-items-center"
                         disabled={ticketUpdateLoading}
                         style={{ fontSize: '0.875rem' }}
                       >
                         {ticketUpdateLoading ? (
-                          <ButtonLoading />
+                          <div style={{ width: '168px' }}><ButtonLoading /></div>
                         ) : (
                           <>
                             <BiSend className="me-2" size={16} /> Send Message
