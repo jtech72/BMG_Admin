@@ -2,8 +2,11 @@
 export const GET_DASHBOARD_DATA = '/api/admin/dashboard/getAllDashBoardData';
 export const GET_RECENT_REGISTRATIONS_FOR_DASHBOARD = '/api/admin/getAllrecentRegisterUsers';
 //category
-export const CREATE_CATEGORY = '';
+export const CREATE_CATEGORY = '/api/category/createCategory';
 export const GET_CATEGORY = '/api/admin/subCategory/getAllSubCategories';
+
+// Sub Category
+export const CREATE_SUB_CATEGORY = '/api/subCategory/createSubCategories';
 
 export const GET_ALL_CATEGORY = '/api/admin/category/getAllCategory';
 export const GET_SUB_CATEGORY = '/api/admin/subCategory/getAllSubCategory';

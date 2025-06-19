@@ -13,6 +13,7 @@ import {
     updatecategoryDataReducer,
     deletecategoryDataReducer,
     categoryAllDataReducer,
+    createSubCategoryDataReducer,
 } from './category/reducers';
 
 import {
@@ -82,4 +83,5 @@ export default combineReducers({
     categoryAllDataReducer,
     postBidHandlerReducer,
     editBidHandlerReducer,
+    createSubCategoryDataReducer,
 });
