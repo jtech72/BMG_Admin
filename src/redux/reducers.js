@@ -37,6 +37,7 @@ import {
 } from './notification/reducers';
 import { getComissionDataReducer, createComissionDataReducer, updateComissionDataReducer } from './commision/reducers';
 import { getPaidAuctionDataReducer, getNonPaidAuctionDataReducer } from './transactions/reducer';
+import { getTicketsReducer, createTicketReducer, updateTicketReducer, getChatByIdReducer } from './support/reducers';
 import {
     getBidHandlerReducer,
     postBidHandlerReducer,
@@ -79,6 +80,7 @@ export default combineReducers({
     getNonPaidAuctionDataReducer,
     getRecentRegistrationsForDashboardReducer,
     specificProductDataReducer,
+    getTicketsReducer, createTicketReducer, updateTicketReducer, getChatByIdReducer,
     getBidHandlerReducer,
     categoryAllDataReducer,
     postBidHandlerReducer,

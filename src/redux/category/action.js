@@ -21,8 +21,18 @@ export const createCategoryActions = (data) => ({
     data,
 });
 
+export const createCategoryActionsReset = (data) => ({
+    type: CategoryActionTypes.CREATE_CATEGORY_RESET,
+    data,
+});
+
 export const createSubCategoryActions = (data) => ({
     type: CategoryActionTypes.CREATE_SUB_CATEGORY,
+    data,
+});
+
+export const createSubCategoryActionsReset = (data) => ({
+    type: CategoryActionTypes.CREATE_SUB_CATEGORY_RESET,
     data,
 });
 

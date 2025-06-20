@@ -14,6 +14,7 @@ import enquirySaga from './enquiry/saga';
 import notificationSaga from './notification/saga';
 import comissionSaga from './commision/saga';
 import transactionSaga from './transactions/saga';
+import supportSaga from './support/saga';
 import { BidHandlerSaga } from './bidHandler/saga';
 
 export default function* rootSaga(): any {
@@ -31,6 +32,7 @@ export default function* rootSaga(): any {
         notificationSaga(),
         comissionSaga(),
         transactionSaga(),
+        supportSaga(),
         BidHandlerSaga(),
     ]);
 }

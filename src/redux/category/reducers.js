@@ -88,6 +88,8 @@ const createCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) 
                 categoryData: action.payload,
                 loading: false,
             };
+        case CategoryActionTypes.CREATE_CATEGORY_RESET:
+            return CATEGORY_DATA_INITIAL_STATE;
         case CategoryActionTypes.STATE_EMPTY_SUCCESS:
             return CATEGORY_DATA_INITIAL_STATE;
         default:

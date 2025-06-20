@@ -5,7 +5,9 @@ import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import {
     createCategoryActions,
+    createCategoryActionsReset,
     createSubCategoryActions,
+    createSubCategoryActionsReset,
     getCategoryActions,
     getSubCategoryActions,
 } from '../../../redux/actions';
@@ -18,7 +20,7 @@ const Categories = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const CategoryData = store?.categoryDataReducer?.categoryData?.groupedCategories;
-    console.log({ CategoryData });
+    console.log({ store });
     const SubCategoryData = store?.subCategoryDataReducer?.categoryData?.subCategories;
     const CategoryLoading = store?.categoryDataReducer?.loading;
     const SubCategoryLoading = store?.subCategoryDataReducer?.loading;
@@ -28,6 +30,7 @@ const Categories = () => {
     const connectTab = (tabIndex) => {
         setActiveTab(tabIndex);
     };
+    const [apiCall, setApiCall] = useState(false);
 
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -58,6 +61,7 @@ const Categories = () => {
         store?.categoryDataReducer?.categoryData?.totalRecords,
         store?.subCategoryDataReducer?.categoryData?.totalRecords,
         activeTab,
+        apiCall,
     ]);
 
     const formatDate = (dateString) => {
@@ -94,38 +98,61 @@ const Categories = () => {
             .replace(/([a-z])([A-Z])/g, '$1 $2') // Convert camelCase
             .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter
     };
+    const [modalCheck, setModalCheck] = useState('');
     const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
     useEffect(() => {
         if (openAddCategoryModal) {
-            dispatch(getSubCategoryActions({ search, limit: '', page: pageIndex }));
+            if (modalCheck.toLowerCase() === 'sub-category') {
+                console.log(modalCheck, 'modalCheckmodalCheck1');
+                dispatch(getCategoryActions({ search, limit: '', page: pageIndex }));
+            } else {
+                console.log(modalCheck, 'modalCheckmodalCheck2');
+                dispatch(getSubCategoryActions({ search, limit: '', page: pageIndex }));
+            }
         }
-    }, [openAddCategoryModal]);
+    }, [openAddCategoryModal, modalCheck]);
+
     const [subCategoryData, setSubCategoryData] = useState([]);
     const addCategoryHandler = (data) => {
-        dispatch(createCategoryActions({ name: data?.categoryName }));
-        setSubCategoryData(data?.subCategories);
+        if (modalCheck) {
+            dispatch(
+                createSubCategoryActions({
+                    subCategoryNames: addedCategories,
+                    categoryId: selectedCategories?.value,
+                })
+            );
+        } else {
+            dispatch(createCategoryActions({ name: data?.categoryName }));
+            setSubCategoryData(data?.subCategories);
+        }
         console.log(data, 'data');
     };
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
     const [newSubCategory, setNewSubCategory] = useState('');
+    const [addedCategories, setAddedCategories] = useState([]);
 
     const createCategoryReducer = store?.createCategoryDataReducer;
     console.log(createCategoryReducer, 'createCategoryReducer');
     useEffect(() => {
         if (createCategoryReducer?.categoryData?.status) {
             if (createCategoryReducer?.categoryData?.status == 200) {
-                if (newSubCategory) {
+                if (addedCategories?.length > 0) {
                     dispatch(
                         createSubCategoryActions({
-                            subCategoryNames: newSubCategory,
+                            subCategoryNames: addedCategories,
                             categoryId: createCategoryReducer?.categoryData?.newCategory?._id,
                         })
                     );
+                    // setApiCall((prev) => !prev);
+                } else {
+                    ToastContainer('Successfully Added', 'success');
+                    setOpenAddCategoryModal(false);
                 }
-                ToastContainer('Successfully Added', 'success');
-                setOpenAddCategoryModal(false);
             } else {
                 ToastContainer(createCategoryReducer?.error, 'error');
             }
+            dispatch(createCategoryActionsReset());
         }
     }, [createCategoryReducer]);
     const createSubCategoryReducer = store?.createSubCategoryDataReducer;
@@ -135,20 +162,33 @@ const Categories = () => {
             if (createSubCategoryReducer?.categoryData?.status == 200) {
                 ToastContainer('Successfully added!', 'success');
                 setOpenAddCategoryModal(false);
+                setApiCall((prev) => !prev);
             } else {
                 ToastContainer(createSubCategoryReducer?.categoryData?.message || 'error');
             }
+            dispatch(createSubCategoryActionsReset());
         }
     }, [createSubCategoryReducer]);
+    console.log(addedCategories, 'addedCategoriesaddedCategories');
+    const handleAddSubCategoryHandler = () => {
+        setOpenAddCategoryModal(true);
+        setModalCheck('Sub-category');
+    };
     return (
         <>
             <AddCategoryModal
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+                addedCategories={addedCategories}
+                setAddedCategories={setAddedCategories}
                 newSubCategory={newSubCategory}
                 setNewSubCategory={setNewSubCategory}
                 onSubmit={addCategoryHandler}
                 show={openAddCategoryModal}
                 handleClose={() => setOpenAddCategoryModal(false)}
                 allSubCategories={SubCategoryData}
+                modalCheck={modalCheck}
+                setModalCheck={setModalCheck}
             />
             <PageTitle
                 breadCrumbItems={[
@@ -177,8 +217,11 @@ const Categories = () => {
                                         <span className="px-3 py-1 bg-dark text-light rounded">
                                             Total Categories: {totalRecords}
                                         </span>
-                                        <Button onClick={() => setOpenAddCategoryModal(true)}>Add Category</Button>
                                         <div className="d-flex">
+                                            <Button onClick={() => setOpenAddCategoryModal(true)} className="me-2">
+                                                Add Category
+                                            </Button>
+
                                             <input
                                                 type="text"
                                                 className="form-control w-auto me-1"
@@ -220,7 +263,10 @@ const Categories = () => {
                                                                     <tr
                                                                         key={index}
                                                                         className="text-dark fw-bold text-nowrap">
-                                                                        <th scope="row">{index + 1}</th>
+                                                                        {/* <th scope="row">{index + 1}</th> */}
+                                                                        <th scope="row">
+                                                                            {(pageIndex - 1) * 10 + index + 1}
+                                                                        </th>
                                                                         <td className="text-uppercase fw-bold text-success">
                                                                             {data?.categoryName ? (
                                                                                 <span>{data?.categoryName} </span>
@@ -306,6 +352,10 @@ const Categories = () => {
                                             Total Sub Categories: {totalRecords}
                                         </span>
                                         <div className="d-flex">
+                                            <Button onClick={handleAddSubCategoryHandler} className="me-2">
+                                                Add Sub-Category
+                                            </Button>
+
                                             <input
                                                 type="text"
                                                 className="form-control w-auto me-1"
