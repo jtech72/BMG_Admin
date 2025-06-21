@@ -16,13 +16,14 @@ const AddCategoryModal = ({
     setModalCheck,
     selectedCategories,
     setSelectedCategories,
+    selectedSubCategories,
+    setSelectedSubCategories,
 }) => {
     const store = useSelector((state) => state);
     const [categoryName, setCategoryName] = useState('');
     const [subCategoryError, setSubCategoryError] = useState('');
 
     const [confirmName, setConfirmName] = useState('');
-    const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     // const handleCategorySubmit = (payload) => {
     //     // payload = { categoryName: 'test1', subCategories: [...] }
     //     setAddedCategories((prev) => [...prev, payload.categoryName]);
@@ -31,7 +32,7 @@ const AddCategoryModal = ({
     const handleAddSubCategory = () => {
         if (newSubCategory.trim() !== '') {
             setAddedCategories((prev) => [...prev, newSubCategory]);
-            const newOption = { label: newSubCategory, value: newSubCategory };
+            const newOption = { label: newSubCategory, value: newSubCategory, new: true };
             setSelectedSubCategories((prev) => [...prev, newOption]);
             setNewSubCategory('');
         }
@@ -63,7 +64,6 @@ const AddCategoryModal = ({
         onSubmit?.(payload);
         setCategoryName('');
         setConfirmName('');
-        setSelectedSubCategories([]);
         setSubCategoryError(''); // reset error
     };
 
@@ -144,7 +144,7 @@ const AddCategoryModal = ({
                         </>
                     )}
                     <Form.Group className="mb-3">
-                        <Form.Label>Selected New Subcategories</Form.Label>
+                        <Form.Label>Selected Subcategories</Form.Label>
                         {!modalCheck ? (
                             <>
                                 <Select

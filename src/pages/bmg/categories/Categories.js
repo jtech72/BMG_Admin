@@ -46,7 +46,7 @@ const Categories = () => {
         } else if (activeTab === 1) {
             dispatch(getSubCategoryActions({ search, limit: pageSize, page: pageIndex }));
         }
-    }, [dispatch, activeTab, pageIndex, pageSize, search]);
+    }, [dispatch, activeTab, pageIndex, pageSize, search, apiCall]);
 
     // Separate useEffect to watch for store updates and set totalRecords
     useEffect(() => {
@@ -111,8 +111,13 @@ const Categories = () => {
             }
         }
     }, [openAddCategoryModal, modalCheck]);
+    const [addedCategories, setAddedCategories] = useState([]);
+    const [selectedSubCategories, setSelectedSubCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     const [subCategoryData, setSubCategoryData] = useState([]);
+    console.log(selectedCategories, 'TestA');
+    console.log(selectedSubCategories, 'TestA');
     const addCategoryHandler = (data) => {
         if (modalCheck) {
             dispatch(
@@ -122,32 +127,36 @@ const Categories = () => {
                 })
             );
         } else {
+            // After creating category from here in useeffect #1
             dispatch(createCategoryActions({ name: data?.categoryName }));
             setSubCategoryData(data?.subCategories);
         }
-        console.log(data, 'data');
     };
-    const [selectedCategories, setSelectedCategories] = useState([]);
-
     const [newSubCategory, setNewSubCategory] = useState('');
-    const [addedCategories, setAddedCategories] = useState([]);
 
     const createCategoryReducer = store?.createCategoryDataReducer;
     console.log(createCategoryReducer, 'createCategoryReducer');
     useEffect(() => {
         if (createCategoryReducer?.categoryData?.status) {
             if (createCategoryReducer?.categoryData?.status == 200) {
-                if (addedCategories?.length > 0) {
+                if (selectedSubCategories?.length > 0) {
+                    // #1 if here sub categories are selected while creating a category then this condition shall run
+                    const checkForNewSubCategory = selectedSubCategories?.filter((item) => item?.new);
+                    const oldSubCategories = selectedSubCategories?.filter((item) => !item?.new);
                     dispatch(
                         createSubCategoryActions({
-                            subCategoryNames: addedCategories,
+                            subCategoryNames: checkForNewSubCategory?.map((item) => item?.label),
                             categoryId: createCategoryReducer?.categoryData?.newCategory?._id,
+                            existingSubCategoryIds: oldSubCategories?.map((item) => item?.value),
                         })
                     );
+                    setSelectedSubCategories([]);
                     // setApiCall((prev) => !prev);
                 } else {
+                    // #2 if here sub categories are not selected while creating a category then this condition shall run
                     ToastContainer('Successfully Added', 'success');
                     setOpenAddCategoryModal(false);
+                    setApiCall((prev) => !prev);
                 }
             } else {
                 ToastContainer(createCategoryReducer?.error, 'error');
@@ -174,9 +183,13 @@ const Categories = () => {
         setOpenAddCategoryModal(true);
         setModalCheck('Sub-category');
     };
+    console.log(selectedSubCategories, 'selectedSubCategories');
+
     return (
         <>
             <AddCategoryModal
+                selectedSubCategories={selectedSubCategories}
+                setSelectedSubCategories={setSelectedSubCategories}
                 selectedCategories={selectedCategories}
                 setSelectedCategories={setSelectedCategories}
                 addedCategories={addedCategories}
