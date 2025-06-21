@@ -9,6 +9,7 @@ import {
     updateCategoryData,
     deleteCategoryData,
     getCategoryData,
+    createSubCategoryData,
 } from './api';
 /**
  * Login the user
@@ -122,6 +123,32 @@ function* createCategoryFunction(data) {
     }
 }
 
+function* createSubCategoryFunction(data) {
+    try {
+        yield put({
+            type: CategoryActionTypes.CREATE_SUB_CATEGORY_LOADING,
+            payload: {},
+        });
+        const response = yield call(createSubCategoryData, data);
+        if (response.data.status) {
+            yield put({
+                type: CategoryActionTypes.CREATE_SUB_CATEGORY_SUCCESS,
+                payload: { ...response.data },
+            });
+        } else {
+            yield put({
+                type: CategoryActionTypes.CREATE_SUB_CATEGORY_ERROR,
+                payload: { ...response.data },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: CategoryActionTypes.CREATE_SUB_CATEGORY_ERROR,
+            payload: error,
+        });
+    }
+}
+
 function* updateCategoryFunction(payload) {
     try {
         yield put({
@@ -187,7 +214,8 @@ function* deleteCategoryFunction(payload) {
 export function* CategoryData() {
     yield takeEvery(CategoryActionTypes.CATEGORY_DATA_FIRST, getCategoryFunction);
     yield takeEvery(CategoryActionTypes.SUB_CATEGORY_DATA_FIRST, getSubCategoryFunction);
-    yield takeEvery(CategoryActionTypes.CREATE_CATEGORY_FIRST, createCategoryFunction);
+    yield takeEvery(CategoryActionTypes.CREATE_CATEGORY, createCategoryFunction);
+    yield takeEvery(CategoryActionTypes.CREATE_SUB_CATEGORY, createSubCategoryFunction);
     yield takeLatest(CategoryActionTypes.UPDATE_CATEGORY_DATA_FIRST, updateCategoryFunction);
     yield takeEvery(CategoryActionTypes.DELETE_CATEGORY_DATA_FIRST, deleteCategoryFunction);
     yield takeEvery(CategoryActionTypes.GET_ALL_CATEGORY, getAllCategoryFunction);

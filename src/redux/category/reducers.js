@@ -88,7 +88,32 @@ const createCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) 
                 categoryData: action.payload,
                 loading: false,
             };
+        case CategoryActionTypes.CREATE_CATEGORY_RESET:
+            return CATEGORY_DATA_INITIAL_STATE;
         case CategoryActionTypes.STATE_EMPTY_SUCCESS:
+            return CATEGORY_DATA_INITIAL_STATE;
+        default:
+            return state;
+    }
+};
+export const createSubCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
+    switch (action.type) {
+        case CategoryActionTypes.CREATE_SUB_CATEGORY_LOADING:
+            return {
+                categoryData: state.categoryData,
+                loading: true,
+            };
+        case CategoryActionTypes.CREATE_SUB_CATEGORY_SUCCESS:
+            return {
+                categoryData: action.payload,
+                loading: false,
+            };
+        case CategoryActionTypes.CREATE_SUB_CATEGORY_ERROR:
+            return {
+                categoryData: action.payload,
+                loading: false,
+            };
+        case CategoryActionTypes.CREATE_SUB_CATEGORY_RESET:
             return CATEGORY_DATA_INITIAL_STATE;
         default:
             return state;
