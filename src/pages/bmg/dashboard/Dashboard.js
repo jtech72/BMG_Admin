@@ -85,10 +85,11 @@ const Dashboard = () => {
                                             cursor: 'pointer',
                                         }}
                                         key={data._id || index}
-                                        onClick={() => navigate(`/bmg/users/${data?._id}`)}
+                                        // onClick={() => navigate(`/bmg/users/${data?._id}`)}
                                         className="fw-bold">
-                                        <td>{index + 1}</td>
-                                        <td>{data?.name ? `${data?.name} ${data?.lastName}` : 'N/A'}</td>
+                                        <td>{(page - 1) * limit + index + 1}</td>
+
+                                        <td>{data?.name ? `${data?.name} ${data?.lastName || ''}` : 'N/A'}</td>
                                         <td>{data?.email ? `${data?.email}` : 'N/A'}</td>
                                         <td>{data?.phoneNumber ? `${data?.phoneNumber}` : 'N/A'}</td>
                                         <td>

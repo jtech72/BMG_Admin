@@ -135,35 +135,31 @@ const Categories = () => {
     const [newSubCategory, setNewSubCategory] = useState('');
 
     const createCategoryReducer = store?.createCategoryDataReducer;
-    console.log(createCategoryReducer, 'createCategoryReducer');
     useEffect(() => {
-        if (createCategoryReducer?.categoryData?.status) {
-            if (createCategoryReducer?.categoryData?.status == 200) {
-                if (selectedSubCategories?.length > 0) {
-                    // #1 if here sub categories are selected while creating a category then this condition shall run
-                    const checkForNewSubCategory = selectedSubCategories?.filter((item) => item?.new);
-                    const oldSubCategories = selectedSubCategories?.filter((item) => !item?.new);
-                    dispatch(
-                        createSubCategoryActions({
-                            subCategoryNames: checkForNewSubCategory?.map((item) => item?.label),
-                            categoryId: createCategoryReducer?.categoryData?.newCategory?._id,
-                            existingSubCategoryIds: oldSubCategories?.map((item) => item?.value),
-                        })
-                    );
-                    setSelectedSubCategories([]);
-                    // setApiCall((prev) => !prev);
-                } else {
-                    // #2 if here sub categories are not selected while creating a category then this condition shall run
-                    ToastContainer('Successfully Added', 'success');
-                    setOpenAddCategoryModal(false);
-                    setApiCall((prev) => !prev);
-                }
+        if (createCategoryReducer?.categoryData?.status === 200) {
+            if (selectedSubCategories?.length > 0) {
+                const checkForNewSubCategory = selectedSubCategories?.filter((item) => item?.new);
+                const oldSubCategories = selectedSubCategories?.filter((item) => !item?.new);
+                dispatch(
+                    createSubCategoryActions({
+                        subCategoryNames: checkForNewSubCategory?.map((item) => item?.label),
+                        categoryId: createCategoryReducer?.categoryData?.newCategory?._id,
+                        existingSubCategoryIds: oldSubCategories?.map((item) => item?.value),
+                    })
+                );
+                setSelectedSubCategories([]);
             } else {
-                ToastContainer(createCategoryReducer?.error, 'error');
+                ToastContainer('Successfully Added', 'success');
+                setOpenAddCategoryModal(false);
+                setApiCall((prev) => !prev);
             }
+            dispatch(createCategoryActionsReset());
+        } else if (createCategoryReducer?.categoryData && typeof createCategoryReducer?.categoryData === 'string') {
+            ToastContainer(createCategoryReducer?.categoryData, 'danger');
             dispatch(createCategoryActionsReset());
         }
     }, [createCategoryReducer]);
+
     const createSubCategoryReducer = store?.createSubCategoryDataReducer;
 
     useEffect(() => {
