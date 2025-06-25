@@ -3,6 +3,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 
+const MandatoryFieldAstrick = () => <span style={{ color: 'red' }}>*</span>;
+
 const AddCategoryModal = ({
     show,
     handleClose,
@@ -38,15 +40,36 @@ const AddCategoryModal = ({
         }
     };
     const [categoryConfirmationMatch, setCategoryConfirmationMatch] = useState('');
+    const [categoryNameError, setCategoryNameError] = useState('');
+    useEffect(() => {
+        if (categoryName.trim() !== '') {
+            setCategoryNameError('');
+        }
+    }, [categoryName]);
+
     useEffect(() => {
         if (categoryName == confirmName) {
             setCategoryConfirmationMatch('');
         }
     }, [categoryName, confirmName]);
+    useEffect(() => {
+        if (selectedSubCategories?.length > 0) {
+            setSubCategoryError('');
+        }
+    }, [selectedSubCategories]);
+    console.log(modalCheck, 'modalCheck');
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        if (categoryName !== confirmName) {
+        const trimmedCategory = categoryName.trim();
+        const trimmedConfirm = confirmName.trim();
+
+        if (!trimmedCategory) {
+            setCategoryNameError('Please enter a valid category name.');
+            return;
+        }
+
+        if (trimmedCategory !== trimmedConfirm) {
             setCategoryConfirmationMatch('Category names do not match!');
             return;
         }
@@ -57,14 +80,14 @@ const AddCategoryModal = ({
         }
 
         const payload = {
-            categoryName,
+            categoryName: trimmedCategory,
             subCategories: selectedSubCategories.map((item) => item.value),
         };
 
         onSubmit?.(payload);
         setCategoryName('');
         setConfirmName('');
-        setSubCategoryError(''); // reset error
+        setSubCategoryError('');
     };
 
     const subCategoryOptions =
@@ -107,19 +130,28 @@ const AddCategoryModal = ({
                 <Modal.Body>
                     {!modalCheck ? (
                         <Form.Group className="mb-3">
-                            <Form.Label>Category Name</Form.Label>
+                            <Form.Label>
+                                Category Name
+                                <MandatoryFieldAstrick />
+                            </Form.Label>
                             <Form.Control
                                 type="text"
                                 value={categoryName}
                                 onChange={(e) => setCategoryName(e.target.value)}
                                 required
+                                placeholder="Enter Category Name"
                             />
+                            {categoryNameError && <p className="text-danger mt-1">{categoryNameError}</p>}
                         </Form.Group>
                     ) : (
                         <Form.Group className="mb-3">
-                            <Form.Label>Assign Category</Form.Label>
+                            <Form.Label>
+                                Assign Category
+                                <MandatoryFieldAstrick />
+                            </Form.Label>
 
                             <Select
+                                required
                                 value={selectedCategories}
                                 options={selectOptions}
                                 onChange={setSelectedCategories}
@@ -130,9 +162,13 @@ const AddCategoryModal = ({
                     {!modalCheck && (
                         <>
                             <Form.Group className="mb-3">
-                                <Form.Label>Confirm Category Name</Form.Label>
+                                <Form.Label>
+                                    Confirm Category Name
+                                    <MandatoryFieldAstrick />
+                                </Form.Label>
                                 <Form.Control
                                     type="text"
+                                    placeholder="Enter Confirm Category Name"
                                     value={confirmName}
                                     onChange={(e) => setConfirmName(e.target.value)}
                                     required
@@ -144,10 +180,14 @@ const AddCategoryModal = ({
                         </>
                     )}
                     <Form.Group className="mb-3">
-                        <Form.Label>Selected Subcategories</Form.Label>
+                        <Form.Label>
+                            Selected Subcategories
+                            {modalCheck == 'Sub-category' ? <MandatoryFieldAstrick /> : null}
+                        </Form.Label>
                         {!modalCheck ? (
                             <>
                                 <Select
+                                    required={modalCheck == 'Sub-category' ? true : false}
                                     isMulti
                                     value={selectedSubCategories}
                                     options={subCategoryOptions}
@@ -192,11 +232,20 @@ const AddCategoryModal = ({
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    {/* <Button variant="secondary" onClick={handleClose}>
                         Cancel
-                    </Button>
-                    <Button variant="primary" type="submit">
-                        Save Category
+                    </Button> */}
+                    <Button
+                        onClick={() => {
+                            if (selectedSubCategories.length > 0) {
+                                handleFormSubmit();
+                            } else {
+                                setSubCategoryError('This field is required');
+                            }
+                        }}
+                        variant="primary"
+                        type="submit">
+                        Save {modalCheck == 'Sub-category' ? 'Sub-category' : 'Category'}
                     </Button>
                 </Modal.Footer>
             </Form>

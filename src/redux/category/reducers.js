@@ -6,6 +6,11 @@ const CATEGORY_DATA_INITIAL_STATE = {
     loading: false,
 };
 
+const CATEGORY_DATA = {
+    categoryData: [],
+    loading: false,
+};
+
 const categoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
     switch (action.type) {
         case CategoryActionTypes.CATEGORY_DATA_LOADING:
@@ -71,7 +76,7 @@ const subCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => 
     }
 };
 
-const createCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) => {
+const createCategoryDataReducer = (state = CATEGORY_DATA, action) => {
     switch (action.type) {
         case CategoryActionTypes.CREATE_CATEGORY_LOADING:
             return {
@@ -89,9 +94,7 @@ const createCategoryDataReducer = (state = CATEGORY_DATA_INITIAL_STATE, action) 
                 loading: false,
             };
         case CategoryActionTypes.CREATE_CATEGORY_RESET:
-            return CATEGORY_DATA_INITIAL_STATE;
-        case CategoryActionTypes.STATE_EMPTY_SUCCESS:
-            return CATEGORY_DATA_INITIAL_STATE;
+            return CATEGORY_DATA;
         default:
             return state;
     }
