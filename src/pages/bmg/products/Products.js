@@ -20,6 +20,7 @@ const Products = () => {
     const DraftCount = store?.productDataReducer?.productData?.totalDraftCount || 0;
     const navigate = useNavigate();
 
+
     const {
         total: AuctionCounts,
         ongoing: ongoingCounts,
