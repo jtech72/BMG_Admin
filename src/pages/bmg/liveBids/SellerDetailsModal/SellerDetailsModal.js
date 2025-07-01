@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
 const SellerDetailsModal = ({ open, close, sellerDetails }) => {
-    console.log(sellerDetails, 'sellerDetailssellerDetails');
     return (
         <Modal show={open} onHide={close}>
             <Modal.Header closeButton>

@@ -66,8 +66,6 @@ const Login = (): React$Element<any> => {
     handle form submission
     */
     const onSubmit = (formData) => {
-        console.log("======login called");
-
         dispatch(loginUser(formData['email'], formData['password']));
     };
 
@@ -114,8 +112,8 @@ const Login = (): React$Element<any> => {
                     </FormInput>
 
                     <div className="mb-3 mb-0 text-center">
-                        <Button style={{backgroundColor:'#008003'}} type="submit" disabled={loading}>
-                        {!loading ?(<>{t('Log In')}</>):(<ButtonLoading/>)}    
+                        <Button style={{ backgroundColor: '#008003' }} type="submit" disabled={loading}>
+                            {!loading ? (<>{t('Log In')}</>) : (<ButtonLoading />)}
                         </Button>
                     </div>
                 </VerticalForm>

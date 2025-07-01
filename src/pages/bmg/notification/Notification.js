@@ -9,12 +9,9 @@ import NotificationModal from './notificationModal/NotificationModal';
 const Notification = () => {
     const dispatch = useDispatch();
     const { getNotificationByAdminReducer } = useSelector((state) => state);
-
     const NotificationData = getNotificationByAdminReducer?.notificationData?.data || [];
-    console.log({ NotificationData });
     const TotalRecords = getNotificationByAdminReducer?.notificationData?.totalRecords || 0;
     const NotificationLoading = getNotificationByAdminReducer?.loading;
-
     const [search, setSearch] = useState('');
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -166,9 +163,8 @@ const Notification = () => {
 
                                                     <td>
                                                         <span
-                                                            className={`badge ${
-                                                                data?.status ? 'bg-success' : 'bg-danger'
-                                                            } px-2 py-1`}>
+                                                            className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
+                                                                } px-2 py-1`}>
                                                             {data?.status ? 'Active' : 'Inactive'}
                                                         </span>
                                                     </td>

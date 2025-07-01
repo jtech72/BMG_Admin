@@ -6,18 +6,18 @@ import { Loading } from '../../../helpers/loader/Loading';
 import { getPaidAuctionActions, getNonPaidAuctionActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination'
 import Tab from './tabs/Tab';
+import { useNavigate } from 'react-router-dom';
 const Transactions = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const PaidAuctionData = store?.getPaidAuctionDataReducer?.transactionData?.result
     const NonPaidAuctionData = store?.getNonPaidAuctionDataReducer?.transactionData?.result
-    console.log({ PaidAuctionData, NonPaidAuctionData })
     const PaidAuctionLoading = store?.getPaidAuctionDataReducer?.loading
     const NonPaidAuctionLoading = store?.getNonPaidAuctionDataReducer?.loading
     const [activeTab, setActiveTab] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0)
-
+    const navigate = useNavigate();
     const connectTab = (tabIndex) => {
         setActiveTab(tabIndex);
     };
@@ -125,7 +125,6 @@ const Transactions = () => {
                 <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ddd' }}>
                     {Object.entries(value).map(([subKey, subValue]) => (
                         <div key={subKey}>
-                            {console.log({ subKey, subValue })}
                             <strong>{formatKey(subKey)}:</strong> {formatValue(subValue, subKey)}
                         </div>
                     ))}
@@ -239,7 +238,14 @@ const Transactions = () => {
                                                                             {data?.productId ? (
                                                                                 <span style={{ cursor: 'pointer', color: 'crimson' }}
                                                                                     onMouseOver={(e) => e.target.style.color = 'rgb(10 207 151)'}
-                                                                                    onMouseOut={(e) => e.target.style.color = 'crimson'} onClick={() => handleProductClick(data?.productId)}>{data?.productId?.Product_Name?.slice(0, 30) + '...'}</span>
+                                                                                    onMouseOut={(e) => e.target.style.color = 'crimson'} onClick={() => {
+                                                                                        navigate(
+                                                                                            `/bmg/items/${data?.productId?._id}`,
+                                                                                            {
+                                                                                                state: { product: data?.product },
+                                                                                            }
+                                                                                        );
+                                                                                    }}>{data?.productId?.Product_Name?.slice(0, 30) + '...'}</span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -376,7 +382,14 @@ const Transactions = () => {
                                                                                 {data ? (
                                                                                     <span style={{ cursor: 'pointer', color: 'crimson' }}
                                                                                         onMouseOver={(e) => e.target.style.color = 'rgb(10 207 151)'}
-                                                                                        onMouseOut={(e) => e.target.style.color = 'crimson'} onClick={() => handleProductClick(data)}>{data?.Product_Name?.slice(0, 30) + '...'}</span>
+                                                                                        onMouseOut={(e) => e.target.style.color = 'crimson'} onClick={() => {
+                                                                                            navigate(
+                                                                                                `/bmg/items/${data?._id}`,
+                                                                                                {
+                                                                                                    state: { product: data?.product },
+                                                                                                }
+                                                                                            );
+                                                                                        }}>{data?.Product_Name?.slice(0, 30) + '...'}</span>
                                                                                 ) : (
                                                                                     <span className="d-flex text-danger justify-content-center">
                                                                                         N/A

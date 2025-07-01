@@ -33,14 +33,12 @@ const BidHandlerModal = ({
         } else {
             dispatch(postbidHandlerActions({ ...restData, categoryIds: categories.map((e) => e._id) }));
         }
-        console.log('Form Data:', data);
         // Handle submit logic here
         // handleClose();
     };
     const store = useSelector((state) => state);
     const getCategoriesReducer = store?.categoryAllDataReducer;
     const getCategoriesList = getCategoriesReducer?.categoryData?.categories;
-    console.log(getCategoriesList, 'getCategoriesList');
     const dispatch = useDispatch();
     useEffect(() => {
         if (show) {
@@ -62,7 +60,6 @@ const BidHandlerModal = ({
             }
         }
     }, [show, editData]);
-    console.log(editData, 'editData');
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>

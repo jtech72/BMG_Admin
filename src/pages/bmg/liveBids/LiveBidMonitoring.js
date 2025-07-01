@@ -15,12 +15,8 @@ const LiveBidMonitoring = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const LiveBidData = store?.getLiveBidDataReducer?.leadData?.result;
-
-    console.log(store?.getLiveBidDataReducer?.leadData);
     const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading;
-
     const TotalRecords = store?.getLiveBidDataReducer?.leadData?.totalRecords;
-
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -190,14 +186,14 @@ const LiveBidMonitoring = () => {
                                                                     </OverlayTrigger>
                                                                 </td>
                                                                 <td
-                                                                    className="text-uppercase fw-bold"
-                                                                    // style={{ cursor: 'pointer' }}
+                                                                    className="text-uppercase fw-bold text-dark"
+                                                                // style={{ cursor: 'pointer' }}
                                                                 >
                                                                     <b>
                                                                         {data?.product?.Product_Name ? (
                                                                             <span>{data?.product?.Product_Name}</span>
                                                                         ) : (
-                                                                            <span className="d-flex justify-content-center">
+                                                                            <span className="d-flex justify-content-center text-dark">
                                                                                 N/A
                                                                             </span>
                                                                         )}
@@ -205,7 +201,7 @@ const LiveBidMonitoring = () => {
                                                                     {/* </OverlayTrigger> */}
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase fw-bold text-dark">
                                                                     {data?.product?.startBidDateTime ? (
                                                                         <span>
                                                                             {readableDate(
@@ -213,13 +209,13 @@ const LiveBidMonitoring = () => {
                                                                             )}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase fw-bold text-dark">
                                                                     {data?.product?.endBidDateTime ? (
                                                                         <span>
                                                                             {readableDate(
@@ -227,15 +223,15 @@ const LiveBidMonitoring = () => {
                                                                             )}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-dark">
                                                                     {data?.product ? (
-                                                                        <span className="fw-semibold">
+                                                                        <span className="fw-semibold text-dark">
                                                                             {data?.product?.Start_Bid_Price}
                                                                         </span>
                                                                     ) : (
@@ -243,26 +239,26 @@ const LiveBidMonitoring = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-dark">
                                                                     {data?.product?.highBidingAmount ? (
                                                                         <span>{data?.product?.highBidingAmount}</span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-dark" >
                                                                     {data?.product?.totalBidders ? (
                                                                         <span>{data?.product?.totalBidders}</span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold ">
                                                                     <FaRegEye
                                                                         onClick={() => {
                                                                             navigate(
@@ -273,14 +269,14 @@ const LiveBidMonitoring = () => {
                                                                             );
                                                                         }}
                                                                         size={18}
-                                                                        cursor={'pointer'}
+                                                                        cursor={'pointer'} className='me-1'
                                                                         style={{
                                                                             color: '#0d6efd', // optional: makes it look like a link/info icon
                                                                         }}
                                                                     />
 
                                                                     <BsInfoCircle
-                                                                        size={18}
+                                                                        size={17}
                                                                         onClick={() =>
                                                                             navigate(
                                                                                 `/bmg/items/${data?.product?._id}`,
@@ -290,7 +286,7 @@ const LiveBidMonitoring = () => {
                                                                             )
                                                                         }
                                                                         style={{
-                                                                            marginRight: '5px',
+                                                                            // marginRight: '5px',
                                                                             cursor: 'pointer',
                                                                             color: '#0d6efd', // optional: makes it look like a link/info icon
                                                                         }}
