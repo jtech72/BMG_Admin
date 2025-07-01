@@ -20,10 +20,6 @@ function getLiveBidApi(params) {
     // const {search,limit,page}=params?.data
     // search=${search}&
     const { pageSize, pageIndex } = params.data;
-    console.log(params, 'paramsparams', {
-        pageSize,
-        pageIndex,
-    });
     return api.get(`${URL.GET_LIVE_BIDS}?limit=${pageSize}&page=${pageIndex}`);
 }
 

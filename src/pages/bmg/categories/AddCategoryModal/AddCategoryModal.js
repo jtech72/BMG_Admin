@@ -57,7 +57,6 @@ const AddCategoryModal = ({
             setSubCategoryError('');
         }
     }, [selectedSubCategories]);
-    console.log(modalCheck, 'modalCheck');
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
@@ -119,7 +118,6 @@ const AddCategoryModal = ({
     }, [show]);
 
     const NoDropdownIndicator = () => null;
-    console.log(subCategoryError, 'kjhgfdsdfghj˚');
 
     return (
         <Modal show={show} onHide={handleClose} centered>

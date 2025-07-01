@@ -5,17 +5,16 @@ import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getLeadActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination';
+import { useNavigate } from 'react-router-dom';
+
 const AuctionLead = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const LeadsData = store?.leadDataReducer?.leadData?.data;
-
-    console.log(store?.leadDataReducer?.leadData);
+    const navigate = useNavigate();
     const LeadsLoading = store?.leadDataReducer?.loading;
-
     const TotalRecords = store?.leadDataReducer?.leadData?.totalRecords;
-    console.log({ TotalRecords });
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -140,7 +139,15 @@ const AuctionLead = () => {
                                                         {LeadsData?.map((data, index) => (
                                                             <tr
                                                                 style={{ cursor: 'pointer' }}
-                                                                onClick={() => handleProductClick(data?.productId)}
+                                                                // onClick={() => handleProductClick(data?.productId)}
+                                                                onClick={() =>
+                                                                    navigate(
+                                                                        `/bmg/items/${data?.productId?._id}`,
+                                                                        {
+                                                                            state: { product: data?.product },
+                                                                        }
+                                                                    )
+                                                                }
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
@@ -192,9 +199,8 @@ const AuctionLead = () => {
                                                                 <td className="fw-bold">
                                                                     {data?.userId ? (
                                                                         <span className="fw-semibold">
-                                                                            {`${data?.userId?.name || ''} ${
-                                                                                data?.userId?.lastName || ''
-                                                                            }`.trim() || 'N/A'}
+                                                                            {`${data?.userId?.name || ''} ${data?.userId?.lastName || ''
+                                                                                }`.trim() || 'N/A'}
                                                                         </span>
                                                                     ) : (
                                                                         <span>N/A</span>

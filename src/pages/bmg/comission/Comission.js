@@ -12,7 +12,6 @@ const Comission = () => {
     const store = useSelector((state) => state);
 
     const ComissionData = store?.getComissionDataReducer?.comissionData?.commisions || [];
-    console.log(store?.getComissionDataReducer)
     const TotalRecords = store?.getComissionDataReducer?.comissionData?.totalRecords || ComissionData?.length || 0;
     const ComissionLoading = store?.getComissionDataReducer?.loading;
 

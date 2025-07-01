@@ -10,11 +10,7 @@ const Orders = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const OrdersData = store?.getOrderDataReducer?.orderData?.orderDetails
-
-    console.log(OrdersData)
     const OrdersLoading = store?.getOrderDataReducer?.loading
-
-
     const TotalRecords = store?.getOrderDataReducer?.orderData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -95,7 +91,6 @@ const Orders = () => {
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
-                                                                {console.log({ data })}
                                                                 <td className='text-uppercase fw-bold'>
                                                                     {data?.orderId ? (
                                                                         <span>{data?.orderId} </span>

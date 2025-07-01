@@ -5,7 +5,7 @@ import * as URL from '../../helpers/api/apiEndPoint';
 const api = new APICore();
 
 function faqData(params: any): any {
-    const { search,limit,page } = params?.data
+    const { search, limit, page } = params?.data
     return api.get(`${URL.GET_FAQ}?search=${encodeURIComponent(search)}&limit=${limit}&page=${page}`);
 }
 
@@ -15,7 +15,6 @@ function createFaqData(params: any): any {
 }
 function updateFaqData(params: any): any {
     const { data } = params;
-    console.log({params})
     return api.update(URL.UPDATE_FAQ, data);
 }
 function deleteFaqData(params: any): any {
@@ -23,4 +22,5 @@ function deleteFaqData(params: any): any {
     return api.create(URL.DELETE_FAQ, data);
 }
 export {
-    faqData, createFaqData, updateFaqData, deleteFaqData};
+    faqData, createFaqData, updateFaqData, deleteFaqData
+};

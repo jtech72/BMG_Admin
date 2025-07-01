@@ -11,7 +11,6 @@ function getDashboardApi(params: any): any {
 
 function recentRegistrationsForDashboardApi(data) {
     const { page, limit } = data?.data;
-    console.log(data, 'datadata');
     return api.get(`${URL.GET_RECENT_REGISTRATIONS_FOR_DASHBOARD}`, {
         page: page || 1,
         limit: limit || 10,

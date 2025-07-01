@@ -5,6 +5,7 @@ import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getProductActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination';
+import { useNavigate } from 'react-router-dom';
 const Products = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
@@ -12,13 +13,12 @@ const Products = () => {
     const [type, setType] = useState('Auction');
     const [productType, setProductType] = useState('ongoing');
     const ProductsData = store?.productDataReducer?.productData?.result;
-    console.log(ProductsData);
     const ProductsLoading = store?.productDataReducer?.loading;
-
     const TotalRecords = store?.productDataReducer?.productData?.totalRecords || 0;
     const auctionCounts = store?.productDataReducer?.productData?.auctionCounts || {};
     const saleCounts = store?.productDataReducer?.productData?.saleCounts || {};
     const DraftCount = store?.productDataReducer?.productData?.totalDraftCount || 0;
+    const navigate = useNavigate();
 
     const {
         total: AuctionCounts,
@@ -34,7 +34,6 @@ const Products = () => {
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
-    console.log('making build console for checking');
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
@@ -101,7 +100,6 @@ const Products = () => {
                 <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ddd' }}>
                     {Object.entries(value).map(([subKey, subValue]) => (
                         <div key={subKey}>
-                            {console.log({ subKey, subValue })}
                             <strong>{formatKey(subKey)}:</strong> {formatValue(subValue, subKey)}
                         </div>
                     ))}
@@ -299,7 +297,6 @@ const Products = () => {
                                                         {ProductsData?.map((data, index) => (
                                                             <tr key={index} className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
-                                                                {console.log({ data })}
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.productGenerateId ? (
                                                                         <span>{data?.productGenerateId} </span>
@@ -342,9 +339,18 @@ const Products = () => {
                                                                         <b>
                                                                             {data?.Product_Name ? (
                                                                                 <span
-                                                                                    onClick={() =>
-                                                                                        handleProductClick(data)
-                                                                                    }>
+                                                                                    // onClick={() =>
+                                                                                    //     handleProductClick(data)
+                                                                                    // }
+                                                                                    onClick={() => {
+                                                                                        navigate(
+                                                                                            `/bmg/items/${data?._id}`,
+                                                                                            {
+                                                                                                state: { product: data?.product },
+                                                                                            }
+                                                                                        );
+                                                                                    }}
+                                                                                >
                                                                                     {data?.Product_Name?.slice(0, 30) +
                                                                                         '...'}{' '}
                                                                                 </span>
