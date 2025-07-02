@@ -11,8 +11,6 @@ const SoldProducts = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const SoldAuctionData = store?.soldProductDataReducer?.leadData?.data
-    console.log(store?.soldProductDataReducer?.leadData, 'SoldAuctionData');
-
     const SoldAuctionLoading = store?.soldProductDataReducer?.loading
     const TotalRecords = store?.soldProductDataReducer?.leadData?.pagination?.totalRecords || 0;
     const [pageIndex, setPageIndex] = useState(1);
