@@ -81,7 +81,7 @@ const AuctionLead = () => {
                         active: true,
                     },
                 ]}
-                title={`Auction Lead's`}
+                title={`Auction Leads under 50,000`}
             />
             <Row>
                 <Col xs={12}>
@@ -127,12 +127,24 @@ const AuctionLead = () => {
                                                             <th scope="col">
                                                                 <i className="mdi mdi-merge"></i>
                                                             </th>
-                                                            <th scope="col">Product Id</th>
-                                                            <th scope="col">Product Name</th>
-                                                            <th scope="col">Brand</th>
-                                                            <th scope="col">Ask Price</th>
-                                                            <th scope="col">User Name</th>
-                                                            <th scope="col">User Email</th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Id
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Brand
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Ask Price
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                User Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                User Email
+                                                            </th>
                                                             {/* <th scope="col">User Verified</th> */}
                                                         </tr>
                                                     </thead>
@@ -145,7 +157,7 @@ const AuctionLead = () => {
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
 
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase fw-bold text-start">
                                                                     {data?.productId?.productGenerateId ? (
                                                                         <span>
                                                                             {data?.productId?.productGenerateId}
@@ -157,10 +169,18 @@ const AuctionLead = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
-                                                                    <b>
+                                                                <td className="text-uppercase fw-bold text-start">
+                                                                    <b title={data?.productId?.Product_Name || 'N/A'}>
                                                                         {data?.productId?.Product_Name ? (
-                                                                            <span>{data?.productId?.Product_Name}</span>
+                                                                            <span>
+                                                                                {data?.productId?.Product_Name.length >
+                                                                                20
+                                                                                    ? data?.productId?.Product_Name.substring(
+                                                                                          0,
+                                                                                          20
+                                                                                      ) + '...'
+                                                                                    : data?.productId?.Product_Name}
+                                                                            </span>
                                                                         ) : (
                                                                             <span className="d-flex justify-content-center">
                                                                                 N/A
@@ -169,17 +189,26 @@ const AuctionLead = () => {
                                                                     </b>
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
-                                                                    {data?.productId?.Brand ? (
-                                                                        <span>{data?.productId?.Brand}</span>
-                                                                    ) : (
-                                                                        <span className="d-flex justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
+                                                                <td className="text-uppercase fw-bold text-start">
+                                                                    <span title={data?.productId?.Brand || 'N/A'}>
+                                                                        {data?.productId?.Brand ? (
+                                                                            <span>
+                                                                                {data?.productId?.Brand.length > 20
+                                                                                    ? data?.productId?.Brand.substring(
+                                                                                          0,
+                                                                                          20
+                                                                                      ) + '...'
+                                                                                    : data?.productId?.Brand}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className="d-flex justify-content-center">
+                                                                                N/A
+                                                                            </span>
+                                                                        )}
+                                                                    </span>
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase fw-bold text-start">
                                                                     {data?.productId?.Ask_Price ? (
                                                                         <span>$ {data?.productId?.Ask_Price}</span>
                                                                     ) : (
@@ -189,7 +218,7 @@ const AuctionLead = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-start">
                                                                     {data?.userId ? (
                                                                         <span className="fw-semibold">
                                                                             {`${data?.userId?.name || ''} ${
@@ -201,7 +230,7 @@ const AuctionLead = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-start">
                                                                     {data?.userId?.email ? (
                                                                         <span>{data?.userId?.email}</span>
                                                                     ) : (

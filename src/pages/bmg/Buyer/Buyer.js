@@ -99,7 +99,7 @@ const Buyer_Seller = () => {
                                                     <div className="table-responsive">
                                                         <table className="table bg-white table-hover">
                                                             <thead>
-                                                                <tr className="" style={{ color: '#703133' }}>
+                                                                <tr className="text-start">
                                                                     <th scope="col">
                                                                         <i className="mdi mdi-merge"></i>
                                                                     </th>
@@ -117,77 +117,69 @@ const Buyer_Seller = () => {
                                                                             navigate(`order-history/${data?._id}`)
                                                                         }
                                                                         key={index}
-                                                                        className="text-dark fw-bold text-nowrap">
+                                                                        className="text-dark fw-bold text-nowrap text-start"
+                                                                        style={{ cursor: 'pointer' }} // optional: adds pointer cursor for UX clarity
+                                                                    >
                                                                         <th scope="row">{index + 1}</th>
-                                                                        <td className="fw-bold text-info">
+
+                                                                        <td className="fw-bold">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
                                                                                     {`${
                                                                                         data?.name
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                    }${data?.name?.slice(1) || ''} 
-                                                                                      ${
-                                                                                          data?.lastName
-                                                                                              ?.charAt(0)
-                                                                                              .toUpperCase() || ''
-                                                                                      }${
+                                                                                    }${data?.name?.slice(1) || ''} ${
+                                                                                        data?.lastName
+                                                                                            ?.charAt(0)
+                                                                                            .toUpperCase() || ''
+                                                                                    }${
                                                                                         data?.lastName?.slice(1) || ''
                                                                                     }`.trim()}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
                                                                         </td>
 
-                                                                        <td className="fw-bold text-success">
+                                                                        <td className="fw-bold">
                                                                             {data?.email ? (
-                                                                                <span>{data?.email} </span>
+                                                                                <span>{data?.email}</span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
                                                                         </td>
+
                                                                         <td className="fw-bold">
                                                                             {data?.phoneNumber ? (
-                                                                                <span>{data?.phoneNumber} </span>
+                                                                                <span>{data?.phoneNumber}</span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
                                                                         </td>
-                                                                        <td className="fw-bold text-primary">
+
+                                                                        <td className="fw-bold">
                                                                             {data?.primaryAddress ? (
                                                                                 <span>
                                                                                     {`${
                                                                                         data?.primaryAddress?.address ||
                                                                                         ''
                                                                                     }, 
-                                                                                      ${
-                                                                                          data?.primaryAddress
-                                                                                              ?.street || ''
-                                                                                      }, 
-                                                                                      ${
-                                                                                          data?.primaryAddress?.city
-                                                                                              ?.name || ''
-                                                                                      }, 
-                                                                                      ${
-                                                                                          data?.primaryAddress?.state
-                                                                                              ?.name || ''
-                                                                                      }, 
-                                                                                      ${
-                                                                                          data?.primaryAddress?.country
-                                                                                              ?.name || ''
-                                                                                      }`
-                                                                                        .replace(/,\s*,/g, ',') // Remove empty commas
+            ${data?.primaryAddress?.street || ''}, 
+            ${data?.primaryAddress?.city?.name || ''}, 
+            ${data?.primaryAddress?.state?.name || ''}, 
+            ${data?.primaryAddress?.country?.name || ''}`
+                                                                                        .replace(/,\s*,/g, ',') // remove empty commas
                                                                                         .trim()}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}

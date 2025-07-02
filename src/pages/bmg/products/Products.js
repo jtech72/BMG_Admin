@@ -283,15 +283,25 @@ const Products = () => {
                                             <div className="table-responsive">
                                                 <table className="table table-striped bg-white ">
                                                     <thead>
-                                                        <tr className="text-nowrap" style={{ color: '#703133' }}>
+                                                        <tr className="text-nowrap">
                                                             <th scope="col">
                                                                 <i className="mdi mdi-merge"></i>
                                                             </th>
-                                                            <th scope="col">Product Id</th>
-                                                            <th scope="col">Serial No</th>
-                                                            <th scope="col">Product Name</th>
-                                                            <th scope="col">Brand</th>
-                                                            <th scope="col">Ask Price</th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Id
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Serial No
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Brand
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Ask Price
+                                                            </th>
                                                             {type === 'Auction' && <th scope="col">Bidding Amount</th>}
                                                         </tr>
                                                     </thead>
@@ -299,39 +309,35 @@ const Products = () => {
                                                         {ProductsData?.map((data, index) => (
                                                             <tr key={index} className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
-                                                                {console.log({ data })}
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase text-start fw-bold">
                                                                     {data?.productGenerateId ? (
                                                                         <span>{data?.productGenerateId} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
+                                                                        <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="text-uppercase fw-bold text-info">
+                                                                <td className="text-uppercase fw-bold text-start">
                                                                     {data?.Serial_No ? (
                                                                         <span>{data?.Serial_No} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
+                                                                        <span className="">N/A</span>
                                                                     )}
                                                                 </td>
 
                                                                 <td
-                                                                    className="text-uppercase fw-bold"
+                                                                    className="text-uppercase text-start fw-bold"
                                                                     style={{
                                                                         cursor: 'pointer',
-                                                                        color: 'crimson',
-                                                                        transition: 'color 0.3s ease-in-out',
+                                                                        // color: 'crimson',
+                                                                        // transition: 'color 0.3s ease-in-out',
                                                                     }}
-                                                                    onMouseOver={(e) =>
-                                                                        (e.target.style.color = 'rgb(10 207 151)')
-                                                                    }
-                                                                    onMouseOut={(e) =>
-                                                                        (e.target.style.color = 'crimson')
-                                                                    }>
+                                                                    // onMouseOver={(e) =>
+                                                                    //     // (e.target.style.color = 'rgb(10 207 151)')
+                                                                    // }
+                                                                    // onMouseOut={(e) =>
+                                                                    //     // (e.target.style.color = 'crimson')
+                                                                    // }
+                                                                >
                                                                     <OverlayTrigger
                                                                         placement="left"
                                                                         overlay={
@@ -356,33 +362,27 @@ const Products = () => {
                                                                         </b>
                                                                     </OverlayTrigger>
                                                                 </td>
-                                                                <td className="text-uppercase fw-bold text-primary">
+                                                                <td className="text-uppercase text-start fw-bold">
                                                                     {data?.Brand ? (
                                                                         <span>{data?.Brand} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
+                                                                        <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="text-uppercase fw-bold text-success">
+                                                                <td className="text-uppercase text-start fw-bold text-success">
                                                                     {data?.Ask_Price ? (
                                                                         <span>$ {data?.Ask_Price} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
+                                                                        <span className="">N/A</span>
                                                                     )}
                                                                 </td>
 
                                                                 {type === 'Auction' && (
-                                                                    <td className="text-uppercase fw-bold text-success">
+                                                                    <td className="text-uppercase text-start fw-bold text-success">
                                                                         {data?.Start_Bid_Price ? (
                                                                             <span>$ {data?.Start_Bid_Price} </span>
                                                                         ) : (
-                                                                            <span className="d-flex text-danger justify-content-center">
-                                                                                N/A
-                                                                            </span>
+                                                                            <span className="">N/A</span>
                                                                         )}
                                                                     </td>
                                                                 )}

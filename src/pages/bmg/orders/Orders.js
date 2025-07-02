@@ -4,16 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getOrdersAction } from '../../../redux/actions';
-import Pagination from '../../../helpers/Pagination'
+import Pagination from '../../../helpers/Pagination';
 const Orders = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const OrdersData = store?.getOrderDataReducer?.orderData?.orderDetails
+    const OrdersData = store?.getOrderDataReducer?.orderData?.orderDetails;
 
-    console.log(OrdersData)
-    const OrdersLoading = store?.getOrderDataReducer?.loading
-
+    console.log(OrdersData);
+    const OrdersLoading = store?.getOrderDataReducer?.loading;
 
     const TotalRecords = store?.getOrderDataReducer?.orderData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
@@ -26,7 +25,6 @@ const Orders = () => {
     useEffect(() => {
         dispatch(getOrdersAction({ search: search, limit: pageSize, page: pageIndex }));
     }, [dispatch, pageIndex, pageSize, search]);
-
 
     return (
         <>
@@ -43,8 +41,10 @@ const Orders = () => {
             <Row>
                 <Col xs={12}>
                     <Card
-                        style={{ boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset' }}
-                    >
+                        style={{
+                            boxShadow:
+                                'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                        }}>
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
@@ -61,9 +61,8 @@ const Orders = () => {
                                     {search && (
                                         <i
                                             className="mdi mdi-backspace-outline text-danger fs-3"
-                                            onClick={() => setSearch("")}
-                                            style={{ cursor: "pointer" }}
-                                        ></i>
+                                            onClick={() => setSearch('')}
+                                            style={{ cursor: 'pointer' }}></i>
                                     )}
                                 </div>
                             </div>
@@ -75,13 +74,14 @@ const Orders = () => {
                             ) : (
                                 <>
                                     {OrdersData && OrdersData?.length > 0 ? (
-
                                         <>
                                             <div className="d-flex justify-content-center table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table table-striped bg-white text-start">
                                                     <thead>
-                                                        <tr className="text-nowrap" style={{ color: '#703133' }}>
-                                                            <th scope="col"><i className="mdi mdi-merge"></i></th>
+                                                        <tr className="text-nowrap">
+                                                            <th scope="col">
+                                                                <i className="mdi mdi-merge"></i>
+                                                            </th>
                                                             <th scope="col">Order Id</th>
                                                             <th scope="col">Payment Id</th>
                                                             <th scope="col">Payment method</th>
@@ -93,50 +93,54 @@ const Orders = () => {
                                                         {OrdersData?.map((data, index) => (
                                                             <tr
                                                                 key={index}
-                                                                className="text-dark fw-bold text-nowrap">
+                                                                className="text-dark fw-bold text-nowrap text-start">
                                                                 <th scope="row">{index + 1}</th>
-                                                                {console.log({ data })}
-                                                                <td className='text-uppercase fw-bold'>
+
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.orderId ? (
-                                                                        <span>{data?.orderId} </span>
+                                                                        <span>{data?.orderId}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-info'>
+
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.paymentId ? (
-                                                                        <span>{data?.paymentId} </span>
+                                                                        <span>{data?.paymentId}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-warning'>
+
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.paymentMethod ? (
-                                                                        <span>{data?.paymentMethod} </span>
+                                                                        <span>{data?.paymentMethod}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='fw-bold text-primary'>
+
+                                                                <td className="fw-bold">
                                                                     {data?.userId?.email ? (
-                                                                        <span>{data?.userId?.email} </span>
+                                                                        <span>{data?.userId?.email}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='text-uppercase fw-bold text-success'>
+
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.status ? (
-                                                                        <span>{data?.status} </span>
+                                                                        <span>{data?.status}</span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
@@ -151,9 +155,7 @@ const Orders = () => {
                                         <div
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
-                                            <code className="fs-4">
-                                                No Order's found.{' '}
-                                            </code>
+                                            <code className="fs-4">No Order's found. </code>
                                         </div>
                                     )}
                                 </>
@@ -168,9 +170,9 @@ const Orders = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row >
+            </Row>
         </>
-    )
-}
+    );
+};
 
-export default Orders
+export default Orders;

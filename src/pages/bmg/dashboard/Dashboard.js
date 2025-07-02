@@ -71,10 +71,10 @@ const Dashboard = () => {
                                     <th>
                                         <i className="mdi mdi-merge"></i>
                                     </th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
-                                    <th>Role</th>
+                                    <th className="text-start">Name</th>
+                                    <th className="text-start">Email</th>
+                                    <th className="text-start">Phone Number</th>
+                                    <th className="text-start">Role</th>
                                     {/* <th>Action</th> */}
                                 </tr>
                             </thead>
@@ -89,12 +89,14 @@ const Dashboard = () => {
                                         className="fw-bold">
                                         <td>{(page - 1) * limit + index + 1}</td>
 
-                                        <td>{data?.name ? `${data?.name} ${data?.lastName || ''}` : 'N/A'}</td>
-                                        <td>{data?.email ? `${data?.email}` : 'N/A'}</td>
-                                        <td>{data?.phoneNumber ? `${data?.phoneNumber}` : 'N/A'}</td>
-                                        <td>
-                                            <span className={`text-capitalize px-2 py-1`}>{data?.role}</span>
+                                        <td className="text-start">
+                                            {data?.name ? `${data?.name} ${data?.lastName || ''}` : 'N/A'}
                                         </td>
+                                        <td className="text-start">{data?.email ? `${data?.email}` : 'N/A'}</td>
+                                        <td className="text-start">
+                                            {data?.phoneNumber ? `${data?.phoneNumber}` : 'N/A'}
+                                        </td>
+                                        <td className="text-start text-capitalize">{data?.role}</td>
                                     </tr>
                                 ))}
                             </tbody>

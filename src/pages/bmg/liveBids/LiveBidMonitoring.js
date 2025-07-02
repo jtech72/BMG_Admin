@@ -148,13 +148,27 @@ const LiveBidMonitoring = () => {
                                                             {/* <th scope="col">
                                                                 <i className="mdi mdi-merge"></i>
                                                             </th> */}
-                                                            <th scope="col">Seller Name</th>
-                                                            <th scope="col">Product Name</th>
-                                                            <th scope="col">Start Date</th>
-                                                            <th scope="col">End Date</th>
-                                                            <th scope="col">Start Bid Price</th>
-                                                            <th scope="col">Highest Bid</th>
-                                                            <th scope="col">No. of Bids</th>
+                                                            <th scope="col" className="text-start">
+                                                                Seller Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Start Date
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                End Date
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Start Bid Price
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Highest Bid
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                No. of Bids
+                                                            </th>
                                                             <th scope="col">Details</th>
                                                         </tr>
                                                     </thead>
@@ -166,7 +180,7 @@ const LiveBidMonitoring = () => {
                                                                 //     cursor: 'pointer',
                                                                 // }}
                                                                 className="text-nowrap">
-                                                                <td className="text-capitalize fw-bold">
+                                                                <td className="text-capitalize text-start fw-bold">
                                                                     <OverlayTrigger
                                                                         placement="left"
                                                                         overlay={
@@ -182,7 +196,7 @@ const LiveBidMonitoring = () => {
                                                                                         data?.product?.userId
                                                                                     );
                                                                                 }}
-                                                                                className="text-primary"
+                                                                                className="text-primary text-start"
                                                                                 style={{ cursor: 'pointer' }}>
                                                                                 {data?.product?.userId?.name}
                                                                             </span>
@@ -190,22 +204,30 @@ const LiveBidMonitoring = () => {
                                                                     </OverlayTrigger>
                                                                 </td>
                                                                 <td
-                                                                    className="text-uppercase fw-bold"
+                                                                    className="text-uppercase text-start fw-bold"
                                                                     // style={{ cursor: 'pointer' }}
                                                                 >
-                                                                    <b>
+                                                                    <b title={data?.product?.Product_Name || 'N/A'}>
                                                                         {data?.product?.Product_Name ? (
-                                                                            <span>{data?.product?.Product_Name}</span>
+                                                                            <span>
+                                                                                {data?.product?.Product_Name.length > 20
+                                                                                    ? data?.product?.Product_Name.substring(
+                                                                                          0,
+                                                                                          20
+                                                                                      ) + '...'
+                                                                                    : data?.product?.Product_Name}
+                                                                            </span>
                                                                         ) : (
                                                                             <span className="d-flex justify-content-center">
                                                                                 N/A
                                                                             </span>
                                                                         )}
                                                                     </b>
+
                                                                     {/* </OverlayTrigger> */}
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase text-start fw-bold">
                                                                     {data?.product?.startBidDateTime ? (
                                                                         <span>
                                                                             {readableDate(
@@ -219,7 +241,7 @@ const LiveBidMonitoring = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="text-uppercase fw-bold">
+                                                                <td className="text-uppercase text-start fw-bold">
                                                                     {data?.product?.endBidDateTime ? (
                                                                         <span>
                                                                             {readableDate(
@@ -233,7 +255,7 @@ const LiveBidMonitoring = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-start">
                                                                     {data?.product ? (
                                                                         <span className="fw-semibold">
                                                                             {data?.product?.Start_Bid_Price}
@@ -243,7 +265,7 @@ const LiveBidMonitoring = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-start">
                                                                     {data?.product?.highBidingAmount ? (
                                                                         <span>{data?.product?.highBidingAmount}</span>
                                                                     ) : (
@@ -253,7 +275,7 @@ const LiveBidMonitoring = () => {
                                                                     )}
                                                                 </td>
 
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-start">
                                                                     {data?.product?.totalBidders ? (
                                                                         <span>{data?.product?.totalBidders}</span>
                                                                     ) : (
@@ -262,7 +284,7 @@ const LiveBidMonitoring = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className="fw-bold">
+                                                                <td className="fw-bold text-start">
                                                                     <FaRegEye
                                                                         onClick={() => {
                                                                             navigate(
