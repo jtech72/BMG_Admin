@@ -42,6 +42,18 @@ const NotificationModal = ({ show, hide, notificationData, setApiCall }) => {
         setNotification((prev) => ({ ...prev, message: value }));
     };
 
+    const modules = {
+        toolbar: [
+            // Remove the 'header' dropdown
+            ['bold', 'italic', 'underline'], // formatting
+            ['link'],                         // link and image
+            // [{ 'color': [] }, { 'background': [] }],   // color pickers
+            // [{ 'align': [] }],                         // alignment
+            ['clean']                                  // remove formatting
+        ]
+    };
+
+
     useEffect(() => {
         if (notificationData?.data) {
             setNotification({
@@ -81,10 +93,12 @@ const NotificationModal = ({ show, hide, notificationData, setApiCall }) => {
     const requiredStar = <span className="text-danger fs-4">*</span>;
 
     return (
-        <Modal show={show} onHide={closeModal} centered size="lg" backdrop="static">
+        <Modal show={show} centered size="lg" backdrop="static"
+        // onHide={closeModal}
+        >
             <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                 <Modal.Title>{notificationData?.type} Notification</Modal.Title>
-                <i className="mdi mdi-close fs-3" onClick={closeModal} style={{ cursor: 'pointer' }}></i>
+                {/* <i className="mdi mdi-close fs-3" onClick={closeModal} style={{ cursor: 'pointer' }}></i> */}
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -104,10 +118,17 @@ const NotificationModal = ({ show, hide, notificationData, setApiCall }) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Message {requiredStar}</Form.Label>
+                        {/* <ReactQuill
+                            value={notification.message}
+                            onChange={handleQuillChange}
+                            theme="snow"
+                            placeholder="Enter message..."
+                        /> */}
                         <ReactQuill
                             value={notification.message}
                             onChange={handleQuillChange}
                             theme="snow"
+                            modules={modules}
                             placeholder="Enter message..."
                         />
                     </Form.Group>

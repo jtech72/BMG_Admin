@@ -32,7 +32,7 @@ const Products = () => {
     const { total: SaleCounts, sold: soldSaleCounts, unsold: unsoldSaleCounts } = saleCounts || {};
 
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
     useEffect(() => {
@@ -296,10 +296,13 @@ const Products = () => {
                                                                 Product Name
                                                             </th>
                                                             <th scope="col" className="text-start">
+                                                                Seller's Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
                                                                 Brand
                                                             </th>
                                                             <th scope="col" className="text-start">
-                                                                Ask Price
+                                                                Amount
                                                             </th>
                                                             {type === 'Auction' && <th scope="col">Bidding Amount</th>}
                                                         </tr>
@@ -307,7 +310,7 @@ const Products = () => {
                                                     <tbody>
                                                         {ProductsData?.map((data, index) => (
                                                             <tr key={index} className="text-dark fw-bold text-nowrap">
-                                                                <th scope="row">{index + 1}</th>
+                                                                <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase text-start fw-bold">
                                                                     {data?.productGenerateId ? (
                                                                         <span>{data?.productGenerateId} </span>
@@ -316,13 +319,21 @@ const Products = () => {
                                                                     )}
                                                                 </td>
                                                                 <td className="text-uppercase fw-bold text-start">
-                                                                    {data?.Serial_No ? (
-                                                                        <span>{data?.Serial_No} </span>
+                                                                    {data?.serialNumber ? (
+                                                                        <span>{data?.serialNumber} </span>
                                                                     ) : (
                                                                         <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-
+                                                                <td className="text-uppercase fw-bold text-start">
+                                                                    {data?.userId?.name || data?.userId?.lastName ? (
+                                                                        <span>
+                                                                            {data?.userId?.name || 'N/A'} {data?.userId?.lastName || 'N/A'}
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span>N/A</span>
+                                                                    )}
+                                                                </td>
                                                                 <td
                                                                     className="text-uppercase text-start fw-bold"
                                                                     style={{

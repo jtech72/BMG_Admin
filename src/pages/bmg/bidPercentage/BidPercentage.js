@@ -13,6 +13,7 @@ import { Button, Card, Col, Row, Tooltip, OverlayTrigger } from 'react-bootstrap
 import BidHandlerModal from './AddBidHandlerModal/AddBidHandlerModal';
 import { BsPencil } from 'react-icons/bs';
 import ToastContainer from '../../../helpers/toast/ToastContainer';
+import PageTitle from '../../../helpers/PageTitle';
 
 const BidPercentage = () => {
     const dispatch = useDispatch();
@@ -84,11 +85,16 @@ const BidPercentage = () => {
                 editData={editData}
             />
             <Row>
-                <Col lg={6} className="d-flex justify-content-start ">
+                <PageTitle
+                    breadCrumbItems={[{ label: 'Bid Handler', path: '/bmg/bidHandler', active: true }]}
+                    title="Bid Handler Management"
+                />
+
+                {/* <Col lg={6} className="d-flex justify-content-start">
                     <div className="navbar text-dark ">
                         <div className={`nav-item`}>Bid Handler</div>{' '}
                     </div>
-                </Col>
+                </Col> */}
                 <div>
                     <Col xs={12}>
                         <Card
@@ -97,15 +103,17 @@ const BidPercentage = () => {
                                     'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
                             }}>
                             <Card.Body className="text-center">
-                                <div className="col d-flex justify-content-end my-3">
-                                    <Button onClick={addBidHandler}>Add Bid Handler</Button>
+                                <div className="col d-flex justify-content-end">
+                                    <Button className="bg-success border-0" onClick={addBidHandler}>
+                                        Add Bid Handler
+                                    </Button>
                                 </div>
                                 {getBidHandlerList && getBidHandlerList.length > 0 ? (
                                     <>
                                         <div className="table-responsive">
                                             <table className="table bg-white">
-                                                <thead>
-                                                    <tr className="" style={{ color: '#703133' }}>
+                                                <thead className="text-start">
+                                                    <tr className="">
                                                         <th scope="col">
                                                             <i className="mdi mdi-merge"></i>
                                                         </th>
@@ -117,41 +125,41 @@ const BidPercentage = () => {
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody className="text-start">
                                                     {getBidHandlerList?.map((data, index) => (
                                                         <tr
                                                             // onClick={() => navigate(`order-history/${data?._id}`)}
                                                             key={index}
-                                                            className="text-dark fw-bold text-nowrap">
+                                                            className="text-dark text-start fw-bold text-nowrap">
                                                             <th scope="row">{index + 1}</th>
-                                                            <td className="fw-bold text-info">
+                                                            <td className="fw-bold">
                                                                 {data?.categoryIds?.length > 0 ? (
                                                                     data?.categoryIds?.slice(0, 4)?.map((ele, ind) => {
                                                                         return (
                                                                             <span key={ind}>
                                                                                 {ele?.name}
                                                                                 {ind === 3 ||
-                                                                                    ind ===
+                                                                                ind ===
                                                                                     data.categoryIds.slice(0, 4)
                                                                                         .length -
-                                                                                    1
+                                                                                        1
                                                                                     ? '...'
                                                                                     : ', '}
                                                                             </span>
                                                                         );
                                                                     })
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
                                                             </td>
 
-                                                            <td className="fw-bold text-success">
-                                                                {data?.minPrice ? (
+                                                            <td className="fw-bold">
+                                                                {data?.minPrice == 0 || data?.minPrice != undefined ? (
                                                                     <span>{data?.minPrice} </span>
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
@@ -160,16 +168,16 @@ const BidPercentage = () => {
                                                                 {data?.maxPrice ? (
                                                                     <span>{data?.maxPrice} </span>
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className="fw-bold text-primary">
+                                                            <td className="fw-bold">
                                                                 {data?.percentage ? (
                                                                     <span>{`${data?.percentage || ''}`} </span>
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
@@ -178,8 +186,9 @@ const BidPercentage = () => {
                                                             <td className="fw-bold">
                                                                 {data?.status ? (
                                                                     <span
-                                                                        className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
-                                                                            } px-2 py-1`}>
+                                                                        className={`badge ${
+                                                                            data?.status ? 'bg-success' : 'bg-danger'
+                                                                        } px-2 py-1`}>
                                                                         {data?.status ? '✅ Acive' : '❌ In-Active'}
                                                                     </span>
                                                                 ) : (

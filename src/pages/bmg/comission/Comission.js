@@ -17,7 +17,7 @@ const Comission = () => {
 
     const [search, setSearch] = useState("");
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(1);
 
     const [comissionModal, setComissionModal] = useState({
@@ -104,7 +104,7 @@ const Comission = () => {
                                         <tbody>
                                             {ComissionData.map((data, index) => (
                                                 <tr key={data._id || index} className="fw-bold">
-                                                    <td>{index + 1}</td>
+                                                    <td>{(pageIndex - 1) * pageSize + index + 1}</td>
                                                     <td>{data?.minAmount ? `$${data?.minAmount}` : "N/A"}</td>
                                                     <td>
                                                         {data?.maxAmount ? `$${data?.maxAmount}` : "N/A"}

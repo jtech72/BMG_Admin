@@ -166,6 +166,12 @@ const LiveMonitoring = () => {
                                                 </span>
                                             </div>
                                             <div className="col-12 mb-2 add_condition_font">
+                                                Product ID :{' '}
+                                                <span className="fw-bold">
+                                                    {auctionData?.productGenerateId || 'N/A'}
+                                                </span>
+                                            </div>
+                                            <div className="col-12 mb-2 add_condition_font">
                                                 Manufacturing :{' '}
                                                 <span className="fw-bold">
                                                     {auctionData?.yearofManufacturer || 'N/A'}
@@ -173,24 +179,26 @@ const LiveMonitoring = () => {
                                             </div>
                                             <div
                                                 className="col-12 mb-1 add_condition_font d-flex align-items-start justify-content-start"
-                                                title={
-                                                    auctionData?.description
-                                                        ? auctionData.description.replace(/<[^>]*>?/gm, '') // Strip HTML for tooltip
-                                                        : 'N/A'
+                                                title={auctionData?.serialNumber ? auctionData.serialNumber
+                                                    .replace(/<[^>]*>?/gm, '') // Strip HTML for tooltip
+                                                    : 'N/A'
                                                 }>
-                                                Description:
+                                                Serial Number
+                                                :
                                                 <span
                                                     className="fw-bold add_botton_zero ms-1"
                                                     dangerouslySetInnerHTML={{
                                                         __html:
-                                                            auctionData?.description?.length > 100
-                                                                ? `${auctionData.description.slice(0, 100)}...`
-                                                                : auctionData?.description || 'N/A',
+                                                            auctionData?.serialNumber
+                                                                ?.length > 100
+                                                                ? `${auctionData.serialNumber
+                                                                    .slice(0, 100)}...`
+                                                                : auctionData?.serialNumber
+                                                                || 'N/A',
                                                     }}></span>
                                             </div>
                                         </div>
                                     </div>
-
                                     {/* Right Auction Info Column */}
                                     <div className="col-md-3 col-12 d-flex align-items-start justify-content-md-end justify-content-start">
                                         <div className="row">
@@ -206,14 +214,28 @@ const LiveMonitoring = () => {
                                             <div className="add_font_small col-12 d-flex align-items-center justify-content-md-end pt-4 justify-content-start">
                                                 Buy-Out Price :
                                                 <span className="ms-1 add_date_time_font_price fw-bold">
-                                                    ${auctionData?.Ask_Price || '10,000'}
+                                                    ${auctionData?.Ask_Price || 'N/A'}
                                                 </span>
                                             </div>
                                             <div className="add_font_small col-12 d-flex align-items-center justify-content-md-end pt-2 justify-content-start">
                                                 Start Bid Price :{' '}
                                                 <span className="ms-1 add_date_time_font_price fw-bold">
                                                     {' '}
-                                                    ${auctionData?.Start_Bid_Price}
+                                                    ${auctionData?.Start_Bid_Price || 'N/A'}
+                                                </span>
+                                            </div>
+                                            <div className="add_font_small col-12 d-flex align-items-center justify-content-md-end pt-2 justify-content-start">
+                                                Highest Bid Amount :{' '}
+                                                <span className="ms-1 add_date_time_font_price fw-bold">
+                                                    {' '}
+                                                    ${auctionData?.highBidingAmount || 'N/A'}
+                                                </span>
+                                            </div>
+                                            <div className="add_font_small col-12 d-flex align-items-center justify-content-md-end pt-2 justify-content-start">
+                                                Time Zone :{' '}
+                                                <span className="ms-1 add_date_time_font_price fw-bold">
+                                                    {' '}
+                                                    {auctionData?.timeZone || 'N/A'}
                                                 </span>
                                             </div>
                                         </div>

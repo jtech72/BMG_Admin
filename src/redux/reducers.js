@@ -44,6 +44,7 @@ import {
     deleteBidHandlerReducer,
     editBidHandlerReducer,
 } from './bidHandler/reducer';
+import { purchaseOrderForAdminReducer } from './Buyers/reducer';
 export default combineReducers({
     Auth,
     Layout,
@@ -80,10 +81,14 @@ export default combineReducers({
     getNonPaidAuctionDataReducer,
     getRecentRegistrationsForDashboardReducer,
     specificProductDataReducer,
-    getTicketsReducer, createTicketReducer, updateTicketReducer, getChatByIdReducer,
+    getTicketsReducer,
+    createTicketReducer,
+    updateTicketReducer,
+    getChatByIdReducer,
     getBidHandlerReducer,
     categoryAllDataReducer,
     postBidHandlerReducer,
     editBidHandlerReducer,
     createSubCategoryDataReducer,
+    purchaseOrderForAdminReducer,
 });

@@ -18,7 +18,7 @@ const LiveBidMonitoring = () => {
     const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading;
     const TotalRecords = store?.getLiveBidDataReducer?.leadData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
     useEffect(() => {
@@ -141,9 +141,9 @@ const LiveBidMonitoring = () => {
                                                 <table className="table bg-white">
                                                     <thead>
                                                         <tr className="text-nowrap text-dark">
-                                                            {/* <th scope="col">
+                                                            <th scope="col">
                                                                 <i className="mdi mdi-merge"></i>
-                                                            </th> */}
+                                                            </th>
                                                             <th scope="col" className="text-start">
                                                                 Seller Name
                                                             </th>
@@ -170,12 +170,11 @@ const LiveBidMonitoring = () => {
                                                     </thead>
                                                     <tbody>
                                                         {LiveBidData?.map((data, index) => (
-                                                            <tr
-                                                                key={index}
-                                                                // style={{
+                                                            <tr key={data._id || index}                                                                // style={{
                                                                 //     cursor: 'pointer',
                                                                 // }}
-                                                                className="text-nowrap">
+                                                                className="text-nowrap" >
+                                                                <td>{(pageIndex - 1) * pageSize + index + 1}</td>
                                                                 <td className="text-capitalize text-start fw-bold">
                                                                     <OverlayTrigger
                                                                         placement="left"
@@ -339,7 +338,7 @@ const LiveBidMonitoring = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row>
+            </Row >
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
                 <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>

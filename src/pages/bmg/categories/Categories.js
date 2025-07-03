@@ -32,7 +32,7 @@ const Categories = () => {
     const [apiCall, setApiCall] = useState(false);
 
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(totalRecords / pageSize));
 
     useEffect(() => {
@@ -248,9 +248,9 @@ const Categories = () => {
                                             {CategoryData && CategoryData?.length > 0 ? (
                                                 <>
                                                     <div className="table-responsive">
-                                                        <table className="table table-striped bg-white">
+                                                        <table className="table text-start table-striped bg-white">
                                                             <thead>
-                                                                <tr className="" style={{ color: '#703133' }}>
+                                                                <tr className="">
                                                                     <th scope="col">
                                                                         <i className="mdi mdi-merge"></i>
                                                                     </th>
@@ -268,30 +268,30 @@ const Categories = () => {
                                                                         <th scope="row">
                                                                             {(pageIndex - 1) * 10 + index + 1}
                                                                         </th>
-                                                                        <td className="text-uppercase fw-bold text-success">
+                                                                        <td className="text-uppercase fw-bold">
                                                                             {data?.categoryName ? (
                                                                                 <span>{data?.categoryName} </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
                                                                         </td>
-                                                                        <td className="text-uppercase fw-bold text-success">
+                                                                        <td className="text-uppercase fw-bold">
                                                                             {data?.subCategories?.length > 0 ? (
                                                                                 <span
                                                                                     style={{
                                                                                         cursor: 'pointer',
-                                                                                        color: 'crimson',
+                                                                                        // color: 'crimson',
                                                                                     }}
-                                                                                    onMouseOver={(e) =>
-                                                                                    (e.target.style.color =
-                                                                                        'rgb(10 207 151)')
-                                                                                    }
-                                                                                    onMouseOut={(e) =>
-                                                                                    (e.target.style.color =
-                                                                                        'crimson')
-                                                                                    }
+                                                                                    // onMouseOver={(e) =>
+                                                                                    //     (e.target.style.color =
+                                                                                    //         'rgb(10 207 151)')
+                                                                                    // }
+                                                                                    // onMouseOut={(e) =>
+                                                                                    //     (e.target.style.color =
+                                                                                    //         'crimson')
+                                                                                    // }
                                                                                     onClick={() =>
                                                                                         handleViewSubCategories(data)
                                                                                     }>
@@ -299,18 +299,18 @@ const Categories = () => {
                                                                                     View Sub Categories
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
                                                                         </td>
-                                                                        <td className="text-uppercase fw-bold text-primary">
+                                                                        <td className="text-uppercase fw-bold">
                                                                             {data?.createdAt ? (
                                                                                 <span>
                                                                                     {formatDate(data?.createdAt)}{' '}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}

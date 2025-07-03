@@ -24,7 +24,7 @@ const Transactions = () => {
     };
 
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(totalRecords / pageSize));
 
     useEffect(() => {
@@ -226,6 +226,7 @@ const Transactions = () => {
                                                                         <i className="mdi mdi-merge"></i>
                                                                     </th>
                                                                     <th scope="col">Payment Id</th>
+                                                                    <th scope="col">Product Id</th>
                                                                     <th scope="col">Order Id</th>
                                                                     <th scope="col">Product Name</th>
                                                                     <th scope="col">Buyer</th>
@@ -239,8 +240,7 @@ const Transactions = () => {
                                                                     <tr
                                                                         key={index}
                                                                         className="text-dark fw-bold text-nowrap text-start">
-                                                                        <th scope="row">{index + 1}</th>
-
+                                                                        <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                         <td className="text-uppercase">
                                                                             {data?.paymentId ? (
                                                                                 <span>{data?.paymentId}</span>
@@ -250,7 +250,9 @@ const Transactions = () => {
                                                                                 </span>
                                                                             )}
                                                                         </td>
-
+                                                                        <td className="text-uppercase">
+                                                                            <span>{data?.productId?.productGenerateId || 'N/A'}</span>
+                                                                        </td>
                                                                         <td className="text-uppercase">
                                                                             {data?.orderId ? (
                                                                                 <span>{data?.orderId}</span>
@@ -396,6 +398,7 @@ const Transactions = () => {
                                                                     <th scope="col">
                                                                         <i className="mdi mdi-merge"></i>
                                                                     </th>
+                                                                    <th scope="col">Product Id</th>
                                                                     <th scope="col">Product Name</th>
                                                                     <th scope="col">Category</th>
                                                                     <th scope="col">Sub Category</th>
@@ -410,6 +413,9 @@ const Transactions = () => {
                                                                         key={index}
                                                                         className="text-dark fw-bold text-nowrap">
                                                                         <th scope="row">{index + 1}</th>
+                                                                        <td className="text-uppercase">
+                                                                            <span>{data?.productGenerateId || 'N/A'}</span>
+                                                                        </td>
                                                                         <td className="text-uppercase text-success">
                                                                             {data ? (
                                                                                 <span
