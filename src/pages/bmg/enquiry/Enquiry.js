@@ -4,13 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getEnquiryActions } from '../../../redux/actions';
-import Pagination from '../../../helpers/Pagination'
+import Pagination from '../../../helpers/Pagination';
 const Enquiry = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const EnquiryData = store?.enquiryDataReducer?.enquiryData?.contacts;
-    const EnquiryLoading = store?.enquiryDataReducer?.loading
+    const EnquiryLoading = store?.enquiryDataReducer?.loading;
     const TotalRecords = store?.enquiryDataReducer?.enquiryData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -22,7 +22,6 @@ const Enquiry = () => {
     useEffect(() => {
         dispatch(getEnquiryActions({ search: search, limit: pageSize, page: pageIndex }));
     }, [dispatch, pageIndex, pageSize, search]);
-
 
     return (
         <>
@@ -39,8 +38,10 @@ const Enquiry = () => {
             <Row>
                 <Col xs={12}>
                     <Card
-                        style={{ boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset' }}
-                    >
+                        style={{
+                            boxShadow:
+                                'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                        }}>
                         <Card.Body className="text-center">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <span className="px-3 py-1 bg-dark text-light rounded">
@@ -57,9 +58,8 @@ const Enquiry = () => {
                                     {search && (
                                         <i
                                             className="mdi mdi-backspace-outline text-danger fs-3"
-                                            onClick={() => setSearch("")}
-                                            style={{ cursor: "pointer" }}
-                                        ></i>
+                                            onClick={() => setSearch('')}
+                                            style={{ cursor: 'pointer' }}></i>
                                     )}
                                 </div>
                             </div>
@@ -71,13 +71,14 @@ const Enquiry = () => {
                             ) : (
                                 <>
                                     {EnquiryData && EnquiryData?.length > 0 ? (
-
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table text-start table-striped bg-white ">
                                                     <thead>
-                                                        <tr className="text-nowrap" style={{ color: '#703133' }}>
-                                                            <th scope="col"><i className="mdi mdi-merge"></i></th>
+                                                        <tr className="text-nowrap">
+                                                            <th scope="col">
+                                                                <i className="mdi mdi-merge"></i>
+                                                            </th>
                                                             <th scope="col">Full Name</th>
                                                             <th scope="col">Email</th>
                                                             <th scope="col">Contact No</th>
@@ -86,38 +87,36 @@ const Enquiry = () => {
                                                     </thead>
                                                     <tbody>
                                                         {EnquiryData?.map((data, index) => (
-                                                            <tr
-                                                                key={index}
-                                                                className="text-dark fw-bold text-nowrap">
+                                                            <tr key={index} className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
-                                                                <td className='text-uppercase fw-bold'>
+                                                                <td className="text-uppercase fw-bold">
                                                                     {data?.fullName ? (
                                                                         <span>{data?.fullName} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='fw-bold text-info'>
+                                                                <td className="fw-bold ">
                                                                     {data?.email ? (
                                                                         <span>{data?.email} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='fw-bold text-warning'>
+                                                                <td className="fw-bold ">
                                                                     {data?.phoneNumber ? (
                                                                         <span>{data?.phoneNumber} </span>
                                                                     ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
+                                                                        <span className="d-flex justify-content-center">
                                                                             N/A
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='fw-bold text-primary' style={{ cursor: 'pointer' }}>
+                                                                <td className="fw-bold" style={{ cursor: 'pointer' }}>
                                                                     <OverlayTrigger
                                                                         placement="left"
                                                                         overlay={
@@ -127,9 +126,11 @@ const Enquiry = () => {
                                                                         }>
                                                                         <b>
                                                                             {data?.message ? (
-                                                                                <span>{data?.message.slice(0, 50)} </span>
+                                                                                <span>
+                                                                                    {data?.message.slice(0, 20)}{' '}
+                                                                                </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -146,9 +147,7 @@ const Enquiry = () => {
                                         <div
                                             className="text-center d-flex align-items-center justify-content-center"
                                             style={{ height: '30vh' }}>
-                                            <code className="fs-4">
-                                                No Enquiries found.{' '}
-                                            </code>
+                                            <code className="fs-4">No Enquiries found. </code>
                                         </div>
                                     )}
                                 </>
@@ -163,9 +162,9 @@ const Enquiry = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row >
+            </Row>
         </>
-    )
-}
+    );
+};
 
-export default Enquiry
+export default Enquiry;

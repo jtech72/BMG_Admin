@@ -51,7 +51,7 @@ const Buyer_Seller = () => {
                 </div> */}
                         <div
                             className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
-                        // onClick={() => handleClick('Sellers', 1)}
+                            // onClick={() => handleClick('Sellers', 1)}
                         >
                             Buyers
                         </div>
@@ -106,7 +106,7 @@ const Buyer_Seller = () => {
                                                                     <th scope="col">Email</th>
                                                                     <th scope="col">Contact No</th>
                                                                     <th scope="col">Location</th>
-                                                                    <th scope="col">Verified</th>
+                                                                    {/* <th scope="col">Verified</th> */}
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -124,19 +124,20 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${data?.name
-                                                                                        ?.charAt(0)
-                                                                                        .toUpperCase() || ''
-                                                                                        }${data?.name?.slice(1) || ''} ${data?.lastName
+                                                                                    {`${
+                                                                                        data?.name
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                        }${data?.lastName?.slice(1) || ''
-                                                                                        }`.trim()}
+                                                                                    }${data?.name?.slice(1) || ''} ${
+                                                                                        data?.lastName
+                                                                                            ?.charAt(0)
+                                                                                            .toUpperCase() || ''
+                                                                                    }${
+                                                                                        data?.lastName?.slice(1) || ''
+                                                                                    }`.trim()}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex justify-content-center">
-                                                                                    N/A
-                                                                                </span>
+                                                                                <span className="">N/A</span>
                                                                             )}
                                                                         </td>
 
@@ -144,9 +145,7 @@ const Buyer_Seller = () => {
                                                                             {data?.email ? (
                                                                                 <span>{data?.email}</span>
                                                                             ) : (
-                                                                                <span className="d-flex justify-content-center">
-                                                                                    N/A
-                                                                                </span>
+                                                                                <span className="">N/A</span>
                                                                             )}
                                                                         </td>
 
@@ -154,18 +153,17 @@ const Buyer_Seller = () => {
                                                                             {data?.phoneNumber ? (
                                                                                 <span>{data?.phoneNumber}</span>
                                                                             ) : (
-                                                                                <span className="d-flex justify-content-center">
-                                                                                    N/A
-                                                                                </span>
+                                                                                <span className="">N/A</span>
                                                                             )}
                                                                         </td>
 
                                                                         <td className="fw-bold">
                                                                             {data?.primaryAddress ? (
                                                                                 <span>
-                                                                                    {`${data?.primaryAddress?.address ||
+                                                                                    {`${
+                                                                                        data?.primaryAddress?.address ||
                                                                                         ''
-                                                                                        }, 
+                                                                                    }, 
             ${data?.primaryAddress?.street || ''}, 
             ${data?.primaryAddress?.city?.name || ''}, 
             ${data?.primaryAddress?.state?.name || ''}, 
@@ -174,19 +172,18 @@ const Buyer_Seller = () => {
                                                                                         .trim()}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex justify-content-center">
-                                                                                    N/A
-                                                                                </span>
+                                                                                <span className="">N/A</span>
                                                                             )}
                                                                         </td>
 
-                                                                        <td className="fw-bold">
+                                                                        {/* <td className="fw-bold">
                                                                             {data ? (
                                                                                 <span
-                                                                                    className={`badge ${data?.isVerified
-                                                                                        ? 'bg-success'
-                                                                                        : 'bg-danger'
-                                                                                        } px-2 py-1`}>
+                                                                                    className={`badge ${
+                                                                                        data?.isVerified
+                                                                                            ? 'bg-success'
+                                                                                            : 'bg-danger'
+                                                                                    } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'
                                                                                         : '❌ Not Verified'}
@@ -196,7 +193,7 @@ const Buyer_Seller = () => {
                                                                                     N/A
                                                                                 </span>
                                                                             )}
-                                                                        </td>
+                                                                        </td> */}
                                                                     </tr>
                                                                 ))}
                                                             </tbody>
@@ -282,15 +279,18 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-info">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${data?.name
-                                                                                        ?.charAt(0)
-                                                                                        .toUpperCase() || ''
-                                                                                        }${data?.name?.slice(1) || ''} 
-                                                                                          ${data?.lastName
+                                                                                    {`${
+                                                                                        data?.name
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                        }${data?.lastName?.slice(1) || ''
-                                                                                        }`}
+                                                                                    }${data?.name?.slice(1) || ''} 
+                                                                                          ${
+                                                                                              data?.lastName
+                                                                                                  ?.charAt(0)
+                                                                                                  .toUpperCase() || ''
+                                                                                          }${
+                                                                                        data?.lastName?.slice(1) || ''
+                                                                                    }`}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
@@ -320,9 +320,10 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-primary">
                                                                             {data?.primaryAddress ? (
                                                                                 <span>
-                                                                                    {`${data?.primaryAddress?.address ||
+                                                                                    {`${
+                                                                                        data?.primaryAddress?.address ||
                                                                                         ''
-                                                                                        }, 
+                                                                                    }, 
         ${data?.primaryAddress?.street || ''}, 
         ${data?.primaryAddress?.city?.name || ''}, 
         ${data?.primaryAddress?.state?.name || ''}, 
@@ -340,10 +341,11 @@ const Buyer_Seller = () => {
                                                                         <td className="text-uppercase fw-bold">
                                                                             {data ? (
                                                                                 <span
-                                                                                    className={`badge ${data?.isVerified
-                                                                                        ? 'bg-success'
-                                                                                        : 'bg-danger'
-                                                                                        } px-2 py-1`}>
+                                                                                    className={`badge ${
+                                                                                        data?.isVerified
+                                                                                            ? 'bg-success'
+                                                                                            : 'bg-danger'
+                                                                                    } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'
                                                                                         : '❌ Not Verified'}

@@ -84,7 +84,7 @@ const BidPercentage = () => {
                 editData={editData}
             />
             <Row>
-                <Col lg={6} className="d-flex justify-content-start ">
+                <Col lg={6} className="d-flex justify-content-start">
                     <div className="navbar text-dark ">
                         <div className={`nav-item`}>Bid Handler</div>{' '}
                     </div>
@@ -104,8 +104,8 @@ const BidPercentage = () => {
                                     <>
                                         <div className="table-responsive">
                                             <table className="table bg-white">
-                                                <thead>
-                                                    <tr className="" style={{ color: '#703133' }}>
+                                                <thead className="text-start">
+                                                    <tr className="">
                                                         <th scope="col">
                                                             <i className="mdi mdi-merge"></i>
                                                         </th>
@@ -117,41 +117,41 @@ const BidPercentage = () => {
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody className="text-start">
                                                     {getBidHandlerList?.map((data, index) => (
                                                         <tr
                                                             // onClick={() => navigate(`order-history/${data?._id}`)}
                                                             key={index}
-                                                            className="text-dark fw-bold text-nowrap">
+                                                            className="text-dark text-start fw-bold text-nowrap">
                                                             <th scope="row">{index + 1}</th>
-                                                            <td className="fw-bold text-info">
+                                                            <td className="fw-bold">
                                                                 {data?.categoryIds?.length > 0 ? (
                                                                     data?.categoryIds?.slice(0, 4)?.map((ele, ind) => {
                                                                         return (
                                                                             <span key={ind}>
                                                                                 {ele?.name}
                                                                                 {ind === 3 ||
-                                                                                    ind ===
+                                                                                ind ===
                                                                                     data.categoryIds.slice(0, 4)
                                                                                         .length -
-                                                                                    1
+                                                                                        1
                                                                                     ? '...'
                                                                                     : ', '}
                                                                             </span>
                                                                         );
                                                                     })
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
                                                             </td>
 
-                                                            <td className="fw-bold text-success">
+                                                            <td className="fw-bold">
                                                                 {data?.minPrice ? (
                                                                     <span>{data?.minPrice} </span>
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
@@ -160,16 +160,16 @@ const BidPercentage = () => {
                                                                 {data?.maxPrice ? (
                                                                     <span>{data?.maxPrice} </span>
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className="fw-bold text-primary">
+                                                            <td className="fw-bold">
                                                                 {data?.percentage ? (
                                                                     <span>{`${data?.percentage || ''}`} </span>
                                                                 ) : (
-                                                                    <span className="d-flex text-danger justify-content-center">
+                                                                    <span className="d-flex justify-content-center">
                                                                         N/A
                                                                     </span>
                                                                 )}
@@ -178,8 +178,9 @@ const BidPercentage = () => {
                                                             <td className="fw-bold">
                                                                 {data?.status ? (
                                                                     <span
-                                                                        className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
-                                                                            } px-2 py-1`}>
+                                                                        className={`badge ${
+                                                                            data?.status ? 'bg-success' : 'bg-danger'
+                                                                        } px-2 py-1`}>
                                                                         {data?.status ? '✅ Acive' : '❌ In-Active'}
                                                                     </span>
                                                                 ) : (
