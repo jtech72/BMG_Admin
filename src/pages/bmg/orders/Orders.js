@@ -47,17 +47,36 @@ const Orders = () => {
             {/* Tabs */}
             <div className="mb-3">
                 <button
-                    className={`btn ${activeTab === 'Sale' ? 'btn-primary' : 'btn-outline-primary'} me-2`}
                     onClick={() => setActiveTab('Sale')}
+                    style={{
+                        border: '1px solid rgb(0,128,3)',
+                        borderRadius: '4px',
+                        padding: '6px 12px',
+                        fontWeight: 600,
+                        color: activeTab === 'Sale' ? 'white' : 'rgb(0,128,3)',
+                        backgroundColor: activeTab === 'Sale' ? 'rgb(0,128,3)' : '#f0f0f0',
+                        cursor: 'pointer',
+                    }}
+                    className="me-2"
                 >
                     Direct Sale
                 </button>
+
                 <button
-                    className={`btn ${activeTab === 'Auction' ? 'btn-primary' : 'btn-outline-primary'}`}
                     onClick={() => setActiveTab('Auction')}
+                    style={{
+                        border: '1px solid rgb(0,128,3)',
+                        borderRadius: '4px',
+                        padding: '6px 12px',
+                        fontWeight: 600,
+                        color: activeTab === 'Auction' ? 'white' : 'rgb(0,128,3)',
+                        backgroundColor: activeTab === 'Auction' ? 'rgb(0,128,3)' : '#f0f0f0',
+                        cursor: 'pointer',
+                    }}
                 >
                     Auction
                 </button>
+
             </div>
             <Row>
                 <Col xs={12}>
