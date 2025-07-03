@@ -105,7 +105,7 @@ const Buyer_Seller = () => {
                                                                     <th scope="col">Email</th>
                                                                     <th scope="col">Contact No</th>
                                                                     <th scope="col">Location</th>
-                                                                    <th scope="col">Verified</th>
+                                                                    {/* <th scope="col">Verified</th> */}
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -151,26 +151,17 @@ const Buyer_Seller = () => {
                                                                             )}
                                                                         </td>
 
-                                                                        <td className="fw-bold">
-                                                                            {data?.primaryAddress ? (
+                                                                        <td className="fw-bold text-capitalize">
+                                                                            {data?.state && data?.city ? (
                                                                                 <span>
-                                                                                    {`${
-                                                                                        data?.primaryAddress?.address ||
-                                                                                        ''
-                                                                                    }, 
-            ${data?.primaryAddress?.street || ''}, 
-            ${data?.primaryAddress?.city?.name || ''}, 
-            ${data?.primaryAddress?.state?.name || ''}, 
-            ${data?.primaryAddress?.country?.name || ''}`
-                                                                                        .replace(/,\s*,/g, ',') // remove empty commas
-                                                                                        .trim()}
+                                                                                    {`${data?.state}, ${data?.city}`}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="">N/A</span>
                                                                             )}
                                                                         </td>
 
-                                                                        <td className="fw-bold">
+                                                                        {/* <td className="fw-bold">
                                                                             {data ? (
                                                                                 <span
                                                                                     className={`badge ${
@@ -187,7 +178,7 @@ const Buyer_Seller = () => {
                                                                                     N/A
                                                                                 </span>
                                                                             )}
-                                                                        </td>
+                                                                        </td> */}
                                                                     </tr>
                                                                 ))}
                                                             </tbody>
