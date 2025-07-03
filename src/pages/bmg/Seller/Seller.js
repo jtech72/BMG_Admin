@@ -52,7 +52,7 @@ const Buyer_Seller = () => {
                             className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
                             // onClick={() => handleClick('Sellers', 1)}
                         >
-                            Buyers
+                            Sellers
                         </div>
                     </div>
                 </Col>
