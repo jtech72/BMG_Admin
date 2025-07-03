@@ -12,7 +12,7 @@ function getLeadApi(params) {
 function getSoldProductApi(params) {
     const { search, limit, page, soldStatus } = params?.data;
     // search=${encodeURIComponent(search)}&
-    return api.get(`${URL.GET_AUCTION_SOLD_PRODUCT}?limit=${limit}&page=${page}&soldSatus=${soldStatus}
+    return api.get(`${URL.GET_AUCTION_SOLD_PRODUCT}?type=Sale&&limit=${limit}&page=${page}
  `);
 }
 
