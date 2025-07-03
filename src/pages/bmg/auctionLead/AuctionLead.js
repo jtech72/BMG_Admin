@@ -16,7 +16,7 @@ const AuctionLead = () => {
     const LeadsLoading = store?.leadDataReducer?.loading;
     const TotalRecords = store?.leadDataReducer?.leadData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
     useEffect(() => {
@@ -162,8 +162,7 @@ const AuctionLead = () => {
                                                                 }
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
-                                                                <th scope="row">{index + 1}</th>
-
+                                                                <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold text-start">
                                                                     {data?.productId?.productGenerateId ? (
                                                                         <span>
@@ -181,11 +180,11 @@ const AuctionLead = () => {
                                                                         {data?.productId?.Product_Name ? (
                                                                             <span>
                                                                                 {data?.productId?.Product_Name.length >
-                                                                                20
+                                                                                    20
                                                                                     ? data?.productId?.Product_Name.substring(
-                                                                                          0,
-                                                                                          20
-                                                                                      ) + '...'
+                                                                                        0,
+                                                                                        20
+                                                                                    ) + '...'
                                                                                     : data?.productId?.Product_Name}
                                                                             </span>
                                                                         ) : (
@@ -202,9 +201,9 @@ const AuctionLead = () => {
                                                                             <span>
                                                                                 {data?.productId?.Brand.length > 20
                                                                                     ? data?.productId?.Brand.substring(
-                                                                                          0,
-                                                                                          20
-                                                                                      ) + '...'
+                                                                                        0,
+                                                                                        20
+                                                                                    ) + '...'
                                                                                     : data?.productId?.Brand}
                                                                             </span>
                                                                         ) : (

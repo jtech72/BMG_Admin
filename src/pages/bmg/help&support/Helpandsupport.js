@@ -19,7 +19,7 @@ const HelpAndSupport = () => {
 
     const TotalRecords = store?.getTicketsReducer?.supportData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
     useEffect(() => {
@@ -116,8 +116,7 @@ const HelpAndSupport = () => {
                                                     <tbody>
                                                         {SupportData?.map((data, index) => (
                                                             <tr key={index} className="text-dark fw-bold text-nowrap">
-                                                                <th scope="row">{index + 1}</th>
-
+                                                                <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.ticketId ? (
                                                                         <OverlayTrigger

@@ -51,7 +51,7 @@ const Buyer_Seller = () => {
                 </div> */}
                         <div
                             className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
-                            // onClick={() => handleClick('Sellers', 1)}
+                        // onClick={() => handleClick('Sellers', 1)}
                         >
                             Buyers
                         </div>
@@ -119,22 +119,18 @@ const Buyer_Seller = () => {
                                                                         className="text-dark fw-bold text-nowrap text-start"
                                                                         style={{ cursor: 'pointer' }} // optional: adds pointer cursor for UX clarity
                                                                     >
-                                                                        <th scope="row">{index + 1}</th>
-
+                                                                        <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                         <td className="fw-bold">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${
-                                                                                        data?.name
+                                                                                    {`${data?.name
+                                                                                        ?.charAt(0)
+                                                                                        .toUpperCase() || ''
+                                                                                        }${data?.name?.slice(1) || ''} ${data?.lastName
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                    }${data?.name?.slice(1) || ''} ${
-                                                                                        data?.lastName
-                                                                                            ?.charAt(0)
-                                                                                            .toUpperCase() || ''
-                                                                                    }${
-                                                                                        data?.lastName?.slice(1) || ''
-                                                                                    }`.trim()}
+                                                                                        }${data?.lastName?.slice(1) || ''
+                                                                                        }`.trim()}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="">N/A</span>
@@ -151,31 +147,18 @@ const Buyer_Seller = () => {
 
                                                                         <td className="fw-bold">
                                                                             {data?.phoneNumber ? (
-                                                                                <span>{data?.phoneNumber}</span>
+                                                                                <span>+1{data?.phoneNumber}</span>
                                                                             ) : (
                                                                                 <span className="">N/A</span>
                                                                             )}
                                                                         </td>
-
-                                                                        <td className="fw-bold">
-                                                                            {data?.primaryAddress ? (
-                                                                                <span>
-                                                                                    {`${
-                                                                                        data?.primaryAddress?.address ||
-                                                                                        ''
-                                                                                    }, 
-            ${data?.primaryAddress?.street || ''}, 
-            ${data?.primaryAddress?.city?.name || ''}, 
-            ${data?.primaryAddress?.state?.name || ''}, 
-            ${data?.primaryAddress?.country?.name || ''}`
-                                                                                        .replace(/,\s*,/g, ',') // remove empty commas
-                                                                                        .trim()}
-                                                                                </span>
-                                                                            ) : (
-                                                                                <span className="">N/A</span>
-                                                                            )}
+                                                                        <td className="fw-bold" title={data?.address || 'N/A'}>
+                                                                            {data?.address
+                                                                                ? data.address.length > 20
+                                                                                    ? `${data.address.slice(0, 20)}...`
+                                                                                    : data.address
+                                                                                : 'N/A'}
                                                                         </td>
-
                                                                         {/* <td className="fw-bold">
                                                                             {data ? (
                                                                                 <span
@@ -279,18 +262,15 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-info">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${
-                                                                                        data?.name
+                                                                                    {`${data?.name
+                                                                                        ?.charAt(0)
+                                                                                        .toUpperCase() || ''
+                                                                                        }${data?.name?.slice(1) || ''} 
+                                                                                          ${data?.lastName
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                    }${data?.name?.slice(1) || ''} 
-                                                                                          ${
-                                                                                              data?.lastName
-                                                                                                  ?.charAt(0)
-                                                                                                  .toUpperCase() || ''
-                                                                                          }${
-                                                                                        data?.lastName?.slice(1) || ''
-                                                                                    }`}
+                                                                                        }${data?.lastName?.slice(1) || ''
+                                                                                        }`}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
@@ -317,35 +297,22 @@ const Buyer_Seller = () => {
                                                                                 </span>
                                                                             )}
                                                                         </td>
-                                                                        <td className="fw-bold text-primary">
-                                                                            {data?.primaryAddress ? (
-                                                                                <span>
-                                                                                    {`${
-                                                                                        data?.primaryAddress?.address ||
-                                                                                        ''
-                                                                                    }, 
-        ${data?.primaryAddress?.street || ''}, 
-        ${data?.primaryAddress?.city?.name || ''}, 
-        ${data?.primaryAddress?.state?.name || ''}, 
-        ${data?.primaryAddress?.country?.name || ''}`
-                                                                                        .replace(/,\s*,/g, ',') // Remove empty commas
-                                                                                        .trim()}
-                                                                                </span>
-                                                                            ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
-                                                                                    N/A
-                                                                                </span>
-                                                                            )}
+                                                                        <td className="fw-bold" title={data?.address || 'N/A'}>
+                                                                            {data?.address
+                                                                                ? data.address.length > 20
+                                                                                    ? `${data.address.slice(0, 20)}...`
+                                                                                    : data.address
+                                                                                : 'N/A'}
                                                                         </td>
+
 
                                                                         <td className="text-uppercase fw-bold">
                                                                             {data ? (
                                                                                 <span
-                                                                                    className={`badge ${
-                                                                                        data?.isVerified
-                                                                                            ? 'bg-success'
-                                                                                            : 'bg-danger'
-                                                                                    } px-2 py-1`}>
+                                                                                    className={`badge ${data?.isVerified
+                                                                                        ? 'bg-success'
+                                                                                        : 'bg-danger'
+                                                                                        } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'
                                                                                         : '❌ Not Verified'}

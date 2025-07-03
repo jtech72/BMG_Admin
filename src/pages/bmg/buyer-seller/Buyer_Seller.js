@@ -125,13 +125,13 @@ const Buyer_Seller = () => {
                                                                     <tr
                                                                         key={index}
                                                                         className="text-dark fw-bold text-nowrap">
-                                                                        <th scope="row">{index + 1}</th>
+                                                                        <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                         <td className="fw-bold text-info">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
                                                                                     {`${data?.name
-                                                                                            ?.charAt(0)
-                                                                                            .toUpperCase() || ''
+                                                                                        ?.charAt(0)
+                                                                                        .toUpperCase() || ''
                                                                                         }${data?.name?.slice(1) || ''} 
                                                                                       ${data?.lastName
                                                                                             ?.charAt(0)
@@ -196,8 +196,8 @@ const Buyer_Seller = () => {
                                                                             {data ? (
                                                                                 <span
                                                                                     className={`badge ${data?.isVerified
-                                                                                            ? 'bg-success'
-                                                                                            : 'bg-danger'
+                                                                                        ? 'bg-success'
+                                                                                        : 'bg-danger'
                                                                                         } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'
@@ -295,8 +295,8 @@ const Buyer_Seller = () => {
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
                                                                                     {`${data?.name
-                                                                                            ?.charAt(0)
-                                                                                            .toUpperCase() || ''
+                                                                                        ?.charAt(0)
+                                                                                        .toUpperCase() || ''
                                                                                         }${data?.name?.slice(1) || ''} 
                                                                                           ${data?.lastName
                                                                                             ?.charAt(0)
@@ -353,8 +353,8 @@ const Buyer_Seller = () => {
                                                                             {data ? (
                                                                                 <span
                                                                                     className={`badge ${data?.isVerified
-                                                                                            ? 'bg-success'
-                                                                                            : 'bg-danger'
+                                                                                        ? 'bg-success'
+                                                                                        : 'bg-danger'
                                                                                         } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'

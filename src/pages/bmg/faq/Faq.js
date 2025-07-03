@@ -17,7 +17,7 @@ const Faq = () => {
 
     const [search, setSearch] = useState('');
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(1);
 
     const [faqModal, setFaqModal] = useState({
@@ -93,7 +93,7 @@ const Faq = () => {
                                         <tbody className="text-stat">
                                             {FaqData.map((data, index) => (
                                                 <tr key={data._id || index}>
-                                                    <td>{index + 1}</td>
+                                                    <td>{(pageIndex - 1) * pageSize + index + 1}</td>
                                                     <OverlayTrigger
                                                         placement="top"
                                                         overlay={
@@ -123,9 +123,8 @@ const Faq = () => {
 
                                                     <td>
                                                         <span
-                                                            className={`badge ${
-                                                                data?.status ? 'bg-success' : 'bg-danger'
-                                                            } px-2 py-1`}>
+                                                            className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
+                                                                } px-2 py-1`}>
                                                             {data?.status ? '✅ Active' : '❌ Inactive'}
                                                         </span>
                                                     </td>

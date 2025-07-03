@@ -9,20 +9,28 @@ const Orders = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const OrdersData = store?.getOrderDataReducer?.orderData?.orderDetails;
+    const data = store?.getOrderDataReducer?.orderData?.data;
     const OrdersLoading = store?.getOrderDataReducer?.loading;
-    const TotalRecords = store?.getOrderDataReducer?.orderData?.totalRecords;
+    const TotalRecords = store?.getOrderDataReducer?.orderData?.totalrecords;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
+    const [activeTab, setActiveTab] = useState('Sale');
 
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
 
     useEffect(() => {
-        dispatch(getOrdersAction({ search: search, limit: pageSize, page: pageIndex }));
-    }, [dispatch, pageIndex, pageSize, search]);
+        dispatch(
+            getOrdersAction({
+                search,
+                limit: pageSize,
+                page: pageIndex,
+                type: activeTab,
+            })
+        );
+    }, [activeTab, dispatch, search, pageIndex, pageSize]);
 
     return (
         <>
@@ -36,6 +44,40 @@ const Orders = () => {
                 ]}
                 title={`Order's`}
             />
+            {/* Tabs */}
+            <div className="mb-3">
+                <button
+                    onClick={() => setActiveTab('Sale')}
+                    style={{
+                        border: '1px solid rgb(0,128,3)',
+                        borderRadius: '4px',
+                        padding: '6px 12px',
+                        fontWeight: 600,
+                        color: activeTab === 'Sale' ? 'white' : 'rgb(0,128,3)',
+                        backgroundColor: activeTab === 'Sale' ? 'rgb(0,128,3)' : '#f0f0f0',
+                        cursor: 'pointer',
+                    }}
+                    className="me-2"
+                >
+                    Direct Sale
+                </button>
+
+                <button
+                    onClick={() => setActiveTab('Auction')}
+                    style={{
+                        border: '1px solid rgb(0,128,3)',
+                        borderRadius: '4px',
+                        padding: '6px 12px',
+                        fontWeight: 600,
+                        color: activeTab === 'Auction' ? 'white' : 'rgb(0,128,3)',
+                        backgroundColor: activeTab === 'Auction' ? 'rgb(0,128,3)' : '#f0f0f0',
+                        cursor: 'pointer',
+                    }}
+                >
+                    Auction
+                </button>
+
+            </div>
             <Row>
                 <Col xs={12}>
                     <Card
@@ -71,7 +113,7 @@ const Orders = () => {
                                 </>
                             ) : (
                                 <>
-                                    {OrdersData && OrdersData?.length > 0 ? (
+                                    {data && data?.length > 0 ? (
                                         <>
                                             <div className="d-flex justify-content-center table-responsive">
                                                 <table className="table table-striped bg-white text-start">
@@ -82,18 +124,21 @@ const Orders = () => {
                                                             </th>
                                                             <th scope="col">Order Id</th>
                                                             <th scope="col">Payment Id</th>
+                                                            <th scope="col">Seller's Name</th>
+                                                            <th scope="col">Amount</th>
+                                                            <th scope="col">Product Name</th>
+                                                            <th scope="col">Customer Name</th>
+                                                            <th scope="col">Payment Received data</th>
                                                             <th scope="col">Payment method</th>
                                                             <th scope="col">User Email</th>
                                                             <th scope="col">Status</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {OrdersData?.map((data, index) => (
-                                                            <tr
-                                                                key={index}
+                                                        {data?.map((data, index) => (
+                                                            <tr key={index}
                                                                 className="text-dark fw-bold text-nowrap text-start">
-                                                                <th scope="row">{index + 1}</th>
-
+                                                                <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.orderId ? (
                                                                         <span>{data?.orderId}</span>
@@ -113,7 +158,46 @@ const Orders = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {data?.sellerId?.name || data?.sellerId?.lastName ? (
+                                                                        <span>{data?.sellerId?.name || 'N/A'}{data?.sellerId?.lastName || 'N/A'} </span>
+                                                                    ) : (
+                                                                        <span className="d-flex justify-content-center">
+                                                                            N/A
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    <span>${data?.totalPrice || 'N/A'} </span>
+                                                                </td>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    <span>${data?.productName || 'N/A'} </span>
+                                                                </td>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {data?.userId?.name || data?.userId?.lastName ? (
+                                                                        <span>{data?.userId?.name || 'N/A'}{data?.userId?.lastName || 'N/A'} </span>
+                                                                    ) : (
+                                                                        <span className="d-flex justify-content-center">
+                                                                            N/A
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {/* {data?.userId?.name || data?.userId?.lastName ? ( */}
+                                                                    <span>
+                                                                        {data?.createdAt
+                                                                            ? new Date(data.createdAt)
+                                                                                .toLocaleDateString('en-GB')
+                                                                                .replace(/\//g, '-')
+                                                                                .slice(0, 8)
+                                                                            : 'N/A'}
+                                                                    </span>
+                                                                    {/* ) : (
+                                                                         <span className="d-flex justify-content-center">
+                                                                             N/A
+                                                                         </span>
+                                                                     )} */}
+                                                                </td>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.paymentMethod ? (
                                                                         <span>{data?.paymentMethod}</span>
@@ -135,8 +219,8 @@ const Orders = () => {
                                                                 </td>
 
                                                                 <td className="text-uppercase fw-bold">
-                                                                    {data?.status ? (
-                                                                        <span>{data?.status}</span>
+                                                                    {data?.deliveryStatus ? (
+                                                                        <span>{data?.deliveryStatus}</span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
                                                                             N/A

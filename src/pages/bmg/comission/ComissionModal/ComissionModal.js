@@ -82,7 +82,7 @@ const CommissionModal = ({ show, hide, comissionData }) => {
         if (comissionData?.type === 'Edit') {
             dispatch(updateComissionDataAction(commissions));
         } else {
-            dispatch(createComissionDataAction({commissions}));
+            dispatch(createComissionDataAction({ commissions }));
         }
     };
 
@@ -95,16 +95,18 @@ const CommissionModal = ({ show, hide, comissionData }) => {
     }, [createStatus, updateStatus, loading, dispatch]);
 
     return (
-        <Modal show={show} onHide={closeModal} centered size="lg">
+        <Modal show={show} centered size="lg"
+        // onHide={closeModal}
+        >
             <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                 <Modal.Title>
                     {comissionData?.type === 'Edit' ? 'Edit Platform Charges' : 'Add Platform Charges'}
                 </Modal.Title>
-                <i
+                {/* <i
                     className="mdi mdi-close fs-3"
                     onClick={closeModal}
                     style={{ cursor: 'pointer' }}
-                />
+                /> */}
             </Modal.Header>
 
             <Form onSubmit={handleSubmit(onSubmit)}>
@@ -195,7 +197,7 @@ const CommissionModal = ({ show, hide, comissionData }) => {
                     </Button>
                 </Modal.Footer>
             </Form>
-        </Modal>
+        </Modal >
     );
 };
 

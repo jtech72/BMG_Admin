@@ -14,7 +14,7 @@ const Notification = () => {
     const NotificationLoading = getNotificationByAdminReducer?.loading;
     const [search, setSearch] = useState('');
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(1);
 
     const [nofificationModal, setNotificationModal] = useState({
@@ -118,15 +118,7 @@ const Notification = () => {
                                         <tbody>
                                             {NotificationData.map((data, index) => (
                                                 <tr key={data._id || index}>
-                                                    <td>{index + 1}</td>
-                                                    {/* <OverlayTrigger
-                            placement="top"
-                            overlay={
-                              <Tooltip id={`tooltip-${index}`}>
-                                <div dangerouslySetInnerHTML={{ __html: data?.message || "N/A" }} />
-                                </Tooltip>
-                            }
-                          > */}
+                                                    <td>{(pageIndex - 1) * pageSize + index + 1}</td>
                                                     <td className="p-1 m-0">
                                                         {' '}
                                                         <span
@@ -135,22 +127,16 @@ const Notification = () => {
                                                             }}
                                                         />
                                                     </td>
-                                                    {/* </OverlayTrigger> */}
-
                                                     <td className="text-capitalize">{data?.type}</td>
-
                                                     <td>
                                                         <span
-                                                            className={`badge ${
-                                                                data?.status ? 'bg-success' : 'bg-danger'
-                                                            } px-2 py-1`}>
+                                                            className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
+                                                                } px-2 py-1`}>
                                                             {data?.status ? 'Active' : 'Inactive'}
                                                         </span>
                                                     </td>
-
                                                     <td>
-                                                        <i
-                                                            className="mdi mdi-square-edit-outline fs-4 text-primary"
+                                                        <i className="mdi mdi-square-edit-outline fs-4 text-primary"
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={() => handleNotificationModal('Edit', data)}></i>
                                                     </td>
