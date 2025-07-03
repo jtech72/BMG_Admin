@@ -70,3 +70,8 @@ export const GET_BID_HANDLER = '/api/v1/getAll/PercentageHandler';
 export const POST_BID_HANDLER = '/api/v1/create/percentageHandler';
 export const DELETE_BID_HANDLER = '/api/v1/delete/percentageHandler';
 export const EDIT_BID_HANDLER = '/api/v1/update/percentageHandler';
+
+// Buyers
+// http://localhost:5004?userId=685e2b703b46af4202f595d0
+export const GET_PURCHASE_ORDER_DETAILS_FOR_ADMIN = '/api/order/getOrderHistoryByUserIdAdmin';
+export const GET_PAY_AUCTION_PRODUCT_FOR_ADMIN = '/api/liveauction/getPayAuctionProductForAdmin';
