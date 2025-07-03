@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Nav, Pagination, Row, Tab, Table } from 'react-bootstrap';
 import { BsEye } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { debounce } from 'lodash';
+
 // import { purchageHistoryAction } from '../../redux/Purchases/actions';
 // import { ButtonLoading, Loading, TableLoading } from '../../../../helpers/loader/Loading'
 // import { getBuyOrderAction } from '../../redux/LiveAuction/actions';
@@ -16,10 +18,15 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 import { FaFileInvoice } from 'react-icons/fa';
 import { ButtonLoading, Loading } from '../../../../helpers/loader/Loading';
 import { purchaseOrderForAdmin } from '../../../../redux/Buyers/action';
+import './BuyerDetails.css';
 
 const Purchases = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
+    const handleSearch = (value) => {
+        // Your API call or filter logic here
+        setSearch(value);
+    };
     const [activeKey, setActiveKey] = useState('auction');
     const user = getUserFromSession();
     const {
@@ -31,6 +38,7 @@ const Purchases = () => {
     } = useForm();
     const [showModal, setShowModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [search, setSearch] = useState('');
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const getPurchaseHistory = store?.puchaseHistoryListReducer;
@@ -72,17 +80,22 @@ const Purchases = () => {
         }
     }, [activeTab]);
     useEffect(() => {
-        dispatch(purchaseOrderForAdmin({ id, type: Type }));
+        dispatch(purchaseOrderForAdmin({ id, type: Type, productName: search }));
         // dispatch(getBuyOrderAction({ userId: user?.id }));
-    }, [dispatch, Type]);
+    }, [dispatch, Type, search]);
     const id = useParams()?.id;
     const purchaseOrderForAdminReducer = store?.purchaseOrderForAdminReducer;
     const purchaseOrderForAdminData =
         Type == 'Auction' ? purchaseOrderForAdminReducer?.data?.result : purchaseOrderForAdminReducer?.data?.orders;
-
+    const debouncedSearch = useCallback(
+        debounce((value) => {
+            handleSearch(value);
+        }, 500), // 500ms debounce
+        []
+    );
     console.log(purchaseOrderForAdminData, 'purchaseOrderForAdminReducerpurchaseOrderForAdminReducer');
     return (
-        <Container fluid className="ps-lg-5 pe-lg-5" style={{ marginTop: '6rem' }}>
+        <Container fluid className="">
             {getPurchaseHistory?.loading ? (
                 <div
                     style={{
@@ -127,6 +140,7 @@ const Purchases = () => {
                                                 style={{ background: 'transparent' }}>
                                                 <input
                                                     type="search"
+                                                    onChange={(e) => debouncedSearch(e.target.value)}
                                                     className="border-0 px-3 w-100 flex-grow-1"
                                                     placeholder="Search"
                                                     name="search"
@@ -145,7 +159,7 @@ const Purchases = () => {
                                     </Row>
                                     <Row className="pe-lg-4 mx-auto ps-lg-4">
                                         <Col md={12}>
-                                            <Table responsive border="1" hover className="w-100">
+                                            <Table responsive border="1" hover className="w-100 rounded-3">
                                                 <thead
                                                     className=" "
                                                     style={{
@@ -154,6 +168,7 @@ const Purchases = () => {
                                                     }}>
                                                     <tr className="">
                                                         <th className="ps-5 table-heading ">ORDER ID</th>
+                                                        <th className="table-heading ">Product Name</th>
                                                         <th className="table-heading ">STATUS</th>
                                                         <th className=" table-heading">PAYMENT METHOD</th>
                                                         <th className=" table-heading">NAME</th>
@@ -184,6 +199,17 @@ const Purchases = () => {
                                                                     {buy?.orderId}
                                                                 </td>
                                                                 <td
+                                                                    className="py-3 carousel-desc"
+                                                                    style={{ fontWeight: '500' }}
+                                                                    title={buy?.productId?.Product_Name} // full text as tooltip
+                                                                >
+                                                                    {buy?.productId?.Product_Name?.length > 20 // your limit here
+                                                                        ? buy.productId.Product_Name.slice(0, 20) +
+                                                                          '...'
+                                                                        : buy.productId.Product_Name}
+                                                                </td>
+
+                                                                <td
                                                                     className=" py-3 carousel-desc"
                                                                     style={{
                                                                         fontWeight: '500',
@@ -205,6 +231,7 @@ const Purchases = () => {
                                                                     style={{ fontWeight: '500' }}>
                                                                     {buy?.paymentMethod}
                                                                 </td>
+
                                                                 <td
                                                                     className=" py-3 carousel-desc"
                                                                     style={{ fontWeight: '500' }}>
@@ -360,6 +387,7 @@ const Purchases = () => {
                                                 style={{ background: 'transparent' }}>
                                                 <input
                                                     type="search"
+                                                    onChange={(e) => debouncedSearch(e.target.value)}
                                                     className="border-0 px-3 w-100 flex-grow-1"
                                                     placeholder="Search"
                                                     name="search"
@@ -387,6 +415,7 @@ const Purchases = () => {
                                                     }}>
                                                     <tr className="">
                                                         <th className="ps-5 table-heading">ORDER ID</th>
+                                                        <th className="table-heading">Product Name</th>
                                                         <th className="table-heading">STATUS</th>
                                                         <th className="table-heading">QUANTITY</th>
                                                         <th className="table-heading">PAYMENT METHOD</th>
@@ -416,6 +445,17 @@ const Purchases = () => {
                                                                     style={{ fontWeight: '500' }}>
                                                                     {order?.orderId}
                                                                 </td>
+                                                                <td
+                                                                    className="py-3 carousel-desc"
+                                                                    style={{ fontWeight: '500' }}
+                                                                    title={order?.productId?.Product_Name} // full name as tooltip
+                                                                >
+                                                                    {order?.productId?.Product_Name?.length > 20 // set your limit here
+                                                                        ? order.productId.Product_Name.slice(0, 20) +
+                                                                          '...'
+                                                                        : order.productId.Product_Name}
+                                                                </td>
+
                                                                 <td
                                                                     className=" py-3 carousel-desc"
                                                                     style={{
