@@ -103,7 +103,7 @@ const Notification = () => {
                                 <Loading />
                             ) : NotificationData.length > 0 ? (
                                 <div className="table-responsive">
-                                    <Table bordered hover className="bg-white text-center">
+                                    <Table bordered hover className="bg-white text-start">
                                         <thead>
                                             <tr className="text-nowrap text-secondary">
                                                 <th>
@@ -137,34 +137,13 @@ const Notification = () => {
                                                     </td>
                                                     {/* </OverlayTrigger> */}
 
-                                                    <td>
-                                                        <span>
-                                                            {data?.type}
-                                                            {/* <span
-                                                            className={`badge ${
-                                                                data?.type === 'buyer'
-                                                                    ? 'bg-info'
-                                                                    : data?.type === 'seller'
-                                                                    ? 'bg-danger'
-                                                                    : data?.type === 'both'
-                                                                    ? 'bg-success'
-                                                                    : 'bg-secondary'
-                                                            } px-2 py-1`}>
-                                                            {data?.type === 'buyer'
-                                                                ? 'Buyer'
-                                                                : data?.type === 'seller'
-                                                                ? 'Seller'
-                                                                : data?.type === 'both'
-                                                                ? 'Both'
-                                                                : 'Unknown'}
-                                                        </span> */}
-                                                        </span>
-                                                    </td>
+                                                    <td className="text-capitalize">{data?.type}</td>
 
                                                     <td>
                                                         <span
-                                                            className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
-                                                                } px-2 py-1`}>
+                                                            className={`badge ${
+                                                                data?.status ? 'bg-success' : 'bg-danger'
+                                                            } px-2 py-1`}>
                                                             {data?.status ? 'Active' : 'Inactive'}
                                                         </span>
                                                     </td>
