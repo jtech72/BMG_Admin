@@ -16,6 +16,7 @@ import comissionSaga from './commision/saga';
 import transactionSaga from './transactions/saga';
 import supportSaga from './support/saga';
 import { BidHandlerSaga } from './bidHandler/saga';
+import PurchaseOrderForAdminDataSaga from './Buyers/saga';
 
 export default function* rootSaga(): any {
     yield all([
@@ -34,5 +35,6 @@ export default function* rootSaga(): any {
         transactionSaga(),
         supportSaga(),
         BidHandlerSaga(),
+        PurchaseOrderForAdminDataSaga(),
     ]);
 }

@@ -13,6 +13,7 @@ import { Button, Card, Col, Row, Tooltip, OverlayTrigger } from 'react-bootstrap
 import BidHandlerModal from './AddBidHandlerModal/AddBidHandlerModal';
 import { BsPencil } from 'react-icons/bs';
 import ToastContainer from '../../../helpers/toast/ToastContainer';
+import PageTitle from '../../../helpers/PageTitle';
 
 const BidPercentage = () => {
     const dispatch = useDispatch();
@@ -84,11 +85,16 @@ const BidPercentage = () => {
                 editData={editData}
             />
             <Row>
-                <Col lg={6} className="d-flex justify-content-start">
+                <PageTitle
+                    breadCrumbItems={[{ label: 'Bid Handler', path: '/bmg/bidHandler', active: true }]}
+                    title="Bid Handler Management"
+                />
+
+                {/* <Col lg={6} className="d-flex justify-content-start">
                     <div className="navbar text-dark ">
                         <div className={`nav-item`}>Bid Handler</div>{' '}
                     </div>
-                </Col>
+                </Col> */}
                 <div>
                     <Col xs={12}>
                         <Card
@@ -97,8 +103,10 @@ const BidPercentage = () => {
                                     'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
                             }}>
                             <Card.Body className="text-center">
-                                <div className="col d-flex justify-content-end my-3">
-                                    <Button onClick={addBidHandler}>Add Bid Handler</Button>
+                                <div className="col d-flex justify-content-end">
+                                    <Button className="bg-success border-0" onClick={addBidHandler}>
+                                        Add Bid Handler
+                                    </Button>
                                 </div>
                                 {getBidHandlerList && getBidHandlerList.length > 0 ? (
                                     <>
@@ -148,7 +156,7 @@ const BidPercentage = () => {
                                                             </td>
 
                                                             <td className="fw-bold">
-                                                                {data?.minPrice ? (
+                                                                {data?.minPrice == 0 || data?.minPrice != undefined ? (
                                                                     <span>{data?.minPrice} </span>
                                                                 ) : (
                                                                     <span className="d-flex justify-content-center">
