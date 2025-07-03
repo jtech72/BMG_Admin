@@ -9,7 +9,7 @@ import { ButtonLoading } from "../../../../helpers/loader/Loading";
 const FaqModal = ({ show, hide, faqData }) => {
     const dispatch = useDispatch();
     const store = useSelector((state) => state);
-
+    const requiredStar = <span className="text-danger fs-4">*</span>;
     const loading = store?.createFaqDataReducer?.loading || store?.updateFaqDataReducer?.loading
     const createStatus = store?.createFaqDataReducer?.faqData?.status
     const updateStatus = store?.updateFaqDataReducer?.faqData?.status
@@ -77,18 +77,19 @@ const FaqModal = ({ show, hide, faqData }) => {
         }
     }, [createStatus, updateStatus, loading, dispatch]);
 
-
     return (
-        <Modal show={show} onHide={closeModal} centered size="lg" backdrop='static'>
+        <Modal show={show} centered size="lg" backdrop='static'
+        // onHide={closeModal}
+        >
             <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                 <Modal.Title>{faqData?.type} FAQ</Modal.Title>
-                <i className="mdi mdi-close fs-3" onClick={closeModal} style={{ cursor: 'pointer' }}></i>
+                {/* <i className="mdi mdi-close fs-3" onClick={closeModal} style={{ cursor: 'pointer' }}></i> */}
             </Modal.Header>
             <Modal.Body >
                 <Form>
                     {/* Question Input */}
                     <Form.Group className="mb-3">
-                        <Form.Label>Question</Form.Label>
+                        <Form.Label>Question {requiredStar}</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Enter question"
@@ -101,7 +102,7 @@ const FaqModal = ({ show, hide, faqData }) => {
 
                     {/* Answer (Rich Text Editor) */}
                     <Form.Group className="mb-3">
-                        <Form.Label>Answer</Form.Label>
+                        <Form.Label>Answer {requiredStar}</Form.Label>
                         <ReactQuill
                             value={faq.answer}
                             onChange={handleQuillChange}

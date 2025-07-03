@@ -129,8 +129,7 @@ const AddCategoryModal = ({
                     {!modalCheck ? (
                         <Form.Group className="mb-3">
                             <Form.Label>
-                                Category Name
-                                <MandatoryFieldAstrick />
+                                Category Name <MandatoryFieldAstrick />
                             </Form.Label>
                             <Form.Control
                                 type="text"
@@ -144,8 +143,7 @@ const AddCategoryModal = ({
                     ) : (
                         <Form.Group className="mb-3">
                             <Form.Label>
-                                Assign Category
-                                <MandatoryFieldAstrick />
+                                Assign Category <MandatoryFieldAstrick />
                             </Form.Label>
 
                             <Select
@@ -161,8 +159,7 @@ const AddCategoryModal = ({
                         <>
                             <Form.Group className="mb-3">
                                 <Form.Label>
-                                    Confirm Category Name
-                                    <MandatoryFieldAstrick />
+                                    Confirm Category Name <MandatoryFieldAstrick />
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
