@@ -10,10 +10,7 @@ const Orders = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const OrdersData = store?.getOrderDataReducer?.orderData?.orderDetails;
-
-    console.log(OrdersData);
     const OrdersLoading = store?.getOrderDataReducer?.loading;
-
     const TotalRecords = store?.getOrderDataReducer?.orderData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -22,6 +19,7 @@ const Orders = () => {
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
+
     useEffect(() => {
         dispatch(getOrdersAction({ search: search, limit: pageSize, page: pageIndex }));
     }, [dispatch, pageIndex, pageSize, search]);

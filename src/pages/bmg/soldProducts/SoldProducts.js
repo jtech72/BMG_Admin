@@ -5,19 +5,18 @@ import PageTitle from '../../../helpers/PageTitle';
 import { Loading } from '../../../helpers/loader/Loading';
 import { getSoldProductDataActions } from '../../../redux/actions';
 import Pagination from '../../../helpers/Pagination'
+import { useNavigate } from 'react-router-dom';
 const SoldProducts = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
-    const SoldAuctionData = store?.soldProductDataReducer?.leadData?.result
-    console.log({ SoldAuctionData })
+    const SoldAuctionData = store?.soldProductDataReducer?.leadData?.data
     const SoldAuctionLoading = store?.soldProductDataReducer?.loading
-
-    const TotalRecords = store?.soldProductDataReducer?.leadData?.totalRecords || 0;
-
+    const TotalRecords = store?.soldProductDataReducer?.leadData?.pagination?.totalRecords || 0;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
+    const navigate = useNavigate();
 
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
@@ -75,7 +74,6 @@ const SoldProducts = () => {
                 <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ddd' }}>
                     {Object.entries(value).map(([subKey, subValue]) => (
                         <div key={subKey}>
-                            {console.log({ subKey, subValue })}
                             <strong>{formatKey(subKey)}:</strong> {formatValue(subValue, subKey)}
                         </div>
                     ))}
@@ -183,11 +181,10 @@ const SoldProducts = () => {
                                                             <tr
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
-                                                                {console.log({ data })}
                                                                 <th scope="row">{index + 1}</th>
                                                                 <td className='text-uppercase fw-bold'>
-                                                                    {data?.productGenerateId ? (
-                                                                        <span>{data?.productGenerateId} </span>
+                                                                    {data?.paymentId ? (
+                                                                        <span>{data?.paymentId} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -209,9 +206,16 @@ const SoldProducts = () => {
                                                                             </Tooltip>
                                                                         }>
                                                                         <b>
-                                                                            {data?.Product_Name ? (
-                                                                                <span onClick={() => handleProductClick(data)}
-                                                                                >{data?.Product_Name?.slice(0,30)+'...'} </span>
+                                                                            {data?.productName ? (
+                                                                                <span onClick={() => {
+                                                                                    navigate(
+                                                                                        `/bmg/items/${data?.productId?._id}`,
+                                                                                        {
+                                                                                            state: { product: data?.product },
+                                                                                        }
+                                                                                    );
+                                                                                }}
+                                                                                >{data?.productName?.slice(0, 30) + '...'} </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
                                                                                     N/A
@@ -221,8 +225,8 @@ const SoldProducts = () => {
                                                                     </OverlayTrigger>
                                                                 </td>
                                                                 <td className='text-uppercase fw-bold text-primary'>
-                                                                    {data?.Brand ? (
-                                                                        <span>{data?.Brand} </span>
+                                                                    {data?.productId?.Brand ? (
+                                                                        <span>{data?.productId?.Brand} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A
@@ -230,8 +234,8 @@ const SoldProducts = () => {
                                                                     )}
                                                                 </td>
                                                                 <td className='text-uppercase fw-bold text-success'>
-                                                                    {data?.Ask_Price ? (
-                                                                        <span>$ {data?.Ask_Price} </span>
+                                                                    {data?.productId?.Ask_Price ? (
+                                                                        <span>$ {data?.productId?.Ask_Price} </span>
                                                                     ) : (
                                                                         <span className="d-flex text-danger justify-content-center">
                                                                             N/A

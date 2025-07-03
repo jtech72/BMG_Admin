@@ -12,18 +12,11 @@ const LiveMonitoring = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [liveMonitoringData, setLiveMonitoringData] = useState([]);
-    console.log(liveMonitoringData, '3456789');
     const auctionData = useLocation()?.state?.product;
-    console.log(auctionData, 'auctionData');
-
     const ProductId = useParams()?.id;
-    console.log(ProductId, 'ProductId');
-
     const [showModal, setShowModal] = useState(false);
     const [bidEndDate, setBidEndDate] = useState('');
     const socketRef = useRef();
-
-    console.log(useLocation(), 'useParams()?.id');
     useEffect(() => {
         socketRef.current = io(config.API_URL, {
             transports: ['websocket'],
@@ -45,11 +38,7 @@ const LiveMonitoring = () => {
         }
         const handleLiveUpdate = (data) => {
             // alert('dd');
-            console.log('Live Monitor Data Received:', data); // ✅
-
             if (data?.data?.[0]?.productId === ProductId) {
-                console.log(data?.data?.productId, 'data?.data?.productId');
-
                 setLiveMonitoringData(data?.data);
             } else {
                 setLiveMonitoringData([]);
@@ -302,15 +291,14 @@ const LiveMonitoring = () => {
                                                 </OverlayTrigger>
                                             </td>
                                             <td
-                                                className={`fw-bold ${
-                                                    index === 0
-                                                        ? 'text-success'
-                                                        : index === 1
+                                                className={`fw-bold ${index === 0
+                                                    ? 'text-success'
+                                                    : index === 1
                                                         ? 'text-warning'
                                                         : index === 2
-                                                        ? 'text-danger'
-                                                        : 'text-dark'
-                                                }`}>
+                                                            ? 'text-danger'
+                                                            : 'text-dark'
+                                                    }`}>
                                                 {`${index + 1}${getOrdinalSuffix(index + 1)}`}
                                             </td>
                                         </tr>

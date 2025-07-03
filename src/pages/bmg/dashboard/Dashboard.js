@@ -37,7 +37,6 @@ const Dashboard = () => {
         { title: 'Sales', value: dashboardData?.totalUpComingAuction, icon: <AiOutlineLineChart />, color: '' },
     ];
     const navigate = useNavigate();
-    console.log(getRecentRegistrationsForDashboard?.dashboardData, 'getRecentRegistrationsForDashboard?.dashboardData');
     return (
         <>
             <PageTitle

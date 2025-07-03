@@ -8,7 +8,6 @@ export function getBigHandlerApi(params) {
 }
 
 export async function postBigHandlerApi(params) {
-    console.log(params);
     const response = await api.create(`${URL.POST_BID_HANDLER}`, params?.data);
     return response;
 }

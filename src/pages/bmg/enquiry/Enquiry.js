@@ -10,11 +10,7 @@ const Enquiry = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const EnquiryData = store?.enquiryDataReducer?.enquiryData?.contacts;
-
-    console.log(store?.enquiryDataReducer?.enquiryData)
     const EnquiryLoading = store?.enquiryDataReducer?.loading
-
-
     const TotalRecords = store?.enquiryDataReducer?.enquiryData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -94,7 +90,6 @@ const Enquiry = () => {
                                                                 key={index}
                                                                 className="text-dark fw-bold text-nowrap">
                                                                 <th scope="row">{index + 1}</th>
-                                                                {console.log({ data })}
                                                                 <td className='text-uppercase fw-bold'>
                                                                     {data?.fullName ? (
                                                                         <span>{data?.fullName} </span>
@@ -122,7 +117,7 @@ const Enquiry = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
-                                                                <td className='fw-bold text-primary' style={{cursor:'pointer'}}>
+                                                                <td className='fw-bold text-primary' style={{ cursor: 'pointer' }}>
                                                                     <OverlayTrigger
                                                                         placement="left"
                                                                         overlay={
@@ -131,13 +126,13 @@ const Enquiry = () => {
                                                                             </Tooltip>
                                                                         }>
                                                                         <b>
-                                                                        {data?.message ? (
-                                                                        <span>{data?.message.slice(0,50)} </span>
-                                                                    ) : (
-                                                                        <span className="d-flex text-danger justify-content-center">
-                                                                            N/A
-                                                                        </span>
-                                                                    )}
+                                                                            {data?.message ? (
+                                                                                <span>{data?.message.slice(0, 50)} </span>
+                                                                            ) : (
+                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                    N/A
+                                                                                </span>
+                                                                            )}
                                                                         </b>
                                                                     </OverlayTrigger>
                                                                 </td>

@@ -36,7 +36,6 @@ function* getNotificationFunction(data) {
 }
 
 function* getNotificationByAdminFunction(data) {
-    console.log(data, 'responseresponse');
     try {
         yield put({
             type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_LOADING,
@@ -55,7 +54,6 @@ function* getNotificationByAdminFunction(data) {
             });
         }
     } catch (error) {
-        console.log(error, 'responseresponse');
         yield put({
             type: NotificationActionTypes.GET_NOTIFICATION_BY_ADMIN_ERROR,
             payload: error,
@@ -70,7 +68,6 @@ function* createNotificationFunction(data) {
             payload: {},
         });
         const response = yield call(createNotificationApi, data);
-        console.log({ response });
         if (response.data.status) {
             yield put({
                 type: NotificationActionTypes.CREATE_NOTIFICATION_SUCCESS,
@@ -101,8 +98,6 @@ function* updateNotificationFunction(payload) {
         });
 
         const response = yield call(updateNotificationApi, payload);
-        console.log({ response });
-
         if (response && response.data) {
             yield put({
                 type: NotificationActionTypes.UPDATE_NOTIFICATION_DATA_SUCCESS,

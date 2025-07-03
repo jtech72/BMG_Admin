@@ -58,7 +58,6 @@ const PostAList = () => {
 
     const { id } = useParams();
     const product = store?.specificProductDataReducer?.productData?.product;
-    console.log(store?.specificProductDataReducer?.productData, 'productproduct');
     // const unwantedDynamicFields = ['type', '_id', 'image', 'userId', 'Product_Name'];
 
     const filteredObject = useMemo(() => {
@@ -73,7 +72,6 @@ const PostAList = () => {
             }, {});
     }, [product]);
     const [viewModal, setViewModal] = useState(false);
-    console.log(filteredObject, viewModal, 'renderDynamicFields');
     const handleBack = () => {
         navigate(-1);
     };
@@ -113,13 +111,13 @@ const PostAList = () => {
                     </Col> */}
                             <Row className="pe-0">
                                 <Col sm={4} className="mt-2 pe-0">
-                                    <Form.Label>Category</Form.Label>
+                                    <Form.Label className='text-dark'>Category</Form.Label>
                                     {/* {requiredStar} */}
                                     <Controller
                                         name="categoryId"
                                         control={control}
                                         render={({ field }) => (
-                                            <Select
+                                            <Select className='text-dark'
                                                 {...field}
                                                 isLoading={categoryLoading}
                                                 isDisabled
@@ -133,7 +131,7 @@ const PostAList = () => {
                                 </Col>
 
                                 <Col sm={4} className="mt-2 pe-0">
-                                    <Form.Label>Sub Category</Form.Label>
+                                    <Form.Label className='text-dark'>Sub Category</Form.Label>
                                     {/* {requiredStar} */}
                                     <Controller
                                         name="subCategoryId"
@@ -153,13 +151,13 @@ const PostAList = () => {
                                 </Col>
 
                                 <div className="mt-2 pe-0 col-sm-4">
-                                    <label className="form-label">Product Name</label>
+                                    <label className="form-label text-dark">Product Name</label>
                                     {/* {requiredStar} */}
                                     <input
                                         placeholder="Product Name"
                                         name="Product_Name"
                                         type="text"
-                                        className="form-control"
+                                        className="form-control text-dark"
                                         {...register('Product_Name', {
                                             required: 'Product Name is required',
                                         })}
@@ -192,17 +190,48 @@ const PostAList = () => {
                                                 </div>
                                             ) : (
                                                 <>
-                                                    <label className="form-label text-capitalize">
+                                                    <label className="form-label text-capitalize text-dark">
                                                         {formattedLabel}
                                                     </label>
 
                                                     <input
                                                         type="text"
                                                         name={key}
-                                                        className="form-control"
-                                                        value={Array.isArray(value) ? value.join(', ') : value}
+                                                        className="form-control text-dark"
+                                                        value={
+                                                            (() => {
+                                                                if (!value) return "";
+
+                                                                if (Array.isArray(value)) {
+                                                                    return value
+                                                                        .map((item) => {
+                                                                            if (typeof item === "string") return item;
+                                                                            if (typeof item === "object" && item !== null) {
+                                                                                // Convert object to key-value pairs
+                                                                                return Object.entries(item)
+                                                                                    .map(([k, v]) => `${k}: ${v}`)
+                                                                                    .join(", ");
+                                                                            }
+                                                                            return String(item);
+                                                                        })
+                                                                        .join(" | ");
+                                                                }
+
+                                                                if (typeof value === "object") {
+                                                                    return Object.entries(value)
+                                                                        .map(([k, v]) => `${k}: ${v}`)
+                                                                        .join(", ");
+                                                                }
+
+                                                                // If value is HTML string
+                                                                const temp = document.createElement("div");
+                                                                temp.innerHTML = value;
+                                                                return temp.innerText;
+                                                            })()
+                                                        }
                                                         disabled
                                                     />
+
                                                 </>
                                             )}
                                         </div>

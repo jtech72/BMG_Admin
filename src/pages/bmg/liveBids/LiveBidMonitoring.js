@@ -15,12 +15,8 @@ const LiveBidMonitoring = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const LiveBidData = store?.getLiveBidDataReducer?.leadData?.result;
-
-    console.log(store?.getLiveBidDataReducer?.leadData);
     const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading;
-
     const TotalRecords = store?.getLiveBidDataReducer?.leadData?.totalRecords;
-
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
@@ -205,20 +201,20 @@ const LiveBidMonitoring = () => {
                                                                 </td>
                                                                 <td
                                                                     className="text-uppercase text-start fw-bold"
-                                                                    // style={{ cursor: 'pointer' }}
+                                                                // style={{ cursor: 'pointer' }}
                                                                 >
                                                                     <b title={data?.product?.Product_Name || 'N/A'}>
                                                                         {data?.product?.Product_Name ? (
                                                                             <span>
                                                                                 {data?.product?.Product_Name.length > 20
                                                                                     ? data?.product?.Product_Name.substring(
-                                                                                          0,
-                                                                                          20
-                                                                                      ) + '...'
+                                                                                        0,
+                                                                                        20
+                                                                                    ) + '...'
                                                                                     : data?.product?.Product_Name}
                                                                             </span>
                                                                         ) : (
-                                                                            <span className="d-flex justify-content-center">
+                                                                            <span className="d-flex justify-content-center text-dark">
                                                                                 N/A
                                                                             </span>
                                                                         )}
@@ -235,7 +231,7 @@ const LiveBidMonitoring = () => {
                                                                             )}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
@@ -249,7 +245,7 @@ const LiveBidMonitoring = () => {
                                                                             )}
                                                                         </span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
@@ -257,7 +253,7 @@ const LiveBidMonitoring = () => {
 
                                                                 <td className="fw-bold text-start">
                                                                     {data?.product ? (
-                                                                        <span className="fw-semibold">
+                                                                        <span className="fw-semibold text-dark">
                                                                             {data?.product?.Start_Bid_Price}
                                                                         </span>
                                                                     ) : (
@@ -269,7 +265,7 @@ const LiveBidMonitoring = () => {
                                                                     {data?.product?.highBidingAmount ? (
                                                                         <span>{data?.product?.highBidingAmount}</span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
@@ -279,7 +275,7 @@ const LiveBidMonitoring = () => {
                                                                     {data?.product?.totalBidders ? (
                                                                         <span>{data?.product?.totalBidders}</span>
                                                                     ) : (
-                                                                        <span className="d-flex justify-content-center">
+                                                                        <span className="d-flex justify-content-center text-dark">
                                                                             N/A
                                                                         </span>
                                                                     )}
@@ -295,14 +291,14 @@ const LiveBidMonitoring = () => {
                                                                             );
                                                                         }}
                                                                         size={18}
-                                                                        cursor={'pointer'}
+                                                                        cursor={'pointer'} className='me-1'
                                                                         style={{
                                                                             color: '#0d6efd', // optional: makes it look like a link/info icon
                                                                         }}
                                                                     />
 
                                                                     <BsInfoCircle
-                                                                        size={18}
+                                                                        size={17}
                                                                         onClick={() =>
                                                                             navigate(
                                                                                 `/bmg/items/${data?.product?._id}`,
@@ -312,7 +308,7 @@ const LiveBidMonitoring = () => {
                                                                             )
                                                                         }
                                                                         style={{
-                                                                            marginRight: '5px',
+                                                                            // marginRight: '5px',
                                                                             cursor: 'pointer',
                                                                             color: '#0d6efd', // optional: makes it look like a link/info icon
                                                                         }}

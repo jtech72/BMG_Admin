@@ -28,11 +28,8 @@ const BidPercentage = () => {
     const addBidHandlerSuccess = addBidHandlerReducer?.data;
     const updateBidHandlerReducer = store?.editBidHandlerReducer;
     const updateBidHandlerSuccess = updateBidHandlerReducer?.data;
-
-    console.log(updateBidHandlerReducer, 'updateBidHandlerReducer');
     const [addBidHandlerModal, setAddBidHandlerModal] = useState(false);
     const [editData, setEditData] = useState(null);
-    console.log(getBidHandlerList, 'getBidHandlerListReducer');
 
     const addBidHandler = () => {
         setAddBidHandlerModal(true);
@@ -42,7 +39,6 @@ const BidPercentage = () => {
         const status = addBidHandlerSuccess?.status;
         const message = addBidHandlerSuccess?.message;
         const isSuccess = addBidHandlerSuccess?.success;
-        console.log(addBidHandlerReducer, 'addBidHandlerSuccess');
         if (status !== undefined) {
             if (isSuccess) {
                 ToastContainer(message || 'Successfully added!', 'success');
@@ -60,7 +56,6 @@ const BidPercentage = () => {
         const status = updateBidHandlerSuccess?.status;
         const message = updateBidHandlerSuccess?.message;
         const isSuccess = updateBidHandlerSuccess?.success;
-        console.log(updateBidHandlerSuccess, 'updateBidHandlerSuccess');
         if (status !== undefined) {
             if (isSuccess) {
                 ToastContainer(message || 'Successfully updated!', 'success');
@@ -136,10 +131,10 @@ const BidPercentage = () => {
                                                                             <span key={ind}>
                                                                                 {ele?.name}
                                                                                 {ind === 3 ||
-                                                                                ind ===
+                                                                                    ind ===
                                                                                     data.categoryIds.slice(0, 4)
                                                                                         .length -
-                                                                                        1
+                                                                                    1
                                                                                     ? '...'
                                                                                     : ', '}
                                                                             </span>
@@ -183,9 +178,8 @@ const BidPercentage = () => {
                                                             <td className="fw-bold">
                                                                 {data?.status ? (
                                                                     <span
-                                                                        className={`badge ${
-                                                                            data?.status ? 'bg-success' : 'bg-danger'
-                                                                        } px-2 py-1`}>
+                                                                        className={`badge ${data?.status ? 'bg-success' : 'bg-danger'
+                                                                            } px-2 py-1`}>
                                                                         {data?.status ? '✅ Acive' : '❌ In-Active'}
                                                                     </span>
                                                                 ) : (

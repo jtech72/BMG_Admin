@@ -77,7 +77,6 @@ export const postBidHandlerReducer = (state = INITIAL_STATE, action) => {
 };
 
 export const editBidHandlerReducer = (state = INITIAL_STATE, action) => {
-    console.log(action, 'action');
     switch (action.type) {
         case bidHandler.EDIT_BID_HANDLER_LOADING:
             return {

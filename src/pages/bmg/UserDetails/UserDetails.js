@@ -10,7 +10,6 @@ const UserDetails = () => {
     const { id } = useParams();
     const usersData = store?.getRecentRegistrationsForDashboardReducer?.dashboardData?.allUsers;
     const specificUserData = usersData?.find((ele) => ele?._id == id);
-    console.log(specificUserData, 'storestorestore');
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getRecentRegistrationsForDashboardActions({}));

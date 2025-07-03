@@ -13,20 +13,20 @@ const FaqModal = ({ show, hide, faqData }) => {
     const loading = store?.createFaqDataReducer?.loading || store?.updateFaqDataReducer?.loading
     const createStatus = store?.createFaqDataReducer?.faqData?.status
     const updateStatus = store?.updateFaqDataReducer?.faqData?.status
-    console.log({ createStatus, updateStatus })
-    console.log({ faqData })
     // State to manage form data
     const [faq, setFaq] = useState({
         question: "",
         answer: "",
         status: false,
     });
-const closeModal=()=>{
-    setFaq({  question: "",
-        answer: "",
-        status: false,})
+    const closeModal = () => {
+        setFaq({
+            question: "",
+            answer: "",
+            status: false,
+        })
         hide()
-}
+    }
     // Handle changes in form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -75,12 +75,12 @@ const closeModal=()=>{
             dispatch(getFaqActions({ search: '', limit: '', page: '' }));
             closeModal();
         }
-    }, [createStatus, updateStatus, loading, dispatch]); 
-    
+    }, [createStatus, updateStatus, loading, dispatch]);
+
 
     return (
         <Modal show={show} onHide={closeModal} centered size="lg" backdrop='static'>
-            <Modal.Header className="px-2 py-1 text-light" style={{backgroundColor:'#008003'}}>
+            <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>
                 <Modal.Title>{faqData?.type} FAQ</Modal.Title>
                 <i className="mdi mdi-close fs-3" onClick={closeModal} style={{ cursor: 'pointer' }}></i>
             </Modal.Header>
@@ -124,8 +124,8 @@ const closeModal=()=>{
                 <Button variant="danger" onClick={closeModal}>
                     Cancel
                 </Button>
-                <Button style={{backgroundColor:'#008003'}} onClick={handleSubmit} disabled={loading}>
-                    {loading ? <ButtonLoading /> : <>{faqData?.type ==='Edit'?'Update':"Add"} FAQ</>}
+                <Button style={{ backgroundColor: '#008003' }} onClick={handleSubmit} disabled={loading}>
+                    {loading ? <ButtonLoading /> : <>{faqData?.type === 'Edit' ? 'Update' : "Add"} FAQ</>}
                 </Button>
             </Modal.Footer>
         </Modal>

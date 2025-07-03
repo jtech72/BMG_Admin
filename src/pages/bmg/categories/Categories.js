@@ -20,7 +20,6 @@ const Categories = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const CategoryData = store?.categoryDataReducer?.categoryData?.groupedCategories;
-    console.log({ store });
     const SubCategoryData = store?.subCategoryDataReducer?.categoryData?.subCategories;
     const CategoryLoading = store?.categoryDataReducer?.loading;
     const SubCategoryLoading = store?.subCategoryDataReducer?.loading;
@@ -84,7 +83,6 @@ const Categories = () => {
     const [selectedCategoryData, setSelectedCategoryData] = useState(null);
 
     const handleViewSubCategories = (category) => {
-        console.log({ category });
         if (category) {
             setSelectedCategory(category?.categoryName);
             setSelectedCategoryData(category?.subCategories);
@@ -103,10 +101,8 @@ const Categories = () => {
     useEffect(() => {
         if (openAddCategoryModal) {
             if (modalCheck.toLowerCase() === 'sub-category') {
-                console.log(modalCheck, 'modalCheckmodalCheck1');
                 dispatch(getCategoryActions({ search, limit: '', page: pageIndex }));
             } else {
-                console.log(modalCheck, 'modalCheckmodalCheck2');
                 dispatch(getSubCategoryActions({ search, limit: '', page: pageIndex }));
             }
         }
@@ -116,8 +112,6 @@ const Categories = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const [subCategoryData, setSubCategoryData] = useState([]);
-    console.log(selectedCategories, 'TestA');
-    console.log(selectedSubCategories, 'TestA');
     const addCategoryHandler = (data) => {
         if (modalCheck) {
             dispatch(
@@ -174,12 +168,10 @@ const Categories = () => {
             dispatch(createSubCategoryActionsReset());
         }
     }, [createSubCategoryReducer]);
-    console.log(addedCategories, 'addedCategoriesaddedCategories');
     const handleAddSubCategoryHandler = () => {
         setOpenAddCategoryModal(true);
         setModalCheck('Sub-category');
     };
-    console.log(selectedSubCategories, 'selectedSubCategories');
 
     return (
         <>
@@ -293,12 +285,12 @@ const Categories = () => {
                                                                                         color: 'crimson',
                                                                                     }}
                                                                                     onMouseOver={(e) =>
-                                                                                        (e.target.style.color =
-                                                                                            'rgb(10 207 151)')
+                                                                                    (e.target.style.color =
+                                                                                        'rgb(10 207 151)')
                                                                                     }
                                                                                     onMouseOut={(e) =>
-                                                                                        (e.target.style.color =
-                                                                                            'crimson')
+                                                                                    (e.target.style.color =
+                                                                                        'crimson')
                                                                                     }
                                                                                     onClick={() =>
                                                                                         handleViewSubCategories(data)
