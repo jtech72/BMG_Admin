@@ -16,7 +16,6 @@ const Orders = () => {
     const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
     const [activeTab, setActiveTab] = useState('Sale');
-    console.log(store?.getOrderDataReducer?.orderData?.totalrecords, 'data');
 
     useEffect(() => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
