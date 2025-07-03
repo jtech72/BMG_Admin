@@ -13,7 +13,7 @@ const Enquiry = () => {
     const EnquiryLoading = store?.enquiryDataReducer?.loading;
     const TotalRecords = store?.enquiryDataReducer?.enquiryData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
     useEffect(() => {
@@ -88,7 +88,7 @@ const Enquiry = () => {
                                                     <tbody>
                                                         {EnquiryData?.map((data, index) => (
                                                             <tr key={index} className="text-dark fw-bold text-nowrap">
-                                                                <th scope="row">{index + 1}</th>
+                                                                <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.fullName ? (
                                                                         <span>{data?.fullName} </span>

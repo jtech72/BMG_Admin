@@ -18,7 +18,7 @@ const LiveBidMonitoring = () => {
     const SoldAuctionLoading = store?.getLiveBidDataReducer?.loading;
     const TotalRecords = store?.getLiveBidDataReducer?.leadData?.totalRecords;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
 
     useEffect(() => {
@@ -174,7 +174,7 @@ const LiveBidMonitoring = () => {
                                                                 //     cursor: 'pointer',
                                                                 // }}
                                                                 className="text-nowrap" >
-                                                                <td>{index + 1}</td>
+                                                                <td>{(pageIndex - 1) * pageSize + index + 1}</td>
                                                                 <td className="text-capitalize text-start fw-bold">
                                                                     <OverlayTrigger
                                                                         placement="left"

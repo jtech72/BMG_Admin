@@ -32,7 +32,7 @@ const Categories = () => {
     const [apiCall, setApiCall] = useState(false);
 
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(totalRecords / pageSize));
 
     useEffect(() => {

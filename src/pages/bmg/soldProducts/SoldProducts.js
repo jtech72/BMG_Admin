@@ -14,7 +14,7 @@ const SoldProducts = () => {
     const SoldAuctionLoading = store?.soldProductDataReducer?.loading;
     const TotalRecords = store?.soldProductDataReducer?.leadData?.pagination?.totalRecords || 0;
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const [totalPages, setTotalPages] = useState(Math.ceil(TotalRecords / pageSize));
     const navigate = useNavigate();
 
@@ -196,7 +196,7 @@ const SoldProducts = () => {
                                                     <tbody className="text-start">
                                                         {SoldAuctionData?.map((data, index) => (
                                                             <tr key={index} className="text-dark fw-bold text-nowrap">
-                                                                <th scope="row">{index + 1}</th>
+                                                                <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.paymentId ? (
                                                                         <span>{data?.paymentId} </span>
@@ -214,12 +214,12 @@ const SoldProducts = () => {
                                                                         // color: 'crimson',
                                                                         // transition: 'color 0.3s ease-in-out',
                                                                     }}
-                                                                    // onMouseOver={(e) =>
-                                                                    //     (e.target.style.color = 'rgb(10 207 151)')
-                                                                    // }
-                                                                    // onMouseOut={(e) =>
-                                                                    //     (e.target.style.color = 'crimson')
-                                                                    // }
+                                                                // onMouseOver={(e) =>
+                                                                //     (e.target.style.color = 'rgb(10 207 151)')
+                                                                // }
+                                                                // onMouseOut={(e) =>
+                                                                //     (e.target.style.color = 'crimson')
+                                                                // }
                                                                 >
                                                                     <OverlayTrigger
                                                                         placement="left"
@@ -275,9 +275,8 @@ const SoldProducts = () => {
                                                                 <td className="fw-bold">
                                                                     {data?.userId ? (
                                                                         <span className="fw-semibold">
-                                                                            {`${data?.userId?.name || ''} ${
-                                                                                data?.userId?.lastName || ''
-                                                                            }`.trim() || 'N/A'}
+                                                                            {`${data?.userId?.name || ''} ${data?.userId?.lastName || ''
+                                                                                }`.trim() || 'N/A'}
                                                                         </span>
                                                                     ) : (
                                                                         <span className="">N/A</span>
