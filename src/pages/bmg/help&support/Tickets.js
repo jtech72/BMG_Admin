@@ -133,15 +133,15 @@ const Tickets = () => {
       {/* Header Section */}
       <Row className="align-items-center mb-2">
         <Col xs="auto">
-            <b>
-              <BiArrowBack onClick={handleBack}
-                className="p-2 rounded-circle"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid #dee2e6'
-                }} />
-            </b>
+          <b>
+            <BiArrowBack onClick={handleBack}
+              className="p-2 rounded-circle"
+              style={{
+                width: '40px',
+                height: '40px',
+                border: '1px solid #dee2e6'
+              }} />
+          </b>
         </Col>
         <Col>
           <h2 className="mb-0 fw-semibold" style={{ color: '#212529' }}>Ticket Details</h2>
@@ -412,7 +412,7 @@ const Tickets = () => {
                 <Card className="border-0 shadow-sm">
                   <Card.Body className="p-3">
                     <div className="d-flex align-items-center">
-                      <div
+                      {ticketInfo?.user?.name?.charAt(0).toUpperCase() ? <div
                         className="rounded-circle d-flex align-items-center justify-content-center bg-success text-white"
                         style={{
                           width: '48px',
@@ -422,7 +422,8 @@ const Tickets = () => {
                         }}
                       >
                         {ticketInfo?.user?.name?.charAt(0).toUpperCase()}
-                      </div>
+                      </div> : ''}
+
                       <div className="ms-3">
                         <h6 className="mb-0 fw-semibold" style={{ fontSize: '0.9375rem' }}>
                           {ticketInfo?.user?.name} {ticketInfo?.user?.lastName || ''}

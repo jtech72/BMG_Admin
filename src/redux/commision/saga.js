@@ -12,7 +12,6 @@ function* getComissionFunction(data) {
             payload: {},
         });
         const response = yield call(getComissionApi, data);
-        // console.log(response,'api response')
         if (response?.status === 200) {
             yield put({
                 type: comissionActionTypes.GET_COMMISSION_DATA_SUCCESS,

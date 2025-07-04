@@ -39,23 +39,18 @@ const Buyer_Seller = () => {
     }, [dispatch, pageSize, search, pageIndex]);
     return (
         <>
+            <PageTitle
+                breadCrumbItems={[
+                    { label: 'Seller', path: '/bmg/sellers' },
+                    {
+                        label: 'Seller',
+                        path: '/bmg/seller',
+                        active: true,
+                    },
+                ]}
+                title={'Seller'}
+            />
             <Row>
-                <Col lg={6} className="d-flex justify-content-start ">
-                    {/* <Tab connectTab={connectTab} /> */}
-                    <div className="navbar text-dark ">
-                        {/* <div
-                    className={`nav-item ${activeTab === 'Buyers' ? 'active' : ''}`}
-                    onClick={() => handleClick('Buyers', 0)}>
-                    Buyer's
-                </div> */}
-                        <div
-                            className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
-                        // onClick={() => handleClick('Sellers', 1)}
-                        >
-                            Sellers
-                        </div>
-                    </div>
-                </Col>
                 <div>
                     {activeTab === 0 ? (
                         <Col xs={12}>
@@ -119,8 +114,8 @@ const Buyer_Seller = () => {
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
                                                                                     {`${data?.name
-                                                                                            ?.charAt(0)
-                                                                                            .toUpperCase() || ''
+                                                                                        ?.charAt(0)
+                                                                                        .toUpperCase() || ''
                                                                                         }${data?.name?.slice(1) || ''} ${data?.lastName
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
@@ -191,13 +186,15 @@ const Buyer_Seller = () => {
                                             )}
                                         </>
                                     )}
-                                    <Pagination
-                                        pageIndex={pageIndex}
-                                        pageSize={pageSize}
-                                        totalPages={totalPages}
-                                        setPageIndex={setPageIndex}
-                                        onChangePageSize={setPageSize}
-                                    />
+                                    {TotalRecords > 20 && (
+                                        <Pagination
+                                            pageIndex={pageIndex}
+                                            pageSize={pageSize}
+                                            totalPages={totalPages}
+                                            setPageIndex={setPageIndex}
+                                            onChangePageSize={setPageSize}
+                                        />
+                                    )}
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -262,8 +259,8 @@ const Buyer_Seller = () => {
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
                                                                                     {`${data?.name
-                                                                                            ?.charAt(0)
-                                                                                            .toUpperCase() || ''
+                                                                                        ?.charAt(0)
+                                                                                        .toUpperCase() || ''
                                                                                         }${data?.name?.slice(1) || ''} 
                                                                                           ${data?.lastName
                                                                                             ?.charAt(0)
@@ -320,8 +317,8 @@ const Buyer_Seller = () => {
                                                                             {data ? (
                                                                                 <span
                                                                                     className={`badge ${data?.isVerified
-                                                                                            ? 'bg-success'
-                                                                                            : 'bg-danger'
+                                                                                        ? 'bg-success'
+                                                                                        : 'bg-danger'
                                                                                         } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'
@@ -348,13 +345,15 @@ const Buyer_Seller = () => {
                                             )}
                                         </>
                                     )}
-                                    <Pagination
-                                        pageIndex={pageIndex}
-                                        pageSize={pageSize}
-                                        totalPages={totalPages}
-                                        setPageIndex={setPageIndex}
-                                        onChangePageSize={setPageSize}
-                                    />
+                                    {TotalRecords > 20 && (
+                                        <Pagination
+                                            pageIndex={pageIndex}
+                                            pageSize={pageSize}
+                                            totalPages={totalPages}
+                                            setPageIndex={setPageIndex}
+                                            onChangePageSize={setPageSize}
+                                        />)}
+
                                 </Card.Body>
                             </Card>
                         </Col>

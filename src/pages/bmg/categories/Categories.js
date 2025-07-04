@@ -219,7 +219,9 @@ const Categories = () => {
                                             Total Categories: {totalRecords}
                                         </span>
                                         <div className="d-flex">
-                                            <Button onClick={() => setOpenAddCategoryModal(true)} className="me-2">
+                                            <Button
+                                                onClick={() => setOpenAddCategoryModal(true)}
+                                                className="me-2 bg-success border-0">
                                                 Add Category
                                             </Button>
 

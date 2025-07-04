@@ -84,7 +84,7 @@ const LiveBidMonitoring = () => {
     const navigate = useNavigate();
     return (
         <>
-            {/* <PageTitle
+            <PageTitle
                 breadCrumbItems={[
                     {
                         label: 'Live Bid Monitoring',
@@ -93,7 +93,7 @@ const LiveBidMonitoring = () => {
                     },
                 ]}
                 title={`Live Bid Monitoring`}
-            /> */}
+            />
             <SellerDetailsModal
                 open={sellerDetailModal}
                 close={() => setSellerDetailModal(false)}
@@ -170,10 +170,11 @@ const LiveBidMonitoring = () => {
                                                     </thead>
                                                     <tbody>
                                                         {LiveBidData?.map((data, index) => (
-                                                            <tr key={data._id || index}                                                                // style={{
+                                                            <tr
+                                                                key={data._id || index} // style={{
                                                                 //     cursor: 'pointer',
                                                                 // }}
-                                                                className="text-nowrap" >
+                                                                className="text-nowrap">
                                                                 <td>{(pageIndex - 1) * pageSize + index + 1}</td>
                                                                 <td className="text-capitalize text-start fw-bold">
                                                                     <OverlayTrigger
@@ -290,7 +291,8 @@ const LiveBidMonitoring = () => {
                                                                             );
                                                                         }}
                                                                         size={18}
-                                                                        cursor={'pointer'} className='me-1'
+                                                                        cursor={'pointer'}
+                                                                        className="me-1"
                                                                         style={{
                                                                             color: '#0d6efd', // optional: makes it look like a link/info icon
                                                                         }}
@@ -328,17 +330,19 @@ const LiveBidMonitoring = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row >
+            </Row>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
                 <Modal.Header className="px-2 py-1 text-light" style={{ backgroundColor: '#008003' }}>

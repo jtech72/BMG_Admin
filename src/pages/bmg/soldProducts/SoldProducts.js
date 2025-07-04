@@ -199,7 +199,7 @@ const SoldProducts = () => {
                                                                 <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.paymentId ? (
-                                                                        <span>{data?.paymentId} </span>
+                                                                        <span>#{data?.paymentId} </span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
                                                                             N/A
@@ -306,13 +306,15 @@ const SoldProducts = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

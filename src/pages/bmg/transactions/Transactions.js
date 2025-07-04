@@ -13,12 +13,10 @@ const Transactions = () => {
     const [search, setSearch] = useState('');
     const PaidAuctionData = store?.getPaidAuctionDataReducer?.transactionData?.result;
     const NonPaidAuctionData = store?.getNonPaidAuctionDataReducer?.transactionData?.result;
-    // console.log({ PaidAuctionData, NonPaidAuctionData });
     const PaidAuctionLoading = store?.getPaidAuctionDataReducer?.loading;
     const NonPaidAuctionLoading = store?.getNonPaidAuctionDataReducer?.loading;
     const [activeTab, setActiveTab] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0);
-
     const connectTab = (tabIndex) => {
         setActiveTab(tabIndex);
     };
@@ -243,7 +241,7 @@ const Transactions = () => {
                                                                         <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                         <td className="text-uppercase">
                                                                             {data?.paymentId ? (
-                                                                                <span>{data?.paymentId}</span>
+                                                                                <span>#{data?.paymentId}</span>
                                                                             ) : (
                                                                                 <span className="d-flex justify-content-center">
                                                                                     N/A
@@ -251,11 +249,11 @@ const Transactions = () => {
                                                                             )}
                                                                         </td>
                                                                         <td className="text-uppercase">
-                                                                            <span>{data?.productId?.productGenerateId || 'N/A'}</span>
+                                                                            <span>#{data?.productId?.productGenerateId || 'N/A'}</span>
                                                                         </td>
                                                                         <td className="text-uppercase">
                                                                             {data?.orderId ? (
-                                                                                <span>{data?.orderId}</span>
+                                                                                <span>#{data?.orderId}</span>
                                                                             ) : (
                                                                                 <span className="d-flex justify-content-center">
                                                                                     N/A
@@ -414,7 +412,7 @@ const Transactions = () => {
                                                                         className="text-dark fw-bold text-nowrap">
                                                                         <th scope="row">{index + 1}</th>
                                                                         <td className="text-uppercase">
-                                                                            <span>{data?.productGenerateId || 'N/A'}</span>
+                                                                            <span>#{data?.productGenerateId || 'N/A'}</span>
                                                                         </td>
                                                                         <td className="text-uppercase text-success">
                                                                             {data ? (

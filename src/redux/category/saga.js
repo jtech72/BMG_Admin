@@ -23,7 +23,6 @@ function* getCategoryFunction(data) {
             payload: {},
         });
         const response = yield call(categoryData, data);
-        // console.log(response,'api response')
         if (response?.status === 200) {
             yield put({
                 type: CategoryActionTypes.CATEGORY_DATA_SUCCESS,
@@ -50,7 +49,6 @@ function* getAllCategoryFunction(data) {
             payload: {},
         });
         const response = yield call(getCategoryData, data);
-        // console.log(response,'api response')
         if (response?.status === 200) {
             yield put({
                 type: CategoryActionTypes.GET_ALL_CATEGORY_SUCCESS,
@@ -77,7 +75,6 @@ function* getSubCategoryFunction(data) {
             payload: {},
         });
         const response = yield call(subCategoryData, data);
-        // console.log(response,'api response')
         if (response?.status === 200) {
             yield put({
                 type: CategoryActionTypes.SUB_CATEGORY_DATA_SUCCESS,

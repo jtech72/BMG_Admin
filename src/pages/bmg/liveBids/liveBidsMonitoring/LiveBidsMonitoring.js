@@ -272,7 +272,8 @@ const LiveMonitoring = () => {
                                         <th>Amount</th>
                                         <th>Product Name</th>
                                         <th>Model</th>
-                                        <th>Location</th>
+                                        <th>Seller's Location</th>
+                                        <th>Buyer's Location</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -309,6 +310,17 @@ const LiveMonitoring = () => {
                                                     }>
                                                     <span className="text-primary">
                                                         {product?.Location?.slice(0, 30).concat('...') || 'N/A'}
+                                                    </span>
+                                                </OverlayTrigger>
+                                            </td>
+                                            <td style={{ cursor: 'pointer' }}>
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    overlay={
+                                                        <Tooltip id="overlay-example">{user?.address}</Tooltip>
+                                                    }>
+                                                    <span className="text-primary">
+                                                        {user?.address?.slice(0, 30).concat('...') || 'N/A'}
                                                     </span>
                                                 </OverlayTrigger>
                                             </td>

@@ -17,7 +17,6 @@ function* getFaqFunction(data) {
             payload: {},
         });
         const response = yield call(faqData, data);
-        // console.log(response, 'api response')
         if (response?.status === 200) {
             yield put({
                 type: FaqActionTypes.FAQ_DATA_SUCCESS,

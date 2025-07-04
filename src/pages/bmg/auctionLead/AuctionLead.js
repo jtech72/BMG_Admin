@@ -166,7 +166,7 @@ const AuctionLead = () => {
                                                                 <td className="text-uppercase fw-bold text-start">
                                                                     {data?.productId?.productGenerateId ? (
                                                                         <span>
-                                                                            {data?.productId?.productGenerateId}
+                                                                            #{data?.productId?.productGenerateId}
                                                                         </span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
@@ -259,13 +259,15 @@ const AuctionLead = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

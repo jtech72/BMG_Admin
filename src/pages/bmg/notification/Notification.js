@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Row, Col, Card, OverlayTrigger, Tooltip, Button, Table } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import PageTitle from '../../../helpers/PageTitle';
@@ -32,19 +32,38 @@ const Notification = () => {
     //     dispatch(getNotificationByAdminActions({ search }));
     // }, [dispatch, search, pageIndex, pageSize, apiCall]);
 
+    // Calculate total pages
     useEffect(() => {
-        if (!search.trim()) {
-            // If search is empty, fetch default list immediately
-            dispatch(getNotificationByAdminActions({ search }));
-            return;
+        setTotalPages(Math.ceil(TotalRecords / pageSize));
+    }, [TotalRecords, pageSize]);
+
+    // API call function with proper parameter encoding
+    const fetchNotifications = useCallback(() => {
+        const params = {
+            search: encodeURIComponent(search),
+            limit: pageSize,
+            page: pageIndex
+        };
+
+        dispatch(getNotificationByAdminActions(params));
+    }, [search, pageSize, pageIndex, dispatch]);
+
+    // Debounced API call effect
+    useEffect(() => {
+        const debounceTimer = setTimeout(() => {
+            fetchNotifications();
+        }, 300);
+
+        return () => clearTimeout(debounceTimer);
+    }, [fetchNotifications]);
+
+    // Force refresh when apiCall state changes
+    useEffect(() => {
+        if (apiCall) {
+            fetchNotifications();
+            setApiCall(false);
         }
-
-        const delayDebounce = setTimeout(() => {
-            dispatch(getNotificationByAdminActions({ search }));
-        }, 200); // Debounce delay
-
-        return () => clearTimeout(delayDebounce);
-    }, [search, dispatch, pageIndex, pageSize]);
+    }, [apiCall, fetchNotifications]);
 
     const handleNotificationModal = (type, data = null) => {
         setNotificationModal({ type, data, isVisible: true });
@@ -54,7 +73,6 @@ const Notification = () => {
 
     //     const delayDebounce = setTimeout(() => {
     //         // ✅ Call your API or search logic here
-    //         console.log('Search triggered for:', search);
     //     }, 200); // wait 200ms after user stops typing
 
     //     return () => clearTimeout(delayDebounce);
@@ -80,7 +98,7 @@ const Notification = () => {
                                     Total Notification's: {TotalRecords || 0}
                                 </span>
                                 <div className="d-flex">
-                                    <input
+                                    {/* <input
                                         type="text"
                                         className="form-control w-auto me-2"
                                         placeholder="Search..."
@@ -92,7 +110,7 @@ const Notification = () => {
                                             className="mdi mdi-backspace-outline text-danger fs-3 me-2"
                                             onClick={() => setSearch('')}
                                             style={{ cursor: 'pointer' }}></i>
-                                    )}
+                                    )} */}
                                     <Button variant="success" onClick={() => handleNotificationModal('Add')}>
                                         <i className="mdi mdi-plus-circle"></i> Add
                                     </Button>
@@ -152,7 +170,7 @@ const Notification = () => {
                                     </code>
                                 </div>
                             )}
-                            {TotalRecords > 10 && (
+                            {TotalRecords > 20 && (
                                 <Pagination
                                     pageIndex={pageIndex}
                                     pageSize={pageSize}

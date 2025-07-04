@@ -40,23 +40,18 @@ const Buyer_Seller = () => {
     const navigate = useNavigate();
     return (
         <>
+            <PageTitle
+                breadCrumbItems={[
+                    { label: 'Buyer', path: '/bmg/buyers' },
+                    {
+                        label: 'Buyer',
+                        path: '/bmg/buyers',
+                        active: true,
+                    },
+                ]}
+                title={'Buyer'}
+            />
             <Row>
-                <Col lg={6} className="d-flex justify-content-start ">
-                    {/* <Tab connectTab={connectTab} /> */}
-                    <div className="navbar text-dark ">
-                        {/* <div
-                    className={`nav-item ${activeTab === 'Buyers' ? 'active' : ''}`}
-                    onClick={() => handleClick('Buyers', 0)}>
-                    Buyer's
-                </div> */}
-                        <div
-                            className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
-                        // onClick={() => handleClick('Sellers', 1)}
-                        >
-                            Buyers
-                        </div>
-                    </div>
-                </Col>
                 <div>
                     {activeTab === 0 ? (
                         <Col xs={12}>
@@ -119,7 +114,9 @@ const Buyer_Seller = () => {
                                                                         className="text-dark fw-bold text-nowrap text-start"
                                                                         style={{ cursor: 'pointer' }} // optional: adds pointer cursor for UX clarity
                                                                     >
-                                                                        <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
+                                                                        <th scope="row">
+                                                                            {(pageIndex - 1) * pageSize + index + 1}
+                                                                        </th>
                                                                         <td className="fw-bold">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
@@ -152,7 +149,9 @@ const Buyer_Seller = () => {
                                                                                 <span className="">N/A</span>
                                                                             )}
                                                                         </td>
-                                                                        <td className="fw-bold" title={data?.address || 'N/A'}>
+                                                                        <td
+                                                                            className="fw-bold"
+                                                                            title={data?.address || 'N/A'}>
                                                                             {data?.address
                                                                                 ? data.address.length > 20
                                                                                     ? `${data.address.slice(0, 20)}...`
@@ -297,14 +296,15 @@ const Buyer_Seller = () => {
                                                                                 </span>
                                                                             )}
                                                                         </td>
-                                                                        <td className="fw-bold" title={data?.address || 'N/A'}>
+                                                                        <td
+                                                                            className="fw-bold"
+                                                                            title={data?.address || 'N/A'}>
                                                                             {data?.address
                                                                                 ? data.address.length > 20
                                                                                     ? `${data.address.slice(0, 20)}...`
                                                                                     : data.address
                                                                                 : 'N/A'}
                                                                         </td>
-
 
                                                                         <td className="text-uppercase fw-bold">
                                                                             {data ? (
@@ -338,13 +338,15 @@ const Buyer_Seller = () => {
                                             )}
                                         </>
                                     )}
-                                    <Pagination
-                                        pageIndex={pageIndex}
-                                        pageSize={pageSize}
-                                        totalPages={totalPages}
-                                        setPageIndex={setPageIndex}
-                                        onChangePageSize={setPageSize}
-                                    />
+                                    {TotalRecords > 20 && (
+                                        <Pagination
+                                            pageIndex={pageIndex}
+                                            pageSize={pageSize}
+                                            totalPages={totalPages}
+                                            setPageIndex={setPageIndex}
+                                            onChangePageSize={setPageSize}
+                                        />
+                                    )}
                                 </Card.Body>
                             </Card>
                         </Col>

@@ -55,7 +55,7 @@ const Faq = () => {
                                     Total FAQs: {TotalRecords || 0}
                                 </span>
                                 <div className="d-flex">
-                                    <input
+                                    {/* <input
                                         type="text"
                                         className="form-control w-auto me-2"
                                         placeholder="Search..."
@@ -67,7 +67,7 @@ const Faq = () => {
                                             className="mdi mdi-backspace-outline text-danger fs-3 me-2"
                                             onClick={() => setSearch('')}
                                             style={{ cursor: 'pointer' }}></i>
-                                    )}
+                                    )} */}
                                     <Button variant="success" onClick={() => handleFaqModal('Add')}>
                                         <i className="mdi mdi-plus-circle"></i> Add
                                     </Button>
@@ -145,14 +145,15 @@ const Faq = () => {
                                     <code className="fs-5 text-muted">No FAQs found. Add some to display.</code>
                                 </div>
                             )}
-
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

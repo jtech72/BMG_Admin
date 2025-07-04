@@ -115,23 +115,25 @@ const Orders = () => {
                                 <>
                                     {data && data?.length > 0 ? (
                                         <>
-                                            <div className="d-flex justify-content-center table-responsive">
+                                            <div className=" table-responsive">
                                                 <table className="table table-striped bg-white text-start">
                                                     <thead>
-                                                        <tr className="text-nowrap">
-                                                            <th scope="col">
+                                                        <tr className="">
+                                                            <th className='text-nowrap'>
                                                                 <i className="mdi mdi-merge"></i>
                                                             </th>
-                                                            <th scope="col">Order Id</th>
-                                                            <th scope="col">Payment Id</th>
-                                                            <th scope="col">Seller's Name</th>
-                                                            <th scope="col">Amount</th>
-                                                            <th scope="col">Product Name</th>
-                                                            <th scope="col">Customer Name</th>
-                                                            <th scope="col">Payment Received data</th>
-                                                            <th scope="col">Payment method</th>
-                                                            <th scope="col">User Email</th>
-                                                            <th scope="col">Status</th>
+                                                            <th className='text-nowrap'>Order Id</th>
+                                                            <th className='text-nowrap'>Payment Id</th>
+                                                            <th className='text-nowrap'>Product Id</th>
+                                                            <th className='text-nowrap'>Seller's Name</th>
+                                                            <th className='text-nowrap'>Amount</th>
+                                                            <th className='text-nowrap'>Product Name</th>
+                                                            <th className='text-nowrap'>Customer Name</th>
+                                                            <th className='text-nowrap'>Payment Received data</th>
+                                                            <th className='text-nowrap'>Payment method</th>
+                                                            <th className='text-nowrap'>User Email</th>
+                                                            <th className='text-nowrap'>Invoice</th>
+                                                            <th className='text-nowrap'>Status</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -141,7 +143,7 @@ const Orders = () => {
                                                                 <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.orderId ? (
-                                                                        <span>{data?.orderId}</span>
+                                                                        <span>#{data?.orderId}</span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
                                                                             N/A
@@ -151,7 +153,16 @@ const Orders = () => {
 
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.paymentId ? (
-                                                                        <span>{data?.paymentId}</span>
+                                                                        <span>#{data?.paymentId}</span>
+                                                                    ) : (
+                                                                        <span className="d-flex justify-content-center">
+                                                                            N/A
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="text-uppercase fw-bold">
+                                                                    {data?.productId?.productGenerateId ? (
+                                                                        <span>#{data?.productId?.productGenerateId || 'N/A'}</span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
                                                                             N/A
@@ -160,7 +171,7 @@ const Orders = () => {
                                                                 </td>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.sellerId?.name || data?.sellerId?.lastName ? (
-                                                                        <span>{data?.sellerId?.name || 'N/A'}{data?.sellerId?.lastName || 'N/A'} </span>
+                                                                        <span>{data?.sellerId?.name || 'N/A'}{' ' + data?.sellerId?.lastName || 'N/A'} </span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
                                                                             N/A
@@ -171,11 +182,11 @@ const Orders = () => {
                                                                     <span>${data?.totalPrice || 'N/A'} </span>
                                                                 </td>
                                                                 <td className="text-uppercase fw-bold">
-                                                                    <span>${data?.productName || 'N/A'} </span>
+                                                                    <span>{data?.productName || 'N/A'} </span>
                                                                 </td>
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.userId?.name || data?.userId?.lastName ? (
-                                                                        <span>{data?.userId?.name || 'N/A'}{data?.userId?.lastName || 'N/A'} </span>
+                                                                        <span>{data?.userId?.name || 'N/A'}{' ' + data?.userId?.lastName || 'N/A'} </span>
                                                                     ) : (
                                                                         <span className="d-flex justify-content-center">
                                                                             N/A
@@ -186,10 +197,11 @@ const Orders = () => {
                                                                     {/* {data?.userId?.name || data?.userId?.lastName ? ( */}
                                                                     <span>
                                                                         {data?.createdAt
-                                                                            ? new Date(data.createdAt)
-                                                                                .toLocaleDateString('en-GB')
-                                                                                .replace(/\//g, '-')
-                                                                                .slice(0, 8)
+                                                                            ? new Date(data.createdAt).toLocaleDateString('en-GB', {
+                                                                                day: '2-digit',
+                                                                                month: '2-digit',
+                                                                                year: 'numeric',
+                                                                            })
                                                                             : 'N/A'}
                                                                     </span>
                                                                     {/* ) : (
@@ -217,6 +229,26 @@ const Orders = () => {
                                                                         </span>
                                                                     )}
                                                                 </td>
+                                                                <td className="fw-bold">
+                                                                    {data?.pdfUrl ? (
+                                                                        <a
+                                                                            href={data.pdfUrl}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            title="Open PDF"
+                                                                            style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
+                                                                        >
+                                                                            <i
+                                                                                className="bi bi-file-earmark-pdf-fill"
+                                                                                style={{ color: "red", fontSize: "1.2rem", marginRight: "0.25rem" }}
+                                                                            ></i>
+                                                                            <span>View PDF</span>
+                                                                        </a>
+                                                                    ) : (
+                                                                        <span style={{ display: "flex", justifyContent: "center" }}>N/A</span>
+                                                                    )}
+                                                                </td>
+
 
                                                                 <td className="text-uppercase fw-bold">
                                                                     {data?.deliveryStatus ? (
@@ -242,13 +274,15 @@ const Orders = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
