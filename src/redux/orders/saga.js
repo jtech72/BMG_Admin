@@ -2,7 +2,7 @@
 import { all, fork, put, takeEvery, call, takeLatest } from 'redux-saga/effects';
 import { OrderActionTypes } from './constants';
 
-import { getOrdersApi} from './api';
+import { getOrdersApi } from './api';
 /**
  * Login the user
  * @param {*} payload - username and password
@@ -15,7 +15,6 @@ function* getOrdersFunction(data) {
             payload: {},
         });
         const response = yield call(getOrdersApi, data);
-        // console.log(response, 'api response')
         if (response?.status === 200) {
             yield put({
                 type: OrderActionTypes.ORDER_DATA_SUCCESS,

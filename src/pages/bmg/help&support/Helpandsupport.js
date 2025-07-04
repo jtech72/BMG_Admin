@@ -200,13 +200,15 @@ const HelpAndSupport = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

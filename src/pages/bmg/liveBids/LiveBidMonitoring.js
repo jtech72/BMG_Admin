@@ -201,16 +201,16 @@ const LiveBidMonitoring = () => {
                                                                 </td>
                                                                 <td
                                                                     className="text-uppercase text-start fw-bold"
-                                                                    // style={{ cursor: 'pointer' }}
+                                                                // style={{ cursor: 'pointer' }}
                                                                 >
                                                                     <b title={data?.product?.Product_Name || 'N/A'}>
                                                                         {data?.product?.Product_Name ? (
                                                                             <span>
                                                                                 {data?.product?.Product_Name.length > 20
                                                                                     ? data?.product?.Product_Name.substring(
-                                                                                          0,
-                                                                                          20
-                                                                                      ) + '...'
+                                                                                        0,
+                                                                                        20
+                                                                                    ) + '...'
                                                                                     : data?.product?.Product_Name}
                                                                             </span>
                                                                         ) : (
@@ -330,13 +330,15 @@ const LiveBidMonitoring = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

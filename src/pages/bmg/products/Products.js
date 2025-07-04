@@ -39,16 +39,25 @@ const Products = () => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
     useEffect(() => {
-        dispatch(
-            getProductActions({
-                search: search,
+        const fetchProducts = () => {
+            const params = {
+                search,
                 limit: pageSize,
                 page: pageIndex,
-                type: type == 'Direct Sale' ? 'Sale' : type,
-                productType: type !== 'Draft' ? productType : '',
-                publish: type !== 'Draft' ? true : false,
-            })
-        );
+                type: type === 'Direct Sale' ? 'Sale' : type,
+                publish: type !== 'Draft',
+            };
+            // Only add productType if not Draft and not empty
+            if (type !== 'Draft' && productType) {
+                params.productType = productType;
+            }
+            dispatch(getProductActions(params));
+        };
+
+        // Debounce search to prevent rapid API calls
+        const debounceTimer = setTimeout(fetchProducts, 300);
+
+        return () => clearTimeout(debounceTimer);
     }, [dispatch, pageIndex, pageSize, search, type, productType]);
 
     const [showModal, setShowModal] = useState(false);
@@ -290,13 +299,13 @@ const Products = () => {
                                                                 Product Id
                                                             </th>
                                                             <th scope="col" className="text-start">
-                                                                Serial No
-                                                            </th>
-                                                            <th scope="col" className="text-start">
-                                                                Product Name
+                                                                Serial. No
                                                             </th>
                                                             <th scope="col" className="text-start">
                                                                 Seller's Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Name
                                                             </th>
                                                             <th scope="col" className="text-start">
                                                                 Brand
@@ -313,7 +322,7 @@ const Products = () => {
                                                                 <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase text-start fw-bold">
                                                                     {data?.productGenerateId ? (
-                                                                        <span>{data?.productGenerateId} </span>
+                                                                        <span>#{data?.productGenerateId} </span>
                                                                     ) : (
                                                                         <span className="">N/A</span>
                                                                     )}
@@ -420,13 +429,15 @@ const Products = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

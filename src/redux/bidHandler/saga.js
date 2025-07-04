@@ -16,7 +16,6 @@ function* getBidHandlerFunction(data) {
             payload: {},
         });
         const response = yield call(getBigHandlerApi, data);
-        // console.log(response, 'api response')
         if (response?.status === 200) {
             yield put({
                 type: bidHandler.GET_BID_HANDLER_SUCCESS,
@@ -43,7 +42,6 @@ function* postBidHandlerFunction(data) {
             payload: {},
         });
         const response = yield call(postBigHandlerApi, data);
-        // console.log(response, 'api response')
         if (response?.status === 201) {
             yield put({
                 type: bidHandler.POST_BID_HANDLER_SUCCESS,
@@ -70,7 +68,6 @@ function* editBidHandlerFunction(data) {
             payload: {},
         });
         const response = yield call(editBidHandlerApi, data);
-        // console.log(response, 'api response')
         if (response?.status === 200) {
             yield put({
                 type: bidHandler.EDIT_BID_HANDLER_SUCCESS,
