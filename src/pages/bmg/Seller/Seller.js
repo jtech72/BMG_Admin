@@ -39,23 +39,18 @@ const Buyer_Seller = () => {
     }, [dispatch, pageSize, search, pageIndex]);
     return (
         <>
+            <PageTitle
+                breadCrumbItems={[
+                    { label: 'Seller', path: '/bmg/sellers' },
+                    {
+                        label: 'Seller',
+                        path: '/bmg/seller',
+                        active: true,
+                    },
+                ]}
+                title={'Seller'}
+            />
             <Row>
-                <Col lg={6} className="d-flex justify-content-start ">
-                    {/* <Tab connectTab={connectTab} /> */}
-                    <div className="navbar text-dark ">
-                        {/* <div
-                    className={`nav-item ${activeTab === 'Buyers' ? 'active' : ''}`}
-                    onClick={() => handleClick('Buyers', 0)}>
-                    Buyer's
-                </div> */}
-                        <div
-                            className={`nav-item ${activeTab === 'Sellers' ? 'active' : ''}`}
-                        // onClick={() => handleClick('Sellers', 1)}
-                        >
-                            Sellers
-                        </div>
-                    </div>
-                </Col>
                 <div>
                     {activeTab === 0 ? (
                         <Col xs={12}>
@@ -118,14 +113,17 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${data?.name
+                                                                                    {`${
+                                                                                        data?.name
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                        }${data?.name?.slice(1) || ''} ${data?.lastName
+                                                                                    }${data?.name?.slice(1) || ''} ${
+                                                                                        data?.lastName
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                        }${data?.lastName?.slice(1) || ''
-                                                                                        }`.trim()}
+                                                                                    }${
+                                                                                        data?.lastName?.slice(1) || ''
+                                                                                    }`.trim()}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="">N/A</span>
@@ -261,15 +259,18 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-info">
                                                                             {data?.name || data?.lastName ? (
                                                                                 <span>
-                                                                                    {`${data?.name
+                                                                                    {`${
+                                                                                        data?.name
                                                                                             ?.charAt(0)
                                                                                             .toUpperCase() || ''
-                                                                                        }${data?.name?.slice(1) || ''} 
-                                                                                          ${data?.lastName
-                                                                                            ?.charAt(0)
-                                                                                            .toUpperCase() || ''
-                                                                                        }${data?.lastName?.slice(1) || ''
-                                                                                        }`}
+                                                                                    }${data?.name?.slice(1) || ''} 
+                                                                                          ${
+                                                                                              data?.lastName
+                                                                                                  ?.charAt(0)
+                                                                                                  .toUpperCase() || ''
+                                                                                          }${
+                                                                                        data?.lastName?.slice(1) || ''
+                                                                                    }`}
                                                                                 </span>
                                                                             ) : (
                                                                                 <span className="d-flex text-danger justify-content-center">
@@ -299,9 +300,10 @@ const Buyer_Seller = () => {
                                                                         <td className="fw-bold text-primary">
                                                                             {data?.primaryAddress ? (
                                                                                 <span>
-                                                                                    {`${data?.primaryAddress?.address ||
+                                                                                    {`${
+                                                                                        data?.primaryAddress?.address ||
                                                                                         ''
-                                                                                        }, 
+                                                                                    }, 
         ${data?.primaryAddress?.street || ''}, 
         ${data?.primaryAddress?.city?.name || ''}, 
         ${data?.primaryAddress?.state?.name || ''}, 
@@ -319,10 +321,11 @@ const Buyer_Seller = () => {
                                                                         <td className="text-uppercase fw-bold">
                                                                             {data ? (
                                                                                 <span
-                                                                                    className={`badge ${data?.isVerified
+                                                                                    className={`badge ${
+                                                                                        data?.isVerified
                                                                                             ? 'bg-success'
                                                                                             : 'bg-danger'
-                                                                                        } px-2 py-1`}>
+                                                                                    } px-2 py-1`}>
                                                                                     {data?.isVerified
                                                                                         ? '✅ Verified'
                                                                                         : '❌ Not Verified'}

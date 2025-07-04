@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Nav, Pagination, Row, Tab, Table } from 'react-bootstrap';
 import { BsEye } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { debounce } from 'lodash';
+
 // import { purchageHistoryAction } from '../../redux/Purchases/actions';
 // import { ButtonLoading, Loading, TableLoading } from '../../../../helpers/loader/Loading'
 // import { getBuyOrderAction } from '../../redux/LiveAuction/actions';
@@ -16,10 +18,15 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 import { FaFileInvoice } from 'react-icons/fa';
 import { ButtonLoading, Loading } from '../../../../helpers/loader/Loading';
 import { purchaseOrderForAdmin } from '../../../../redux/Buyers/action';
+import './BuyerDetails.css';
 
 const Purchases = () => {
     const store = useSelector((state) => state);
     const dispatch = useDispatch();
+    const handleSearch = (value) => {
+        // Your API call or filter logic here
+        setSearch(value);
+    };
     const [activeKey, setActiveKey] = useState('auction');
     const user = getUserFromSession();
     const {
@@ -31,6 +38,7 @@ const Purchases = () => {
     } = useForm();
     const [showModal, setShowModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [search, setSearch] = useState('');
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const getPurchaseHistory = store?.puchaseHistoryListReducer;
@@ -72,17 +80,21 @@ const Purchases = () => {
         }
     }, [activeTab]);
     useEffect(() => {
-        dispatch(purchaseOrderForAdmin({ id, type: Type }));
+        dispatch(purchaseOrderForAdmin({ id, type: Type, productName: search }));
         // dispatch(getBuyOrderAction({ userId: user?.id }));
-    }, [dispatch, Type]);
+    }, [dispatch, Type, search]);
     const id = useParams()?.id;
     const purchaseOrderForAdminReducer = store?.purchaseOrderForAdminReducer;
     const purchaseOrderForAdminData =
         Type == 'Auction' ? purchaseOrderForAdminReducer?.data?.result : purchaseOrderForAdminReducer?.data?.orders;
-
-    console.log(purchaseOrderForAdminData, 'purchaseOrderForAdminReducerpurchaseOrderForAdminReducer');
+    const debouncedSearch = useCallback(
+        debounce((value) => {
+            handleSearch(value);
+        }, 500), // 500ms debounce
+        []
+    );
     return (
-        <Container fluid className="ps-lg-5 pe-lg-5" style={{ marginTop: '6rem' }}>
+        <Container fluid className="p-0">
             {getPurchaseHistory?.loading ? (
                 <div
                     style={{
@@ -105,7 +117,7 @@ const Purchases = () => {
                         }}>
                         <Nav
                             variant="pills"
-                            className="d-flex justify-content-md-between custom-nav-tab rounded shadow border-bottom mx-4"
+                            className="d-flex justify-content-md-between custom-nav-tab rounded shadow border-bottom mx-2 pt-2"
                             style={{ width: '190px', backgroundColor: 'rgba(255, 255, 255, 1)' }}>
                             <Nav.Item className="text-center">
                                 <Nav.Link eventKey="auction">Auction</Nav.Link>
@@ -117,7 +129,7 @@ const Purchases = () => {
                         <Tab.Content>
                             <Tab.Pane eventKey="auction">
                                 <>
-                                    <Row className="pe-lg-4 ps-lg-4 mx-auto">
+                                    <Row className="mx-auto py-1">
                                         <Col md={6} xs={6}>
                                             <h1 className="account-title mt-4 text-start px-0">Purchases History</h1>
                                         </Col>
@@ -127,6 +139,7 @@ const Purchases = () => {
                                                 style={{ background: 'transparent' }}>
                                                 <input
                                                     type="search"
+                                                    onChange={(e) => debouncedSearch(e.target.value)}
                                                     className="border-0 px-3 w-100 flex-grow-1"
                                                     placeholder="Search"
                                                     name="search"
@@ -143,161 +156,209 @@ const Purchases = () => {
                                             </div>
                                         </Col>
                                     </Row>
-                                    <Row className="pe-lg-4 mx-auto ps-lg-4">
+                                    <Row className="mx-auto">
                                         <Col md={12}>
-                                            <Table responsive border="1" hover className="w-100">
-                                                <thead
-                                                    className=" "
-                                                    style={{
-                                                        border: '1px solid rgba(189, 185, 185, 0.2)',
-                                                        borderRadius: '13px 13px 0px 0px !important',
-                                                    }}>
-                                                    <tr className="">
-                                                        <th className="ps-5 table-heading ">ORDER ID</th>
-                                                        <th className="table-heading ">STATUS</th>
-                                                        <th className=" table-heading">PAYMENT METHOD</th>
-                                                        <th className=" table-heading">NAME</th>
-                                                        <th className=" table-heading">DATE</th>
-                                                        <th className="table-heading ">TOTAL</th>
-                                                        <th className=" table-heading">RATING</th>
-                                                        <th className=" table-heading">REVIEW</th>
-                                                        <th className=" table-heading">ADD RATING </th>
-                                                        <th className=" table-heading">INVOICE</th>
-                                                        <th className="table-heading ">ACTION</th>
-                                                    </tr>
-                                                </thead>
-                                                {purchaseOrderForAdminReducer?.loading ? (
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colSpan="12" className="text-center py-5">
-                                                                <Loading />
-                                                            </td>
+                                            <div
+                                                style={{
+                                                    boxShadow:
+                                                        'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                                                }}
+                                                className="table-responsive">
+                                                <table
+                                                    // style={{ boxShadow: '0 4px 8px rgba(0,0,0,0.2)' }}
+                                                    className="w-100 table-bordered rounded text-start table bg-white">
+                                                    <thead className="">
+                                                        <tr className="">
+                                                            <th className="table-heading text-start text-nowrap">
+                                                                Order ID
+                                                            </th>
+                                                            <th className="table-heading text-start text-nowrap">
+                                                                Product Name
+                                                            </th>
+
+                                                            <th className="table-heading  text-start text-nowrap">
+                                                                Status
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Payment Method
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Name
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Date
+                                                            </th>
+                                                            <th className="table-heading text-start text-nowrap ">
+                                                                Total
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Rating
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Review
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Add Rating{' '}
+                                                            </th>
+                                                            <th className=" table-heading text-start text-nowrap">
+                                                                Invoice
+                                                            </th>
+                                                            <th className="table-heading text-start text-nowrap ">
+                                                                Action
+                                                            </th>
                                                         </tr>
-                                                    </tbody>
-                                                ) : (
-                                                    <tbody className=" border">
-                                                        {purchaseOrderForAdminData?.map((buy, index) => (
-                                                            <tr key={index}>
-                                                                <td
-                                                                    className="py-3 carousel-desc ps-5"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {buy?.orderId}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{
-                                                                        fontWeight: '500',
-                                                                        color:
-                                                                            buy?.status === 'PENDING'
-                                                                                ? 'green'
-                                                                                : buy?.status === 'DELIVERED'
-                                                                                ? 'yellow'
-                                                                                : buy?.status === 'CANCELLED'
-                                                                                ? 'red'
-                                                                                : 'black', // Default color if status doesn't match
-                                                                    }}>
-                                                                    {buy?.deliveryStatus &&
-                                                                        buy.deliveryStatus.charAt(0).toUpperCase() +
-                                                                            buy.deliveryStatus.slice(1)}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {buy?.paymentMethod}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {buy?.userId?.name} {buy?.userId?.lastName}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {new Date(buy?.orderDate).toLocaleString('en-US', {
-                                                                        year: 'numeric',
-                                                                        month: 'short',
-                                                                        day: '2-digit',
-                                                                    })}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {new Intl.NumberFormat('en-US', {
-                                                                        style: 'currency',
-                                                                        currency: 'USD',
-                                                                    }).format(Number(buy?.totalPrice) || 0)}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {buy?.productId?.review?.rating
-                                                                        ? [...Array(5)].map((_, index) => (
-                                                                              <span
-                                                                                  key={index}
-                                                                                  style={{ color: '#FFD700' }}>
-                                                                                  {index <
-                                                                                  buy.productId.review.rating ? (
-                                                                                      <FaStar />
-                                                                                  ) : (
-                                                                                      <FaRegStar />
-                                                                                  )}
-                                                                              </span>
-                                                                          ))
-                                                                        : 'N/A'}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500', cursor: 'pointer' }}
-                                                                    title={buy?.productId?.review?.comment} // Show full comment on hover
-                                                                >
-                                                                    {buy?.productId?.review?.comment
-                                                                        ? buy.productId.review.comment.length > 20
-                                                                            ? buy.productId.review.comment.slice(
-                                                                                  0,
-                                                                                  20
-                                                                              ) + '...'
-                                                                            : buy.productId.review.comment
-                                                                        : 'N/A'}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500', cursor: 'pointer' }}
-                                                                    onClick={() => handleOpenModal(buy)} // Pass ID when clicking
-                                                                >
-                                                                    <FcRating className="fs-3" />
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500', cursor: 'pointer' }}>
-                                                                    <a
-                                                                        href={buy?.pdfUrl}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">
-                                                                        <FaFileInvoice
-                                                                            className="fs-4"
-                                                                            color="rgb(74, 118, 82)"
-                                                                        />
-                                                                    </a>
-                                                                </td>
-                                                                <td className=" py-3">
-                                                                    <Link
-                                                                        to={`/bmg/orderdetail/${buy.orderId}`}
-                                                                        state={{ orderDetails: buy, activeTab }}
-                                                                        className="nav-link">
-                                                                        <BsEye
-                                                                            className="ms-4"
-                                                                            style={{
-                                                                                cursor: 'pointer',
-                                                                                color: 'rgba(74, 118, 82, 1)',
-                                                                            }}
-                                                                        />
-                                                                    </Link>
+                                                    </thead>
+                                                    {purchaseOrderForAdminReducer?.loading ? (
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colSpan="12" className="text-center py-5">
+                                                                    <Loading />
                                                                 </td>
                                                             </tr>
-                                                        ))}
-                                                    </tbody>
-                                                )}
-                                            </Table>
+                                                        </tbody>
+                                                    ) : (
+                                                        <tbody className=" border">
+                                                            {purchaseOrderForAdminData?.map((buy, index) => (
+                                                                <tr key={index}>
+                                                                    <td
+                                                                        className="text-nowrap carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {buy?.orderId}
+                                                                    </td>
+                                                                    <td
+                                                                        className="carousel-desc"
+                                                                        style={{ fontWeight: '500' }}
+                                                                        title={buy?.productId?.Product_Name} // full text as tooltip
+                                                                    >
+                                                                        {buy?.productId?.Product_Name?.length > 20 // your limit here
+                                                                            ? buy.productId.Product_Name.slice(0, 20) +
+                                                                              '...'
+                                                                            : buy.productId.Product_Name}
+                                                                    </td>
+
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{
+                                                                            fontWeight: '500',
+                                                                            color:
+                                                                                buy?.status === 'PENDING'
+                                                                                    ? 'green'
+                                                                                    : buy?.status === 'DELIVERED'
+                                                                                    ? 'yellow'
+                                                                                    : buy?.status === 'CANCELLED'
+                                                                                    ? 'red'
+                                                                                    : 'black', // Default color if status doesn't match
+                                                                        }}>
+                                                                        {buy?.deliveryStatus &&
+                                                                            buy.deliveryStatus.charAt(0).toUpperCase() +
+                                                                                buy.deliveryStatus.slice(1)}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {buy?.paymentMethod}
+                                                                    </td>
+
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {buy?.userId?.name} {buy?.userId?.lastName}
+                                                                    </td>
+                                                                    <td
+                                                                        className="text-nowrap carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {new Date(buy?.orderDate).toLocaleString(
+                                                                            'en-US',
+                                                                            {
+                                                                                year: 'numeric',
+                                                                                month: 'short',
+                                                                                day: '2-digit',
+                                                                            }
+                                                                        )}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {new Intl.NumberFormat('en-US', {
+                                                                            style: 'currency',
+                                                                            currency: 'USD',
+                                                                        }).format(Number(buy?.totalPrice) || 0)}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {buy?.productId?.review?.rating
+                                                                            ? [...Array(5)].map((_, index) => (
+                                                                                  <span
+                                                                                      key={index}
+                                                                                      style={{ color: '#FFD700' }}>
+                                                                                      {index <
+                                                                                      buy.productId.review.rating ? (
+                                                                                          <FaStar />
+                                                                                      ) : (
+                                                                                          <FaRegStar />
+                                                                                      )}
+                                                                                  </span>
+                                                                              ))
+                                                                            : 'N/A'}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500', cursor: 'pointer' }}
+                                                                        title={buy?.productId?.review?.comment} // Show full comment on hover
+                                                                    >
+                                                                        {buy?.productId?.review?.comment
+                                                                            ? buy.productId.review.comment.length > 20
+                                                                                ? buy.productId.review.comment.slice(
+                                                                                      0,
+                                                                                      20
+                                                                                  ) + '...'
+                                                                                : buy.productId.review.comment
+                                                                            : 'N/A'}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500', cursor: 'pointer' }}
+                                                                        onClick={() => handleOpenModal(buy)} // Pass ID when clicking
+                                                                    >
+                                                                        <FcRating className="fs-3" />
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{
+                                                                            fontWeight: '500',
+                                                                            cursor: 'pointer',
+                                                                        }}>
+                                                                        <a
+                                                                            href={buy?.pdfUrl}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer">
+                                                                            <FaFileInvoice
+                                                                                className="fs-4"
+                                                                                color="rgb(74, 118, 82)"
+                                                                            />
+                                                                        </a>
+                                                                    </td>
+                                                                    <td className="">
+                                                                        <Link
+                                                                            to={`/bmg/orderdetail/${buy.orderId}`}
+                                                                            state={{ orderDetails: buy, activeTab }}
+                                                                            className="nav-link">
+                                                                            <BsEye
+                                                                                className=""
+                                                                                style={{
+                                                                                    cursor: 'pointer',
+                                                                                    color: 'rgba(74, 118, 82, 1)',
+                                                                                }}
+                                                                            />
+                                                                        </Link>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    )}
+                                                </table>
+                                            </div>
                                         </Col>
                                     </Row>
                                     {totalPages > 1 && (
@@ -350,7 +411,7 @@ const Purchases = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="buynow">
                                 <>
-                                    <Row className="px-lg-4 mx-auto">
+                                    <Row className="mx-auto py-1">
                                         <Col md={6} xs={6}>
                                             <h1 className="account-title mt-4 text-start px-0">Direct Buy</h1>
                                         </Col>
@@ -360,6 +421,7 @@ const Purchases = () => {
                                                 style={{ background: 'transparent' }}>
                                                 <input
                                                     type="search"
+                                                    onChange={(e) => debouncedSearch(e.target.value)}
                                                     className="border-0 px-3 w-100 flex-grow-1"
                                                     placeholder="Search"
                                                     name="search"
@@ -376,164 +438,217 @@ const Purchases = () => {
                                             </div>
                                         </Col>
                                     </Row>
-                                    <Row className="px-lg-4 mx-auto">
+                                    <Row className="mx-auto">
                                         <Col md={12}>
-                                            <Table responsive border="1" hover className="w-100">
-                                                <thead
-                                                    className=" "
-                                                    style={{
-                                                        border: '1px solid rgba(189, 185, 185, 0.2)',
-                                                        borderRadius: '13px 13px 0px 0px !important',
-                                                    }}>
-                                                    <tr className="">
-                                                        <th className="ps-5 table-heading">ORDER ID</th>
-                                                        <th className="table-heading">STATUS</th>
-                                                        <th className="table-heading">QUANTITY</th>
-                                                        <th className="table-heading">PAYMENT METHOD</th>
-                                                        <th className="table-heading">DATE</th>
-                                                        <th className="table-heading">TOTAL</th>
-                                                        <th className="table-heading">RATING</th>
-                                                        <th className="table-heading">REVIEW</th>
-                                                        <th className="table-heading">ADD RATING </th>
-                                                        <th className="table-heading">INVOICE</th>
-                                                        <th className="table-heading">ACTION</th>
-                                                    </tr>
-                                                </thead>
-                                                {purchaseOrderForAdminReducer?.loading ? (
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colSpan="12" className="text-center py-5">
-                                                                <Loading />
-                                                            </td>
+                                            <div
+                                                style={{
+                                                    boxShadow:
+                                                        'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
+                                                }}
+                                                className="table-responsive">
+                                                <table className="text-start w-100 table-bordered rounded table bg-white">
+                                                    <thead
+                                                        className=" "
+                                                        style={{
+                                                            border: '1px solid rgba(189, 185, 185, 0.2)',
+                                                            borderRadius: '13px 13px 0px 0px !important',
+                                                        }}>
+                                                        <tr className="">
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Order ID
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Product Name
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Status
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Quantity
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Payment Method
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Date
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Total
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Rating
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Review
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Add Rating{' '}
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Invoice
+                                                            </th>
+                                                            <th className="text-start table-heading text-nowrap">
+                                                                Action
+                                                            </th>
                                                         </tr>
-                                                    </tbody>
-                                                ) : (
-                                                    <tbody className=" border">
-                                                        {purchaseOrderForAdminData?.map((order, index) => (
-                                                            <tr key={index}>
-                                                                <td
-                                                                    className=" py-3 carousel-desc ps-5"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {order?.orderId}
+                                                    </thead>
+                                                    {purchaseOrderForAdminReducer?.loading ? (
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colSpan="12" className="text-center py-5">
+                                                                    <Loading />
                                                                 </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{
-                                                                        fontWeight: '500',
-                                                                        color:
-                                                                            order?.status === 'PENDING'
-                                                                                ? 'green'
-                                                                                : order?.status === 'DELIVERED'
-                                                                                ? 'yellow'
-                                                                                : order?.status === 'CANCELLED'
-                                                                                ? 'red'
-                                                                                : 'black', // Default color if status doesn't match
-                                                                    }}>
-                                                                    {order?.deliveryStatus &&
-                                                                        order.deliveryStatus.charAt(0).toUpperCase() +
-                                                                            order.deliveryStatus.slice(1)}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {order?.quantity}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {order?.paymentMethod}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {new Date(order.createdAt).toLocaleString('en-US', {
-                                                                        year: 'numeric',
-                                                                        month: 'short',
-                                                                        day: '2-digit',
-                                                                        // hour: "2-digit",
-                                                                        // minute: "2-digit",
-                                                                        // hour12: true
-                                                                    })}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {new Intl.NumberFormat('en-US', {
-                                                                        style: 'currency',
-                                                                        currency: 'USD',
-                                                                    }).format(Number(order?.totalPrice) || 0)}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500' }}>
-                                                                    {order?.productId?.review?.rating
-                                                                        ? [...Array(5)].map((_, index) => (
-                                                                              <span
-                                                                                  key={index}
-                                                                                  style={{ color: '#FFD700' }}>
-                                                                                  {index <
-                                                                                  order.productId.review.rating ? (
-                                                                                      <FaStar />
-                                                                                  ) : (
-                                                                                      <FaRegStar />
-                                                                                  )}
-                                                                              </span>
-                                                                          ))
-                                                                        : 'N/A'}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500', cursor: 'pointer' }}
-                                                                    title={order?.productId?.review?.comment} // Show full comment on hover
-                                                                >
-                                                                    {order?.productId?.review?.comment
-                                                                        ? order.productId.review.comment.length > 20
-                                                                            ? order.productId.review.comment.slice(
+                                                            </tr>
+                                                        </tbody>
+                                                    ) : (
+                                                        <tbody className=" border">
+                                                            {purchaseOrderForAdminData?.map((order, index) => (
+                                                                <tr key={index}>
+                                                                    <td
+                                                                        className="text-nowrap carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {order?.orderId}
+                                                                    </td>
+                                                                    <td
+                                                                        className="carousel-desc"
+                                                                        style={{ fontWeight: '500' }}
+                                                                        title={order?.productId?.Product_Name} // full name as tooltip
+                                                                    >
+                                                                        {order?.productId?.Product_Name?.length > 20 // set your limit here
+                                                                            ? order.productId.Product_Name.slice(
                                                                                   0,
                                                                                   20
                                                                               ) + '...'
-                                                                            : order.productId.review.comment
-                                                                        : 'N/A'}
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500', cursor: 'pointer' }}
-                                                                    onClick={() => handleOpenModal(order)} // Pass ID when clicking
-                                                                >
-                                                                    <FcRating className="fs-3" />
-                                                                </td>
-                                                                <td
-                                                                    className=" py-3 carousel-desc"
-                                                                    style={{ fontWeight: '500', cursor: 'pointer' }}>
-                                                                    <a
-                                                                        href={order?.pdfUrl}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">
-                                                                        <FaFileInvoice
-                                                                            className="fs-4"
-                                                                            color="rgb(74, 118, 82)"
-                                                                        />
-                                                                    </a>
-                                                                </td>
-                                                                <td className=" py-3">
-                                                                    <Link
-                                                                        to={`/bmg/orderdetail/${order.orderId}`}
-                                                                        state={{ orderDetails: order, activeTab }}
-                                                                        className="nav-link">
-                                                                        <BsEye
-                                                                            className="ms-4"
-                                                                            style={{
-                                                                                cursor: 'pointer',
-                                                                                color: 'rgba(74, 118, 82, 1)',
-                                                                            }}
-                                                                        />
-                                                                    </Link>
-                                                                </td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                )}
-                                            </Table>
+                                                                            : order.productId.Product_Name}
+                                                                    </td>
+
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{
+                                                                            fontWeight: '500',
+                                                                            color:
+                                                                                order?.status === 'PENDING'
+                                                                                    ? 'green'
+                                                                                    : order?.status === 'DELIVERED'
+                                                                                    ? 'yellow'
+                                                                                    : order?.status === 'CANCELLED'
+                                                                                    ? 'red'
+                                                                                    : 'black', // Default color if status doesn't match
+                                                                        }}>
+                                                                        {order?.deliveryStatus &&
+                                                                            order.deliveryStatus
+                                                                                .charAt(0)
+                                                                                .toUpperCase() +
+                                                                                order.deliveryStatus.slice(1)}
+                                                                    </td>
+                                                                    <td
+                                                                        className="carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {order?.productId?.quantity}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {order?.paymentMethod}
+                                                                    </td>
+                                                                    <td
+                                                                        className="text-nowrap  carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {new Date(order.createdAt).toLocaleString(
+                                                                            'en-US',
+                                                                            {
+                                                                                year: 'numeric',
+                                                                                month: 'short',
+                                                                                day: '2-digit',
+                                                                                // hour: "2-digit",
+                                                                                // minute: "2-digit",
+                                                                                // hour12: true
+                                                                            }
+                                                                        )}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {new Intl.NumberFormat('en-US', {
+                                                                            style: 'currency',
+                                                                            currency: 'USD',
+                                                                        }).format(Number(order?.totalPrice) || 0)}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500' }}>
+                                                                        {order?.productId?.review?.rating
+                                                                            ? [...Array(5)].map((_, index) => (
+                                                                                  <span
+                                                                                      key={index}
+                                                                                      style={{ color: '#FFD700' }}>
+                                                                                      {index <
+                                                                                      order.productId.review.rating ? (
+                                                                                          <FaStar />
+                                                                                      ) : (
+                                                                                          <FaRegStar />
+                                                                                      )}
+                                                                                  </span>
+                                                                              ))
+                                                                            : 'N/A'}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500', cursor: 'pointer' }}
+                                                                        title={order?.productId?.review?.comment} // Show full comment on hover
+                                                                    >
+                                                                        {order?.productId?.review?.comment
+                                                                            ? order.productId.review.comment.length > 20
+                                                                                ? order.productId.review.comment.slice(
+                                                                                      0,
+                                                                                      20
+                                                                                  ) + '...'
+                                                                                : order.productId.review.comment
+                                                                            : 'N/A'}
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{ fontWeight: '500', cursor: 'pointer' }}
+                                                                        onClick={() => handleOpenModal(order)} // Pass ID when clicking
+                                                                    >
+                                                                        <FcRating className="fs-3" />
+                                                                    </td>
+                                                                    <td
+                                                                        className=" carousel-desc"
+                                                                        style={{
+                                                                            fontWeight: '500',
+                                                                            cursor: 'pointer',
+                                                                        }}>
+                                                                        <a
+                                                                            href={order?.pdfUrl}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer">
+                                                                            <FaFileInvoice
+                                                                                className="fs-4"
+                                                                                color="rgb(74, 118, 82)"
+                                                                            />
+                                                                        </a>
+                                                                    </td>
+                                                                    <td className="">
+                                                                        <Link
+                                                                            to={`/bmg/orderdetail/${order.orderId}`}
+                                                                            state={{ orderDetails: order, activeTab }}
+                                                                            className="nav-link">
+                                                                            <BsEye
+                                                                                className=""
+                                                                                style={{
+                                                                                    cursor: 'pointer',
+                                                                                    color: 'rgba(74, 118, 82, 1)',
+                                                                                }}
+                                                                            />
+                                                                        </Link>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    )}
+                                                </table>
+                                            </div>
                                         </Col>
                                     </Row>
                                 </>
