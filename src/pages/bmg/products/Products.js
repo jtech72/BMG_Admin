@@ -187,7 +187,7 @@ const Products = () => {
                 ]}
                 title={'Item'}
             /> */}
-            <Row className="mb-2 ms-1 border-bottom pb-1">
+            <Row className="mb-2 ms-1 border-bottom pb-1 mt-4">
                 {types?.map((item) => {
                     let count = '';
                     if (item === 'Auction') count = AuctionCounts ?? '';
@@ -215,7 +215,7 @@ const Products = () => {
             </Row>
 
             {type !== 'Draft' && (
-                <Row className="mb-3 ms-1 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                <Row className="mb-3 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
                     {productTypes.map((item) => {
                         if (type === 'Direct Sale' && item !== 'sold' && item !== 'unsold') return null;
 
