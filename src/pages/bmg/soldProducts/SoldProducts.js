@@ -178,7 +178,7 @@ const SoldProducts = () => {
                                     {SoldAuctionData && SoldAuctionData?.length > 0 ? (
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table table-hover bg-white">
                                                     <thead className="text-start">
                                                         <tr className="text-nowrap">
                                                             <th scope="col">
@@ -282,7 +282,7 @@ const SoldProducts = () => {
                                                                         <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="fw-bold text-primary">
+                                                                <td className="fw-bold ">
                                                                     {data?.userId?.email ? (
                                                                         <span>{data?.userId?.email} </span>
                                                                     ) : (

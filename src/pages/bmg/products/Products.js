@@ -289,7 +289,7 @@ const Products = () => {
                                     {ProductsData && ProductsData.length > 0 ? (
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table table-hover bg-white">
                                                     <thead>
                                                         <tr className="text-nowrap">
                                                             <th scope="col">
@@ -397,7 +397,7 @@ const Products = () => {
                                                                         <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="text-uppercase text-start fw-bold text-success">
+                                                                <td className="text-uppercase text-start fw-bold" style={{ color: 'green' }}>
                                                                     {data?.Ask_Price ? (
                                                                         <span>$ {data?.Ask_Price} </span>
                                                                     ) : (
@@ -406,7 +406,7 @@ const Products = () => {
                                                                 </td>
 
                                                                 {type === 'Auction' && (
-                                                                    <td className="text-uppercase text-start fw-bold text-success">
+                                                                    <td className="text-uppercase text-start fw-bold" style={{ color: 'green' }}>
                                                                         {data?.Start_Bid_Price ? (
                                                                             <span>$ {data?.Start_Bid_Price} </span>
                                                                         ) : (

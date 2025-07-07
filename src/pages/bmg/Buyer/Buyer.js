@@ -239,7 +239,7 @@ const Buyer_Seller = () => {
                                             {UserData && UserData?.length > 0 ? (
                                                 <>
                                                     <div className="table-responsive">
-                                                        <table className="table table-striped bg-white">
+                                                        <table className="table table-hover bg-white">
                                                             <thead>
                                                                 <tr className="" style={{ color: '#703133' }}>
                                                                     <th scope="col">

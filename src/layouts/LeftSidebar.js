@@ -10,7 +10,7 @@ import { getMenuItems } from '../helpers/menu';
 import AppMenu from './Menu';
 
 // images
-import { Logo,BmgLogo } from '../helpers/image';
+import { Logo, BmgLogo } from '../helpers/image';
 
 type SideBarContentProps = {
     hideUserProfile: boolean,
