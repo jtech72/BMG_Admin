@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import Routes from './routes/Routes';
+import './index.css'
 
 // setup fake backend
 import { configureFakeBackend } from './helpers';

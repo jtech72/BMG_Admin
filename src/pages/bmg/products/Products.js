@@ -187,7 +187,7 @@ const Products = () => {
                 ]}
                 title={'Item'}
             /> */}
-            <Row className="mb-2 ms-1 border-bottom pb-1">
+            <Row className="mb-2 ms-1 border-bottom pb-1 mt-4">
                 {types?.map((item) => {
                     let count = '';
                     if (item === 'Auction') count = AuctionCounts ?? '';
@@ -215,7 +215,7 @@ const Products = () => {
             </Row>
 
             {type !== 'Draft' && (
-                <Row className="mb-3 ms-1 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                <Row className="mb-3 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
                     {productTypes.map((item) => {
                         if (type === 'Direct Sale' && item !== 'sold' && item !== 'unsold') return null;
 
@@ -289,7 +289,7 @@ const Products = () => {
                                     {ProductsData && ProductsData.length > 0 ? (
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table table-hover bg-white">
                                                     <thead>
                                                         <tr className="text-nowrap">
                                                             <th scope="col">
@@ -397,7 +397,7 @@ const Products = () => {
                                                                         <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="text-uppercase text-start fw-bold text-success">
+                                                                <td className="text-uppercase text-start fw-bold" style={{ color: 'green' }}>
                                                                     {data?.Ask_Price ? (
                                                                         <span>$ {data?.Ask_Price} </span>
                                                                     ) : (
@@ -406,7 +406,7 @@ const Products = () => {
                                                                 </td>
 
                                                                 {type === 'Auction' && (
-                                                                    <td className="text-uppercase text-start fw-bold text-success">
+                                                                    <td className="text-uppercase text-start fw-bold" style={{ color: 'green' }}>
                                                                         {data?.Start_Bid_Price ? (
                                                                             <span>$ {data?.Start_Bid_Price} </span>
                                                                         ) : (

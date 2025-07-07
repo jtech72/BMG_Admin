@@ -115,8 +115,8 @@ const Orders = () => {
                                 <>
                                     {data && data?.length > 0 ? (
                                         <>
-                                            <div className=" table-responsive">
-                                                <table className="table table-striped bg-white text-start">
+                                            <div className="table-responsive">
+                                                <table className="table table-hover bg-white">
                                                     <thead>
                                                         <tr className="">
                                                             <th className='text-nowrap'>
@@ -240,9 +240,9 @@ const Orders = () => {
                                                                         >
                                                                             <i
                                                                                 className="bi bi-file-earmark-pdf-fill"
-                                                                                style={{ color: "red", fontSize: "1.2rem", marginRight: "0.25rem" }}
+                                                                                style={{ fontSize: "1.2rem", marginRight: "0.25rem" }}
                                                                             ></i>
-                                                                            <span>View PDF</span>
+                                                                            <span style={{ color: 'green', textDecoration: 'underline' }}>View PDF</span>
                                                                         </a>
                                                                     ) : (
                                                                         <span style={{ display: "flex", justifyContent: "center" }}>N/A</span>
@@ -286,7 +286,7 @@ const Orders = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-            </Row>
+            </Row >
         </>
     );
 };
