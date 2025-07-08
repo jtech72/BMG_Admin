@@ -74,7 +74,6 @@ const Dashboard = () => {
                                     <th className="text-start">Email</th>
                                     <th className="text-start">Phone Number</th>
                                     <th className="text-start">Role</th>
-                                    {/* <th>Action</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,7 +83,6 @@ const Dashboard = () => {
                                             cursor: 'pointer',
                                         }}
                                         key={data._id || index}
-                                        // onClick={() => navigate(`/bmg/users/${data?._id}`)}
                                         className="fw-bold">
                                         <td>{(page - 1) * limit + index + 1}</td>
 
@@ -100,13 +98,13 @@ const Dashboard = () => {
                                 ))}
                             </tbody>
                         </Table>
-                        <Pagination
+                        {/* <Pagination
                             pageIndex={page}
                             pageSize={limit}
                             totalPages={getRecentRegistrationsForDashboard?.dashboardData?.totalPages}
                             setPageIndex={setPage}
                             onChangePageSize={setLimit}
-                        />
+                        /> */}
                     </div>
                 </Row>
             )}
