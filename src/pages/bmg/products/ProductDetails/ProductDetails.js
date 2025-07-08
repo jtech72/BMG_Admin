@@ -422,7 +422,7 @@ const PostAList = () => {
                                                 {key === 'image' ? (
                                                     <Form.Group className="d-flex flex-column">
                                                         <Form.Label className="fw-semibold text-dark">{formattedLabel}</Form.Label>
-                                                        <Button variant="outline-primary" onClick={() => setViewModal(true)}>
+                                                        <Button variant="" style={{ borderColor: 'green' }} className='shadow-none' onClick={() => setViewModal(true)}>
                                                             View Image
                                                         </Button>
                                                     </Form.Group>
