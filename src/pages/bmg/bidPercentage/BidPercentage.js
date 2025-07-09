@@ -120,7 +120,7 @@ const BidPercentage = () => {
                                                         <th scope="col">Categories</th>
                                                         <th scope="col">Min Price</th>
                                                         <th scope="col">Max Price</th>
-                                                        <th scope="col">Percentage</th>
+                                                        <th scope="col">Bid Amount</th>
                                                         <th scope="col">Verified</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -174,8 +174,8 @@ const BidPercentage = () => {
                                                                 )}
                                                             </td>
                                                             <td className="fw-bold">
-                                                                {data?.percentage ? (
-                                                                    <span>{`${data?.percentage || ''}`} </span>
+                                                                {data?.bidAmount ? (
+                                                                    <span>{`${data?.bidAmount || ''}`} </span>
                                                                 ) : (
                                                                     <span className="d-flex justify-content-center">
                                                                         N/A

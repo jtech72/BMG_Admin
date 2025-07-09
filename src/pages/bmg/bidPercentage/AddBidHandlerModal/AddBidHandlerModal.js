@@ -48,14 +48,14 @@ const BidHandlerModal = ({
                 setValue('categories', editData?.categoryIds);
                 setValue('minPrice', editData?.minPrice);
                 setValue('maxPrice', editData?.maxPrice);
-                setValue('percentage', editData?.percentage);
+                setValue('bidAmount', editData?.bidAmount);
             } else {
                 // ✅ Clear the form when not editing
                 reset({
                     categories: [],
                     minPrice: '',
                     maxPrice: '',
-                    percentage: '',
+                    bidAmount: '',
                 });
             }
         }
@@ -115,19 +115,19 @@ const BidHandlerModal = ({
 
                         {errors.maxPrice && <small className="text-danger">{errors.maxPrice.message}</small>}
                     </Form.Group>
-                    {/* Percentage */}
+                    {/* bidAmount */}
                     <Form.Group className="mb-3">
-                        <Form.Label>Percentage</Form.Label>
+                        <Form.Label>Bid Amount</Form.Label>
                         <Form.Control
                             type="number"
-                            {...register('percentage', {
-                                required: 'Percentage is required',
+                            {...register('bidAmount', {
+                                required: 'Bid Amount is required',
                                 valueAsNumber: true,
                                 min: { value: 1, message: 'Min 1%' },
                                 max: { value: 100, message: 'Max 100%' },
                             })}
                         />
-                        {errors.percentage && <small className="text-danger">{errors.percentage.message}</small>}
+                        {errors.bidAmount && <small className="text-danger">{errors.bidAmount.message}</small>}
                     </Form.Group>
                     <div className="d-flex justify-content-end">
                         <Button variant="secondary" onClick={handleClose} className="me-2">
