@@ -138,7 +138,7 @@ const LiveBidMonitoring = () => {
                                     {LiveBidData && LiveBidData?.length > 0 ? (
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table bg-white">
+                                                <table className="table table-hover bg-white">
                                                     <thead>
                                                         <tr className="text-nowrap text-dark">
                                                             <th scope="col">
@@ -192,8 +192,8 @@ const LiveBidMonitoring = () => {
                                                                                         data?.product?.userId
                                                                                     );
                                                                                 }}
-                                                                                className="text-primary text-start"
-                                                                                style={{ cursor: 'pointer' }}>
+                                                                                className=" text-start"
+                                                                                style={{ cursor: 'pointer', color: 'green', textDecoration: 'underline' }}>
                                                                                 {data?.product?.userId?.name}
                                                                             </span>
                                                                         </b>
@@ -201,16 +201,16 @@ const LiveBidMonitoring = () => {
                                                                 </td>
                                                                 <td
                                                                     className="text-uppercase text-start fw-bold"
-                                                                    // style={{ cursor: 'pointer' }}
+                                                                // style={{ cursor: 'pointer' }}
                                                                 >
                                                                     <b title={data?.product?.Product_Name || 'N/A'}>
                                                                         {data?.product?.Product_Name ? (
                                                                             <span>
                                                                                 {data?.product?.Product_Name.length > 20
                                                                                     ? data?.product?.Product_Name.substring(
-                                                                                          0,
-                                                                                          20
-                                                                                      ) + '...'
+                                                                                        0,
+                                                                                        20
+                                                                                    ) + '...'
                                                                                     : data?.product?.Product_Name}
                                                                             </span>
                                                                         ) : (
@@ -294,7 +294,7 @@ const LiveBidMonitoring = () => {
                                                                         cursor={'pointer'}
                                                                         className="me-1"
                                                                         style={{
-                                                                            color: '#0d6efd', // optional: makes it look like a link/info icon
+                                                                            color: 'green', // optional: makes it look like a link/info icon
                                                                         }}
                                                                     />
 
@@ -311,7 +311,7 @@ const LiveBidMonitoring = () => {
                                                                         style={{
                                                                             // marginRight: '5px',
                                                                             cursor: 'pointer',
-                                                                            color: '#0d6efd', // optional: makes it look like a link/info icon
+                                                                            color: 'green', // optional: makes it look like a link/info icon
                                                                         }}
                                                                     />
                                                                 </td>
@@ -330,13 +330,15 @@ const LiveBidMonitoring = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

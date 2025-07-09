@@ -39,16 +39,25 @@ const Products = () => {
         setTotalPages(Math.ceil(TotalRecords / pageSize));
     }, [TotalRecords, pageSize]);
     useEffect(() => {
-        dispatch(
-            getProductActions({
-                search: search,
+        const fetchProducts = () => {
+            const params = {
+                search,
                 limit: pageSize,
                 page: pageIndex,
-                type: type == 'Direct Sale' ? 'Sale' : type,
-                productType: type !== 'Draft' ? productType : '',
-                publish: type !== 'Draft' ? true : false,
-            })
-        );
+                type: type === 'Direct Sale' ? 'Sale' : type,
+                publish: type !== 'Draft',
+            };
+            // Only add productType if not Draft and not empty
+            if (type !== 'Draft' && productType) {
+                params.productType = productType;
+            }
+            dispatch(getProductActions(params));
+        };
+
+        // Debounce search to prevent rapid API calls
+        const debounceTimer = setTimeout(fetchProducts, 300);
+
+        return () => clearTimeout(debounceTimer);
     }, [dispatch, pageIndex, pageSize, search, type, productType]);
 
     const [showModal, setShowModal] = useState(false);
@@ -178,7 +187,7 @@ const Products = () => {
                 ]}
                 title={'Item'}
             /> */}
-            <Row className="mb-2 ms-1 border-bottom pb-1">
+            <Row className="mb-2 ms-1 border-bottom pb-1 mt-4">
                 {types?.map((item) => {
                     let count = '';
                     if (item === 'Auction') count = AuctionCounts ?? '';
@@ -206,7 +215,7 @@ const Products = () => {
             </Row>
 
             {type !== 'Draft' && (
-                <Row className="mb-3 ms-1 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                <Row className="mb-3 py-1 px-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
                     {productTypes.map((item) => {
                         if (type === 'Direct Sale' && item !== 'sold' && item !== 'unsold') return null;
 
@@ -280,7 +289,7 @@ const Products = () => {
                                     {ProductsData && ProductsData.length > 0 ? (
                                         <>
                                             <div className="table-responsive">
-                                                <table className="table table-striped bg-white ">
+                                                <table className="table table-hover bg-white">
                                                     <thead>
                                                         <tr className="text-nowrap">
                                                             <th scope="col">
@@ -290,13 +299,13 @@ const Products = () => {
                                                                 Product Id
                                                             </th>
                                                             <th scope="col" className="text-start">
-                                                                Serial No
-                                                            </th>
-                                                            <th scope="col" className="text-start">
-                                                                Product Name
+                                                                Serial. No
                                                             </th>
                                                             <th scope="col" className="text-start">
                                                                 Seller's Name
+                                                            </th>
+                                                            <th scope="col" className="text-start">
+                                                                Product Name
                                                             </th>
                                                             <th scope="col" className="text-start">
                                                                 Brand
@@ -313,7 +322,7 @@ const Products = () => {
                                                                 <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                 <td className="text-uppercase text-start fw-bold">
                                                                     {data?.productGenerateId ? (
-                                                                        <span>{data?.productGenerateId} </span>
+                                                                        <span>#{data?.productGenerateId} </span>
                                                                     ) : (
                                                                         <span className="">N/A</span>
                                                                     )}
@@ -388,7 +397,7 @@ const Products = () => {
                                                                         <span className="">N/A</span>
                                                                     )}
                                                                 </td>
-                                                                <td className="text-uppercase text-start fw-bold text-success">
+                                                                <td className="text-uppercase text-start fw-bold" style={{ color: 'green' }}>
                                                                     {data?.Ask_Price ? (
                                                                         <span>$ {data?.Ask_Price} </span>
                                                                     ) : (
@@ -397,7 +406,7 @@ const Products = () => {
                                                                 </td>
 
                                                                 {type === 'Auction' && (
-                                                                    <td className="text-uppercase text-start fw-bold text-success">
+                                                                    <td className="text-uppercase text-start fw-bold" style={{ color: 'green' }}>
                                                                         {data?.Start_Bid_Price ? (
                                                                             <span>$ {data?.Start_Bid_Price} </span>
                                                                         ) : (
@@ -420,13 +429,15 @@ const Products = () => {
                                     )}
                                 </>
                             )}
-                            <Pagination
-                                pageIndex={pageIndex}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                setPageIndex={setPageIndex}
-                                onChangePageSize={setPageSize}
-                            />
+                            {TotalRecords > 20 && (
+                                <Pagination
+                                    pageIndex={pageIndex}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    setPageIndex={setPageIndex}
+                                    onChangePageSize={setPageSize}
+                                />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>

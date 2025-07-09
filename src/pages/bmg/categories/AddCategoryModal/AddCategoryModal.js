@@ -177,7 +177,7 @@ const AddCategoryModal = ({
                     <Form.Group className="mb-3">
                         <Form.Label>
                             Selected Subcategories
-                            {modalCheck == 'Sub-category' ? <MandatoryFieldAstrick /> : null}
+                            {modalCheck == 'Sub-category' ? <MandatoryFieldAstrick /> : <MandatoryFieldAstrick />}
                         </Form.Label>
                         {!modalCheck ? (
                             <>

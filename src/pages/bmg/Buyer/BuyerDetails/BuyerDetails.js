@@ -203,9 +203,9 @@ const Purchases = () => {
                                                             <th className=" table-heading text-start text-nowrap">
                                                                 Invoice
                                                             </th>
-                                                            <th className="table-heading text-start text-nowrap ">
+                                                            {/* <th className="table-heading text-start text-nowrap ">
                                                                 Action
-                                                            </th>
+                                                            </th> */}
                                                         </tr>
                                                     </thead>
                                                     {purchaseOrderForAdminReducer?.loading ? (
@@ -232,7 +232,7 @@ const Purchases = () => {
                                                                     >
                                                                         {buy?.productId?.Product_Name?.length > 20 // your limit here
                                                                             ? buy.productId.Product_Name.slice(0, 20) +
-                                                                              '...'
+                                                                            '...'
                                                                             : buy.productId.Product_Name}
                                                                     </td>
 
@@ -244,14 +244,14 @@ const Purchases = () => {
                                                                                 buy?.status === 'PENDING'
                                                                                     ? 'green'
                                                                                     : buy?.status === 'DELIVERED'
-                                                                                    ? 'yellow'
-                                                                                    : buy?.status === 'CANCELLED'
-                                                                                    ? 'red'
-                                                                                    : 'black', // Default color if status doesn't match
+                                                                                        ? 'yellow'
+                                                                                        : buy?.status === 'CANCELLED'
+                                                                                            ? 'red'
+                                                                                            : 'black', // Default color if status doesn't match
                                                                         }}>
                                                                         {buy?.deliveryStatus &&
                                                                             buy.deliveryStatus.charAt(0).toUpperCase() +
-                                                                                buy.deliveryStatus.slice(1)}
+                                                                            buy.deliveryStatus.slice(1)}
                                                                     </td>
                                                                     <td
                                                                         className=" carousel-desc"
@@ -289,17 +289,17 @@ const Purchases = () => {
                                                                         style={{ fontWeight: '500' }}>
                                                                         {buy?.productId?.review?.rating
                                                                             ? [...Array(5)].map((_, index) => (
-                                                                                  <span
-                                                                                      key={index}
-                                                                                      style={{ color: '#FFD700' }}>
-                                                                                      {index <
-                                                                                      buy.productId.review.rating ? (
-                                                                                          <FaStar />
-                                                                                      ) : (
-                                                                                          <FaRegStar />
-                                                                                      )}
-                                                                                  </span>
-                                                                              ))
+                                                                                <span
+                                                                                    key={index}
+                                                                                    style={{ color: '#FFD700' }}>
+                                                                                    {index <
+                                                                                        buy.productId.review.rating ? (
+                                                                                        <FaStar />
+                                                                                    ) : (
+                                                                                        <FaRegStar />
+                                                                                    )}
+                                                                                </span>
+                                                                            ))
                                                                             : 'N/A'}
                                                                     </td>
                                                                     <td
@@ -310,9 +310,9 @@ const Purchases = () => {
                                                                         {buy?.productId?.review?.comment
                                                                             ? buy.productId.review.comment.length > 20
                                                                                 ? buy.productId.review.comment.slice(
-                                                                                      0,
-                                                                                      20
-                                                                                  ) + '...'
+                                                                                    0,
+                                                                                    20
+                                                                                ) + '...'
                                                                                 : buy.productId.review.comment
                                                                             : 'N/A'}
                                                                     </td>
@@ -339,7 +339,7 @@ const Purchases = () => {
                                                                             />
                                                                         </a>
                                                                     </td>
-                                                                    <td className="">
+                                                                    {/* <td className="">
                                                                         <Link
                                                                             to={`/bmg/orderdetail/${buy.orderId}`}
                                                                             state={{ orderDetails: buy, activeTab }}
@@ -352,7 +352,7 @@ const Purchases = () => {
                                                                                 }}
                                                                             />
                                                                         </Link>
-                                                                    </td>
+                                                                    </td> */}
                                                                 </tr>
                                                             ))}
                                                         </tbody>
@@ -381,12 +381,12 @@ const Purchases = () => {
                                                 <Pagination.Item
                                                     key={i}
                                                     active={i + 1 === currentPage}
-                                                    // onClick={() =
-                                                    // >
-                                                    // dispatch(
-                                                    //     purchageHistoryAction({ userId: user?.id, page: i + 1 })
-                                                    // )
-                                                    // }
+                                                // onClick={() =
+                                                // >
+                                                // dispatch(
+                                                //     purchageHistoryAction({ userId: user?.id, page: i + 1 })
+                                                // )
+                                                // }
                                                 >
                                                     {i + 1}
                                                 </Pagination.Item>
@@ -487,9 +487,9 @@ const Purchases = () => {
                                                             <th className="text-start table-heading text-nowrap">
                                                                 Invoice
                                                             </th>
-                                                            <th className="text-start table-heading text-nowrap">
+                                                            {/* <th className="text-start table-heading text-nowrap">
                                                                 Action
-                                                            </th>
+                                                            </th> */}
                                                         </tr>
                                                     </thead>
                                                     {purchaseOrderForAdminReducer?.loading ? (
@@ -516,9 +516,9 @@ const Purchases = () => {
                                                                     >
                                                                         {order?.productId?.Product_Name?.length > 20 // set your limit here
                                                                             ? order.productId.Product_Name.slice(
-                                                                                  0,
-                                                                                  20
-                                                                              ) + '...'
+                                                                                0,
+                                                                                20
+                                                                            ) + '...'
                                                                             : order.productId.Product_Name}
                                                                     </td>
 
@@ -530,16 +530,16 @@ const Purchases = () => {
                                                                                 order?.status === 'PENDING'
                                                                                     ? 'green'
                                                                                     : order?.status === 'DELIVERED'
-                                                                                    ? 'yellow'
-                                                                                    : order?.status === 'CANCELLED'
-                                                                                    ? 'red'
-                                                                                    : 'black', // Default color if status doesn't match
+                                                                                        ? 'yellow'
+                                                                                        : order?.status === 'CANCELLED'
+                                                                                            ? 'red'
+                                                                                            : 'black', // Default color if status doesn't match
                                                                         }}>
                                                                         {order?.deliveryStatus &&
                                                                             order.deliveryStatus
                                                                                 .charAt(0)
                                                                                 .toUpperCase() +
-                                                                                order.deliveryStatus.slice(1)}
+                                                                            order.deliveryStatus.slice(1)}
                                                                     </td>
                                                                     <td
                                                                         className="carousel-desc"
@@ -579,17 +579,17 @@ const Purchases = () => {
                                                                         style={{ fontWeight: '500' }}>
                                                                         {order?.productId?.review?.rating
                                                                             ? [...Array(5)].map((_, index) => (
-                                                                                  <span
-                                                                                      key={index}
-                                                                                      style={{ color: '#FFD700' }}>
-                                                                                      {index <
-                                                                                      order.productId.review.rating ? (
-                                                                                          <FaStar />
-                                                                                      ) : (
-                                                                                          <FaRegStar />
-                                                                                      )}
-                                                                                  </span>
-                                                                              ))
+                                                                                <span
+                                                                                    key={index}
+                                                                                    style={{ color: '#FFD700' }}>
+                                                                                    {index <
+                                                                                        order.productId.review.rating ? (
+                                                                                        <FaStar />
+                                                                                    ) : (
+                                                                                        <FaRegStar />
+                                                                                    )}
+                                                                                </span>
+                                                                            ))
                                                                             : 'N/A'}
                                                                     </td>
                                                                     <td
@@ -600,9 +600,9 @@ const Purchases = () => {
                                                                         {order?.productId?.review?.comment
                                                                             ? order.productId.review.comment.length > 20
                                                                                 ? order.productId.review.comment.slice(
-                                                                                      0,
-                                                                                      20
-                                                                                  ) + '...'
+                                                                                    0,
+                                                                                    20
+                                                                                ) + '...'
                                                                                 : order.productId.review.comment
                                                                             : 'N/A'}
                                                                     </td>
@@ -629,7 +629,7 @@ const Purchases = () => {
                                                                             />
                                                                         </a>
                                                                     </td>
-                                                                    <td className="">
+                                                                    {/* <td className="">
                                                                         <Link
                                                                             to={`/bmg/orderdetail/${order.orderId}`}
                                                                             state={{ orderDetails: order, activeTab }}
@@ -642,7 +642,7 @@ const Purchases = () => {
                                                                                 }}
                                                                             />
                                                                         </Link>
-                                                                    </td>
+                                                                    </td> */}
                                                                 </tr>
                                                             ))}
                                                         </tbody>

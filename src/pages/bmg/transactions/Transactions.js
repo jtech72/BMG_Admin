@@ -13,12 +13,10 @@ const Transactions = () => {
     const [search, setSearch] = useState('');
     const PaidAuctionData = store?.getPaidAuctionDataReducer?.transactionData?.result;
     const NonPaidAuctionData = store?.getNonPaidAuctionDataReducer?.transactionData?.result;
-    // console.log({ PaidAuctionData, NonPaidAuctionData });
     const PaidAuctionLoading = store?.getPaidAuctionDataReducer?.loading;
     const NonPaidAuctionLoading = store?.getNonPaidAuctionDataReducer?.loading;
     const [activeTab, setActiveTab] = useState(0);
     const [totalRecords, setTotalRecords] = useState(0);
-
     const connectTab = (tabIndex) => {
         setActiveTab(tabIndex);
     };
@@ -203,7 +201,7 @@ const Transactions = () => {
                                             />
                                             {search && (
                                                 <i
-                                                    className="mdi mdi-backspace-outline text-danger fs-3"
+                                                    className="mdi mdi-backspace-outline fs-3"
                                                     onClick={() => setSearch('')}
                                                     style={{ cursor: 'pointer' }}></i>
                                             )}
@@ -219,7 +217,7 @@ const Transactions = () => {
                                             {PaidAuctionData && PaidAuctionData?.length > 0 ? (
                                                 <>
                                                     <div className="table-responsive">
-                                                        <table className="table table-striped bg-white">
+                                                        <table className="table table-hover bg-white">
                                                             <thead>
                                                                 <tr className="text-start">
                                                                     <th scope="col">
@@ -243,7 +241,7 @@ const Transactions = () => {
                                                                         <th scope="row">{(pageIndex - 1) * pageSize + index + 1}</th>
                                                                         <td className="text-uppercase">
                                                                             {data?.paymentId ? (
-                                                                                <span>{data?.paymentId}</span>
+                                                                                <span>#{data?.paymentId}</span>
                                                                             ) : (
                                                                                 <span className="d-flex justify-content-center">
                                                                                     N/A
@@ -251,11 +249,11 @@ const Transactions = () => {
                                                                             )}
                                                                         </td>
                                                                         <td className="text-uppercase">
-                                                                            <span>{data?.productId?.productGenerateId || 'N/A'}</span>
+                                                                            <span>#{data?.productId?.productGenerateId || 'N/A'}</span>
                                                                         </td>
                                                                         <td className="text-uppercase">
                                                                             {data?.orderId ? (
-                                                                                <span>{data?.orderId}</span>
+                                                                                <span>#{data?.orderId}</span>
                                                                             ) : (
                                                                                 <span className="d-flex justify-content-center">
                                                                                     N/A
@@ -313,7 +311,7 @@ const Transactions = () => {
 
                                                                         <td className="text-uppercase">
                                                                             {data?.totalPrice ? (
-                                                                                <span>$ {data?.totalPrice}</span>
+                                                                                <span>${data?.totalPrice}</span>
                                                                             ) : (
                                                                                 <span className="d-flex justify-content-center">
                                                                                     N/A
@@ -377,7 +375,7 @@ const Transactions = () => {
                                             />
                                             {search && (
                                                 <i
-                                                    className="mdi mdi-backspace-outline text-danger fs-3"
+                                                    className="mdi mdi-backspace-outline fs-3"
                                                     onClick={() => setSearch('')}
                                                     style={{ cursor: 'pointer' }}></i>
                                             )}
@@ -392,7 +390,7 @@ const Transactions = () => {
                                             {NonPaidAuctionData && NonPaidAuctionData?.length > 0 ? (
                                                 <>
                                                     <div className="table-responsive">
-                                                        <table className="table table-striped bg-white">
+                                                        <table className="table table-hover bg-white">
                                                             <thead>
                                                                 <tr className="" style={{ color: '#703133' }}>
                                                                     <th scope="col">
@@ -414,7 +412,7 @@ const Transactions = () => {
                                                                         className="text-dark fw-bold text-nowrap">
                                                                         <th scope="row">{index + 1}</th>
                                                                         <td className="text-uppercase">
-                                                                            <span>{data?.productGenerateId || 'N/A'}</span>
+                                                                            <span>#{data?.productGenerateId || 'N/A'}</span>
                                                                         </td>
                                                                         <td className="text-uppercase text-success">
                                                                             {data ? (
@@ -425,7 +423,7 @@ const Transactions = () => {
                                                                                     }}
                                                                                     onMouseOver={(e) =>
                                                                                     (e.target.style.color =
-                                                                                        'rgb(10 207 151)')
+                                                                                        'green')
                                                                                     }
                                                                                     onMouseOut={(e) =>
                                                                                     (e.target.style.color =
@@ -438,7 +436,7 @@ const Transactions = () => {
                                                                                         '...'}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -447,7 +445,7 @@ const Transactions = () => {
                                                                             {data?.categoryId ? (
                                                                                 <span>{data?.categoryId?.name} </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -461,7 +459,7 @@ const Transactions = () => {
                                                                                     }{' '}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -472,7 +470,7 @@ const Transactions = () => {
                                                                                     {formatUserName(data?.buyerId)}{' '}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -483,7 +481,7 @@ const Transactions = () => {
                                                                                     {formatUserName(data?.userId)}{' '}
                                                                                 </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex  justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -493,7 +491,7 @@ const Transactions = () => {
                                                                             {data?.highBidingAmount ? (
                                                                                 <span>$ {data?.highBidingAmount} </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}
@@ -503,7 +501,7 @@ const Transactions = () => {
                                                                             {data?.createdAt ? (
                                                                                 <span>{formatDate(data?.createdAt)}  </span>
                                                                             ) : (
-                                                                                <span className="d-flex text-danger justify-content-center">
+                                                                                <span className="d-flex justify-content-center">
                                                                                     N/A
                                                                                 </span>
                                                                             )}

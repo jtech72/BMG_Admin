@@ -16,7 +16,6 @@ function* getProductFunction(data) {
             payload: {},
         });
         const response = yield call(productData, data);
-        // console.log(response, 'api response')
         if (response?.status === 200) {
             yield put({
                 type: ProductActionTypes.PRODUCT_DATA_SUCCESS,

@@ -11,7 +11,6 @@ function* purchaseOrderForAdminFunction(data) {
             payload: {},
         });
         const response = yield call(getPurchaseOrderDetailsForAdmin, data);
-        // console.log(response,'api response')
         if (response?.status === 200) {
             yield put({
                 type: buyer.GET_PURCHASE_ORDER_DETAILS_FOR_ADMIN_SUCCESS,

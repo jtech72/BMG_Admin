@@ -16,7 +16,6 @@ function* getBuyerSellerFunction(data) {
             payload: {},
         });
         const response = yield call(buyerSellerData, data);
-        // console.log(response, 'api response')
         if (response?.status === 200) {
             yield put({
                 type: UserActionTypes.BUYER_SELLER_DATA_SUCCESS,
