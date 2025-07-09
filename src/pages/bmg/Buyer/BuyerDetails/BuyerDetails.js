@@ -118,7 +118,7 @@ const Purchases = () => {
                         <Nav
                             variant="pills"
                             className="d-flex justify-content-md-between custom-nav-tab rounded shadow border-bottom mx-2 pt-2"
-                            style={{ width: '190px', backgroundColor: 'rgba(255, 255, 255, 1)' }}>
+                            style={{ width: '220px', backgroundColor: 'rgba(255, 255, 255, 1)' }}>
                             <Nav.Item className="text-center">
                                 <Nav.Link eventKey="auction">Auction</Nav.Link>
                             </Nav.Item>
