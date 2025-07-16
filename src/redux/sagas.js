@@ -15,8 +15,9 @@ import notificationSaga from './notification/saga';
 import comissionSaga from './commision/saga';
 import transactionSaga from './transactions/saga';
 import supportSaga from './support/saga';
-import { BidHandlerSaga } from './bidHandler/saga';
+import BidHandlerSaga  from './bidHandler/saga';
 import PurchaseOrderForAdminDataSaga from './Buyers/saga';
+import locationSaga from './location/saga';
 
 export default function* rootSaga(): any {
     yield all([
@@ -36,5 +37,6 @@ export default function* rootSaga(): any {
         supportSaga(),
         BidHandlerSaga(),
         PurchaseOrderForAdminDataSaga(),
+        locationSaga(),
     ]);
 }

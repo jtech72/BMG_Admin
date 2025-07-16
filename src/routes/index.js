@@ -46,6 +46,8 @@ const BidPercentage = React.lazy(() => import('../pages/bmg/bidPercentage/BidPer
 const UserDetails = React.lazy(() => import('../pages/bmg/UserDetails/UserDetails'));
 const HelpAndSupport = React.lazy(() => import('../pages/bmg/help&support/Helpandsupport'));
 const TicketDetails = React.lazy(() => import('../pages/bmg/help&support/Tickets'));
+const States = React.lazy(() => import('../pages/bmg/location/States'));
+const Cities = React.lazy(() => import('../pages/bmg/location/Cities'));
 
 // error handlers
 const ErrorPageNotFound = React.lazy(() => import('../pages/error/PageNotFound'));
@@ -206,17 +208,25 @@ const AllRoutes = () => {
                             path: 'transactions',
                             element: <LoadComponent component={Transactions} />,
                         },
-                         {
+                        {
                             path: 'help-support',
                             element: <LoadComponent component={HelpAndSupport} />,
                         },
-                         {
+                        {
                             path: 'ticket/:id',
                             element: <LoadComponent component={TicketDetails} />,
                         },
                         {
                             path: 'bidPercentage',
                             element: <LoadComponent component={BidPercentage} />,
+                        },
+                        {
+                            path: 'location',
+                            element: <LoadComponent component={States} />,
+                        },
+                        {
+                            path: 'cities/:id',
+                            element: <LoadComponent component={Cities} />,
                         },
                     ],
                 },
