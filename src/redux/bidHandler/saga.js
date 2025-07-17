@@ -99,6 +99,8 @@ export function* watchEditBidHandlerData() {
     yield takeEvery(bidHandler.EDIT_BID_HANDLER, editBidHandlerFunction);
 }
 
-export function* BidHandlerSaga() {
+function* BidHandlerSaga() {
     yield all([fork(watchGetBidHandlerData), fork(watchPostBidHandlerData), fork(watchEditBidHandlerData)]);
 }
+
+export default BidHandlerSaga;

@@ -45,6 +45,7 @@ import {
     editBidHandlerReducer,
 } from './bidHandler/reducer';
 import { purchaseOrderForAdminReducer } from './Buyers/reducer';
+import { getAllStatesReducer,getCitiesByIdReducer,createLocationReducer,updateCityReducer } from './location/reducers';
 export default combineReducers({
     Auth,
     Layout,
@@ -91,4 +92,5 @@ export default combineReducers({
     editBidHandlerReducer,
     createSubCategoryDataReducer,
     purchaseOrderForAdminReducer,
+    getAllStatesReducer,getCitiesByIdReducer,createLocationReducer,updateCityReducer,
 });

@@ -75,3 +75,9 @@ export const EDIT_BID_HANDLER = '/api/v1/update/percentageHandler';
 // http://localhost:5004?userId=685e2b703b46af4202f595d0
 export const GET_PURCHASE_ORDER_DETAILS_FOR_ADMIN = '/api/order/getOrderHistoryByUserIdAdmin';
 export const GET_PAY_AUCTION_PRODUCT_FOR_ADMIN = '/api/liveauction/getPayAuctionProductForAdmin';
+
+//location
+export const GET_ALL_STATES = '/api/country/US';
+export const GET_CITIES_BY_ID = '/api/state';
+export const CREATE_LOCATION = '/api/v1/admin/stateWithCities';
+export const UPDATE_CITY = '/api/v1/admin/city/update';
