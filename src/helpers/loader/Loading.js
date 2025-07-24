@@ -1,5 +1,6 @@
 import React from 'react';
 import { ColorRing, RotatingLines } from 'react-loader-spinner';
+
 const Loading = () => {
     return (
         <div style={{ height: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
